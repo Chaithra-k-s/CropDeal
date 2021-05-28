@@ -1,0 +1,2 @@
+# CropDeal
+MEAN STACK Application
