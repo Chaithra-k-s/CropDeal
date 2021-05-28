@@ -1,0 +1,23 @@
+{
+  "name": "crop",
+  "version": "1.0.0",
+  "description": "",
+  "main": "CropSchema.js",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "http": "^0.0.1-security",
+    "morgan": "^1.10.0",
+    "mongoose": "^5.12.11",
+    "multer": "^1.4.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
