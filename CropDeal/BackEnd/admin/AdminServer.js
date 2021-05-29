@@ -33,6 +33,48 @@ mongoose.connect("mongodb+srv://admin:123@mongodbpractise.bjozc.mongodb.net/Crop
 //importing schema
 const adminschema=require("./AdminSchema");
 
+// login dealer user
+
+app.post("/login",(req,res,next)=>{
+    adminschema.find({email:req.body.email}).exec()
+    .then(admin=>{
+        if(admin.length<1){
+            return res.status(401).json({
+                message:"Authentication Failed"
+            })
+        }
+        bcrypt.compare(req.body.password, admin[0].password,(err,result)=>{
+            if(err){
+                return res.status(401).json({
+                    message:"Authentication failed"
+                })
+            }
+            if (result){
+                const token=jwt.sign({
+                    email:admin[0].email,
+                    userId:admin[0]._id
+                },"chaithra",{
+                    expiresIn:'1h'
+                })
+                return res.status(200).json({
+                    message:"Auth Successful!",
+                    token:token
+                })
+            }
+            res.status(401).json({
+                message:"Authentication failed"
+            })
+        })
+    }).catch(err=>{
+        console.log(err);
+        res.status(500).json({
+            error:err,
+            message:err
+        })
+    })
+})
+
+
 //api
 app.post('/signup',(req,res,next)=>{
     adminschema.find({email:req.body.email})
@@ -58,7 +100,7 @@ app.post('/signup',(req,res,next)=>{
                     .then(result=>{
                         res.status(201).json({
                             message:"adding admin details",
-                            admin:createdadmin 
+                            admin:result 
                         })
                     })
                     .catch(err=>{

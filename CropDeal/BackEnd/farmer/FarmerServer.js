@@ -59,6 +59,48 @@ app.get('/:id',(req,res)=>{
     })
 })
 
+// login dealer user
+
+app.post("/login",(req,res,next)=>{
+    farmererschema.find({email:req.body.email}).exec()
+    .then(farmer=>{
+        if(farmer.length<1){
+            return res.status(401).json({
+                message:"Authentication Failed"
+            })
+        }
+        bcrypt.compare(req.body.password, farmer[0].password,(err,result)=>{
+            if(err){
+                return res.status(401).json({
+                    message:"Authentication failed"
+                })
+            }
+            if (result){
+                const token=jwt.sign({
+                    email:farmer[0].email,
+                    userId:farmer[0]._id
+                },"chaithra",{
+                    expiresIn:'1h'
+                })
+                return res.status(200).json({
+                    message:"Auth Successful!",
+                    token:token
+                })
+            }
+            res.status(401).json({
+                message:"Authentication failed"
+            })
+        })
+    }).catch(err=>{
+        console.log(err);
+        res.status(500).json({
+            error:err,
+            message:err
+        })
+    })
+})
+
+
 //adding crop
 app.post("/",(req,res)=>{
     farmerschema.find({email:req.body.email})
