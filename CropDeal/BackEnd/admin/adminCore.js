@@ -4,6 +4,7 @@ const cors=require("cors");
 const bcrypt =require ("bcrypt")
 const jwt=require("jsonwebtoken");
 const mongoose=require("mongoose");
+const secretKey = require("./config");
 
 exports.admin_register=(req,res,next)=>{
     adminschema.find({email:req.body.email})
@@ -63,7 +64,9 @@ exports.admin_login=(req,res,next)=>{
                 const token=jwt.sign({
                     email:admin[0].email,
                     userId:admin[0]._id
-                },"chaithra",{
+                },
+                secretKey.secretKey,
+                {
                     expiresIn:'1h'
                 })
                 return res.status(200).json({

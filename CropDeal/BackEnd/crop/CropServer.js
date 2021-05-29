@@ -11,8 +11,14 @@ const jwt=require("jsonwebtoken")
 const app=express();
 
 //connecting to database
-mongoose.connect("mongodb+srv://admin:123@mongodbpractise.bjozc.mongodb.net/CROP?retryWrites=true&w=majority",
-()=>console.log("crop database connected"));
+const dbURI="mongodb+srv://admin:123@mongodbpractise.bjozc.mongodb.net/CROP?retryWrites=true&w=majority";
+mongoose.connect(dbURI,{useNewUrlParser:true,useUnifiedTopology:true,useCreateIndex:true})
+.then(()=>{
+    console.log("admin database connected")
+})
+.catch((err)=>{
+    console.log("db connection error:" + err);
+});
 
 app.use('/uploads',express.static('uploads'));
 

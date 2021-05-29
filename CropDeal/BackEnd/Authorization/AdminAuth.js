@@ -8,7 +8,7 @@ const member=require('./FarmerSchema');
 const jwt=require('jsonwebtoken');
 const bcrypt=require('bcrypt');
 const mongoose=require('mongoose');
-const authConfig=require('../config/authConfig');
+const secretKey=require('./config');
 
 exports.login=(req,res,next)=>{
     member.findOne({
@@ -30,7 +30,7 @@ exports.login=(req,res,next)=>{
                     const token=jwt.sign({
                         userId:user._id
                     },
-                    authConfig.secretKey,
+                    secretKey.secretKey,
                     {
                         expiresIn:"1h"
                     });

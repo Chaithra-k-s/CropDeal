@@ -42,8 +42,14 @@ const CheckAuth=(req,res,next)=>{
 }
 
 //connecting to database
-mongoose.connect("mongodb+srv://admin:123@mongodbpractise.bjozc.mongodb.net/FARMER?retryWrites=true&w=majority",
-()=>console.log("farmer database connected"));
+const dbURI="mongodb+srv://admin:123@mongodbpractise.bjozc.mongodb.net/FARMER?retryWrites=true&w=majority";
+mongoose.connect(dbURI,{useNewUrlParser:true,useUnifiedTopology:true,useCreateIndex:true})
+.then(()=>{
+    console.log("admin database connected")
+})
+.catch((err)=>{
+    console.log("db connection error:" + err);
+});
 
 //importing schema
 const farmerschema=require("./FarmerSchema");

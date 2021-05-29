@@ -38,8 +38,14 @@ CheckAuth((req,res,next)=>{
 })
 
 //connecting to database
-mongoose.connect("mongodb+srv://admin:123@mongodbpractise.bjozc.mongodb.net/INVOICE?retryWrites=true&w=majority",
-()=>console.log("invoice database connected"));
+const dbURI="mongodb+srv://admin:123@mongodbpractise.bjozc.mongodb.net/INVOICE?retryWrites=true&w=majority";
+mongoose.connect(dbURI,{useNewUrlParser:true,useUnifiedTopology:true,useCreateIndex:true})
+.then(()=>{
+    console.log("admin database connected")
+})
+.catch((err)=>{
+    console.log("db connection error:" + err);
+});
 
 const invoice=require("./InvoiceSchema");
 
