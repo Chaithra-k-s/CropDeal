@@ -6,6 +6,7 @@ const morgan=require("morgan")
 const bodyParser=require("body-parser")
 const cors=require("cors");
 const bcrypt =require ("bcrypt");
+const jwt=require("jsonwebtoken")
 
 const app=express();
 app.use(bodyParser.urlencoded({extended:false}))

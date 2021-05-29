@@ -6,9 +6,9 @@ const mongoose=require("mongoose");
 const morgan=require("morgan")
 const bodyParser=require("body-parser")
 const cors=require("cors");
-const bcrypt =require ("bcrypt")
+const bcrypt =require ("bcrypt");
+const jwt=require("jsonwebtoken")
 const app=express();
-
 
 //connecting to database
 mongoose.connect("mongodb+srv://admin:123@mongodbpractise.bjozc.mongodb.net/CROP?retryWrites=true&w=majority",
