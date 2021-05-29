@@ -31,6 +31,19 @@ app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json());
 app.use(morgan("dev"));
 
+//checking Authorization in middleware
+CheckAuth((req,res,next)=>{
+    try{
+    const decoded=jwt.verify(req.body.token,"chaithra");
+    req.userdata=decoded;
+    next();
+    } catch(error){
+        return res.status(401).json({
+            message:"Auth failed in middleware"
+        })
+    }
+})
+
 const Storage = multer.diskStorage({
     destination:(req,file,cb)=>{
         cb(null,"./uploads/")
@@ -57,7 +70,7 @@ const cropschema=require("./CropSchema");
 // Api methods
 
 //getting all data
-app.get("/",(req,res)=>{
+app.get("/",CheckAuth,(req,res)=>{
     cropschema.find({}).exec((err,data)=>{
         if(err){
             res.send("error fetching data from database")
@@ -70,7 +83,7 @@ app.get("/",(req,res)=>{
 })
 
 // fetch particular crop details with name
-app.get('/:id',(req,res)=>{
+app.get('/:id',CheckAuth,(req,res)=>{
     cropschema.findOne({crop_name:req.params.id}).exec((err,data)=>{
         if(err){
             res.send("error fetching data from database")
@@ -83,7 +96,7 @@ app.get('/:id',(req,res)=>{
 })
 
 //adding crop
-app.post("/",upload.single("crop_img"),(req,res)=>{
+app.post("/",upload.single("crop_img"),CheckAuth,(req,res)=>{
     cropschema.find({crop_name:req.body.crop_name})
     .exec().then(user=>{
             const crop=new cropschema({
@@ -121,7 +134,7 @@ app.post("/",upload.single("crop_img"),(req,res)=>{
     
 
 //updating a particular crop
-app.put("/:id",upload.single("crop_img"),(req,res)=>{
+app.put("/:id",CheckAuth,upload.single("crop_img"),(req,res)=>{
     cropschema.findOneAndUpdate({crop_name:req.params.id},{$set:
         {
             crop_name:req.body.crop_name,
@@ -157,7 +170,7 @@ app.put("/:id",upload.single("crop_img"),(req,res)=>{
 })
 
 //deleteing particular crop
-app.delete('/:id',(req,res)=>{
+app.delete('/:id',CheckAuth,(req,res)=>{
     cropschema.findOneAndDelete({crop_name:req.params.id}).exec((err,data)=>{
         if(err){
             res.send("error deleting data from database",err)

@@ -26,7 +26,11 @@ var cropschema=new schema({
     },
     location:location,
     crop_img: String,
-    uploaded_by:String
+    uploaded_by:String,
+    status:{
+        type:String,
+        Default:"Available"
+    }
 })
 
 module.exports=mongoose.model("crop",cropschema);

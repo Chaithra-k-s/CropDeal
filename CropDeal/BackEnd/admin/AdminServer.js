@@ -6,14 +6,13 @@ const morgan=require("morgan")
 const bodyParser=require("body-parser")
 const cors=require("cors");
 const bcrypt =require ("bcrypt");
-const jwt=require("jsonwebtoken")
+const jwt=require("jsonwebtoken");
+const core=require("./adminCore")
 
 const app=express();
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json());
 app.use(morgan("dev"));
-
-
 
 //for browsers only
 app.use((req,res,next)=>{
@@ -27,6 +26,21 @@ app.use((req,res,next)=>{
     next();
 })
 
+//checking Authorization in middleware
+const CheckAuth=(req,res,next)=>{
+    try{
+        const token =req.headers.authorization.split(" ")[1];
+        console.log(token);
+    const decoded=jwt.verify(token,"chaithra");
+    req.userdata=decoded;
+    next();
+    } catch(error){
+        return res.status(401).json({
+            message:"Auth failed in middleware"
+        })
+    }
+}
+
 //connecting to database
 mongoose.connect("mongodb+srv://admin:123@mongodbpractise.bjozc.mongodb.net/CropdealADMIN?retryWrites=true&w=majority",
 ()=>console.log("admin database connected"));
@@ -35,87 +49,16 @@ mongoose.connect("mongodb+srv://admin:123@mongodbpractise.bjozc.mongodb.net/Crop
 const adminschema=require("./AdminSchema");
 
 // login dealer user
+app.post("/login",core.admin_login);
 
-app.post("/login",(req,res,next)=>{
-    adminschema.find({email:req.body.email}).exec()
-    .then(admin=>{
-        if(admin.length<1){
-            return res.status(401).json({
-                message:"Authentication Failed"
-            })
-        }
-        bcrypt.compare(req.body.password, admin[0].password,(err,result)=>{
-            if(err){
-                return res.status(401).json({
-                    message:"Authentication failed"
-                })
-            }
-            if (result){
-                const token=jwt.sign({
-                    email:admin[0].email,
-                    userId:admin[0]._id
-                },"chaithra",{
-                    expiresIn:'1h'
-                })
-                return res.status(200).json({
-                    message:"Auth Successful!",
-                    token:token
-                })
-            }
-            res.status(401).json({
-                message:"Authentication failed"
-            })
-        })
-    }).catch(err=>{
-        console.log(err);
-        res.status(500).json({
-            error:err,
-            message:err
-        })
-    })
-})
+//register new dealer
+app.post('/register',core.admin_register);
 
+//edit admin deatils
+app.put("/:id",CheckAuth,core.admin_edit_by_id);
 
-//api
-app.post('/signup',(req,res,next)=>{
-    adminschema.find({email:req.body.email})
-    .exec().then(user=>{
-        if(user.length>=1){
-            return res.status(409).json({
-                message:"MAIL EXITS/USER EXITS" 
-            })
-        }else{
-            bcrypt.hash(req.body.password,10,(err,hash)=>{
-                if (err) {
-                    return res.status(500).json({
-                        error:err
-                    })
-                } else{
-                    const createdadmin=new adminschema({
-                        _id:new mongoose.Types.ObjectId(),
-                        name:req.body.name,
-                        email:req.body.email,
-                        password: hash
-                    })
-                    createdadmin.save()
-                    .then(result=>{
-                        res.status(201).json({
-                            message:"adding admin details",
-                            admin:result 
-                        })
-                    })
-                    .catch(err=>{
-                        console.log(err),
-                        res.status(402).json({
-                            message:"INVALID EMAIL ID",
-                            ERROR:err._message
-                        })
-                    })
-                }
-            })
-        }
-    })  
-})
+//delete admin details
+app.delete("/:id",CheckAuth,core.admin_delete_by_id)
 
 //handing server errors
 app.use((req,res,next)=>{

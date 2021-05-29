@@ -24,13 +24,26 @@ app.use((req,res,next)=>{
     next();
 })
 
+//authenticate check in middleware
+CheckAuth((req,res,next)=>{
+    try{
+    const decoded=jwt.verify(req.body.token,"chaithra");
+    req.userdata=decoded;
+    next();
+    } catch(error){
+        return res.status(401).json({
+            message:"Auth failed in middleware"
+        })
+    }
+})
+
 //connecting to database
 mongoose.connect("mongodb+srv://admin:123@mongodbpractise.bjozc.mongodb.net/INVOICE?retryWrites=true&w=majority",
 ()=>console.log("invoice database connected"));
 
 const invoice=require("./InvoiceSchema");
 
-app.post('/generate',(req,res,next)=>{
+app.post('/generate',CheckAuth,(req,res,next)=>{
     const createinvoice=new invoice({
         _id:new mongoose.Types.ObjectId(),
         crop_name: req.body.crop_name,
@@ -55,7 +68,7 @@ app.post('/generate',(req,res,next)=>{
     console.log(req.body);
 })
 
-app.put('/edit/:id',(req,res,next)=>{
+app.put('/edit/:id',CheckAuth,(req,res,next)=>{
     invoice.findOneAndUpdate({crop_name:req.params.id},{$set:
         {
         crop_name: req.body.crop_name,
