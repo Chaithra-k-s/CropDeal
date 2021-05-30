@@ -1,5 +1,4 @@
 //import libraries
-const http=require("http");
 const express=require("express");
 const mongoose=require("mongoose");
 const morgan=require("morgan")
@@ -12,7 +11,11 @@ const core=require("./adminCore")
 const app=express();
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json());
-app.use(morgan("dev"));
+//app.use(morgan("dev"));
+
+app.get("/",(req,res)=>{
+    res.send("hello")
+})
 
 //for browsers only
 app.use((req,res,next)=>{
@@ -53,6 +56,9 @@ mongoose.connect(dbURI,{useNewUrlParser:true,useUnifiedTopology:true,useCreateIn
 
 //importing schema
 const adminschema=require("./AdminSchema");
+app.get("/",(req,res)=>{
+    res.send("hello")
+})
 
 // login dealer user
 app.post("/login",core.admin_login);
@@ -82,4 +88,4 @@ app.use((error,req,res,next)=>{
     })
 })
 
-app.listen("6000",()=>console.log("admin server is running on 6000"))
+app.listen("2000",()=>console.log("admin server is running on 6000"))

@@ -47,6 +47,7 @@ exports.admin_register=(req,res,next)=>{
 }
 
 exports.admin_login=(req,res,next)=>{
+    console.log(req.body);
     adminschema.find({email:req.body.email}).exec()
     .then(admin=>{
         if(admin.length<1){
@@ -60,7 +61,7 @@ exports.admin_login=(req,res,next)=>{
                     message:"Authentication failed"
                 })
             }
-            if (result){
+            if (result && req.body.role === "ADMIN"){
                 const token=jwt.sign({
                     email:admin[0].email,
                     userId:admin[0]._id
