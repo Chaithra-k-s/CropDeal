@@ -17,8 +17,8 @@ export class UploadCropComponent implements OnInit {
     crop_name:new FormControl("",[Validators.required]),
     crop_type: new FormControl("",[ Validators.required]),
     crop_quantity:new FormControl("",[Validators.required]),
-    crop_img:new FormControl(""),
-    uploaded_by:new FormControl(""),
+    crop_img:new FormControl("",[Validators.required]),
+    uploaded_by:new FormControl("",[Validators.required]),
     location:this.fb.group({
       Addressline1:new FormControl("",[Validators.required]),
       Addressline2:new FormControl(""),

@@ -41,8 +41,8 @@ exports.upload_crop=(req,res)=>{
                 crop_type:req.body.crop_type,
                 crop_quantity:req.body.crop_quantity,
                 location:{
-                    Adressline1:req.body.location.Adressline1,
-                    Adressline1:req.body.location.Adressline1,
+                    Addressline1:req.body.location.Addressline1,
+                    Addressline2:req.body.location.Addressline2,
                     localArea:req.body.location.localArea,
                     State:req.body.location.State,
                     Country:req.body.location.Country,
@@ -76,8 +76,8 @@ exports.edit_by_id=(req,res)=>{
             crop_type:req.body.crop_type,
             crop_quantity:req.body.crop_quantity,
             location:{
-                Adressline1:req.body.location.Adressline1,
-                Adressline2:req.body.location.Adressline2,
+                Addressline1:req.body.location.Addressline1,
+                Addressline2:req.body.location.Addressline2,
                 localArea:req.body.location.localArea,
                 State:req.body.location.state,
                 Country:req.body.location.Country,
