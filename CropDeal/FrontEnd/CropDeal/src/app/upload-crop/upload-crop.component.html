@@ -37,6 +37,7 @@
         <mat-form-field appearance="outline">
           <mat-label for="crop_img">UPLOAD IMAGE or URL</mat-label> 
           <input type="text" formControlName="uploaded_by" matInput placeholder="secret@key">{{f.crop_img.touched && f.crop_img.invalid}}
+
         </mat-form-field>
       </p>
   
@@ -49,7 +50,6 @@
       <div *ngIf="f.location.touched && f.location.invalid">FEILD REQUIRED</div>
     </mat-form-field>
   </p>
-
   <p class="form-group">
     <mat-form-field appearance="outline">
     <mat-label for="Addressline2">ADDRESS LINE 2</mat-label>
