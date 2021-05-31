@@ -32,6 +32,7 @@ var farmerschema=new schema({
     description:String,
     bank_details:bank,
     Role:{
+        type:String,
         default:"FARMER"
     }
 })

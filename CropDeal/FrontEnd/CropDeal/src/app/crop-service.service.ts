@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpClientModule, HttpErrorResponse } from '@angular/common/http';
 import { retry, catchError } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
-import { admin,farmer,dealer } from '../observables';
+import { admin,farmer,crop,dealer } from './observables';
 
 @Injectable({
   providedIn: 'root'
 })
-export class LoginService {
+export class CropServiceService {
 
   constructor(private http:HttpClientModule, private client:HttpClient) { }
   error:any
@@ -15,41 +15,34 @@ export class LoginService {
     adminurl="http://localhost:2000/";
     farmerurl="http://localhost:5000/";
     dealerurl="http://localhost:7000/"
-
-    loginadmin(value:any):Observable<admin[]>{
+    cropurl="http://localhost:8000/"
+//get all crops
+    getcrop():Observable<crop[]>{
       const headers={'content-type':'application/json'};
-      const body=JSON.stringify(value)
-      if(value.role==="ADMIN"){
-        return this.client.post<admin[]>(this.adminurl+"login",body,{'headers':headers})
+      //const body=JSON.stringify(value)
+        return this.client.get<crop[]>(this.cropurl,{'headers':headers})
         .pipe(
-          catchError(this.handleError)
-        );
-      }
-      if(value.role==="FARMER"){
-        return this.client.post<admin[]>(this.farmerurl+"login",body,{'headers':headers})
-        .pipe(
-          catchError(this.handleError)
-        );
-      }
-      if(value.role==="DEALER"){
-        return this.client.post<admin[]>(this.dealerurl+"login",body,{'headers':headers})
-        .pipe(
-          catchError(this.handleError)
-        );
-      }
-      return this.error
+         catchError(this.handleError)
+       );
     }
-    registerdealer(value:any):Observable<admin[]>{
+    // get particular crop
+    filtercrop(value:any):Observable<crop[]>{
       const headers={'content-type':'application/json'};
       const body=JSON.stringify(value)
-      return this.client.post<admin[]>(this.adminurl+"register",body,{'headers':headers})
+      return this.client.get<crop[]>(this.cropurl+value.crop_name,{'headers':headers})
       .pipe(
         catchError(this.handleError)
       );
     }
-    // getadmin(){
-    //   return this.client.get(this.url)
-    // }
+    //post crop
+    uploadcrop(value:any):Observable<crop[]>{
+      const headers={'content-type':'application/json'};
+      const body=JSON.stringify(value)
+      return this.client.post<crop[]>(this.cropurl,body,{'headers':headers})
+      .pipe(
+        catchError(this.handleError)
+      );
+    }
     handleError(error:HttpErrorResponse) {
        let errorMessage = '';
        if (error.error instanceof ErrorEvent) {
@@ -65,3 +58,4 @@ export class LoginService {
     }
 
 }
+

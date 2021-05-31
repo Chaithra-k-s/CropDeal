@@ -29,14 +29,18 @@ app.use((req,res,next)=>{
 //checking Authorization in middleware
 const CheckAuth=(req,res,next)=>{
     try{
-        const token =req.headers.authorization.split(" ")[1];
-        console.log(token);
-    const decoded=jwt.verify(token,"chaithra");
-    req.userdata=decoded;
+        if(req.body.role==="ADMIN" || req.body.role==="FARMER")
+        {
+            console.log(req.body.role);
+            const token =req.headers.authorization.split(" ")[1];
+            console.log(token);
+            const decoded=jwt.verify(token,"chaithra");
+            req.userdata=decoded;
     next();
+}
     } catch(error){
         return res.status(401).json({
-            message:"Auth failed in middleware"
+            message:"UNAUTHORISED!"
         })
     }
 }
@@ -45,7 +49,7 @@ const CheckAuth=(req,res,next)=>{
 const dbURI="mongodb+srv://admin:123@mongodbpractise.bjozc.mongodb.net/FARMER?retryWrites=true&w=majority";
 mongoose.connect(dbURI,{useNewUrlParser:true,useUnifiedTopology:true,useCreateIndex:true})
 .then(()=>{
-    console.log("admin database connected")
+    console.log("farmer database connected")
 })
 .catch((err)=>{
     console.log("db connection error:" + err);

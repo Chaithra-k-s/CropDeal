@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-//import { ProfileServiceService } from '../profile-service.service';
+import { LoginService } from '../login.service';
 
 @Component({
   selector: 'app-farmer-register',
@@ -9,9 +9,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 })
 export class FarmerRegisterComponent implements OnInit {
 
-  constructor( private fb :FormBuilder
-    // private connectserver:ProfileServiceService
-    ) { }
+  constructor( private fb :FormBuilder, private service:LoginService ) { }
   ngOnInit(): void {}
   message:any;
   form=this.fb.group({
@@ -48,11 +46,11 @@ export class FarmerRegisterComponent implements OnInit {
     {
       console.log(this.form.value);
       
-    // this.connectserver.postadmin(this.form.value).subscribe(data=>{
-    //   console.log(this.form.value); 
-    //   console.log(data);
-    //   this.message="submitted successfully!"
-    //})
+    this.service.register(this.form.value).subscribe(data=>{
+      console.log(this.form.value); 
+      console.log(data);
+      this.message="submitted successfully!"
+    })
   }  else {
     this.message="password mismatch!!";
   }

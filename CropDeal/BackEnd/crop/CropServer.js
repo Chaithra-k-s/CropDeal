@@ -7,14 +7,25 @@ const morgan=require("morgan")
 const bodyParser=require("body-parser")
 const cors=require("cors");
 const bcrypt =require ("bcrypt");
-const jwt=require("jsonwebtoken")
+const jwt=require("jsonwebtoken");
+const cropschema=require("./CropSchema");
+//const location=require("./CropSchema")
+const core=require("./cropCore");
+
 const app=express();
+app.use(bodyParser.urlencoded({extended:false}))
+app.use(bodyParser.json());
+app.use(morgan("dev"));
 
 //connecting to database
 const dbURI="mongodb+srv://admin:123@mongodbpractise.bjozc.mongodb.net/CROP?retryWrites=true&w=majority";
-mongoose.connect(dbURI,{useNewUrlParser:true,useUnifiedTopology:true,useCreateIndex:true})
+mongoose.connect(dbURI,{useNewUrlParser:true,
+    useUnifiedTopology:true,
+    useCreateIndex:true,
+    useFindAndModify:true
+})
 .then(()=>{
-    console.log("admin database connected")
+    console.log("crop database connected")
 })
 .catch((err)=>{
     console.log("db connection error:" + err);
@@ -33,22 +44,24 @@ app.use((req,res,next)=>{
     }
     next();
 })
-app.use(bodyParser.urlencoded({extended:false}))
-app.use(bodyParser.json());
-app.use(morgan("dev"));
 
 //checking Authorization in middleware
-CheckAuth((req,res,next)=>{
+CheckAuth=(req,res,next)=>{
     try{
-    const decoded=jwt.verify(req.body.token,"chaithra");
-    req.userdata=decoded;
-    next();
+        if(req.body.role==="ADMIN" || req.body.role==="FARMER"){
+            next();
+        }
+        else{
+            res.status(404).json({
+                message:"Unauthorized Access"
+            })
+        }
     } catch(error){
         return res.status(401).json({
             message:"Auth failed in middleware"
         })
     }
-})
+}
 
 const Storage = multer.diskStorage({
     destination:(req,file,cb)=>{
@@ -70,124 +83,23 @@ const upload=multer({storage:Storage,limits:{
     fileSize:1024*1024*5
 }})
 //const upload=multer({dest:"./uploads/"});
-//importing schema
-const cropschema=require("./CropSchema");
 
 // Api methods
 
 //getting all data
-app.get("/",CheckAuth,(req,res)=>{
-    cropschema.find({}).exec((err,data)=>{
-        if(err){
-            res.send("error fetching data from database")
-        }
-        else{
-            res.send(data);
-            console.log(data);
-        }
-    })
-})
+app.get("/",core.crop_get_all)
 
 // fetch particular crop details with name
-app.get('/:id',CheckAuth,(req,res)=>{
-    cropschema.findOne({crop_name:req.params.id}).exec((err,data)=>{
-        if(err){
-            res.send("error fetching data from database")
-        }
-        else{
-            res.send(data);
-            console.log(data);
-        }
-    })
-})
+app.get('/:id',core.crop_get_by_id)
 
 //adding crop
-app.post("/",upload.single("crop_img"),CheckAuth,(req,res)=>{
-    cropschema.find({crop_name:req.body.crop_name})
-    .exec().then(user=>{
-            const crop=new cropschema({
-                _id:new mongoose.Types.ObjectId(),
-                crop_name:req.body.crop_name,
-                crop_type:req.body.crop_type,
-                crop_quantity:req.body.crop_quantity,
-                location:{
-                    Adressline1:req.body.location.Adressline1,
-                    Adressline1:req.body.location.Adressline1,
-                    localArea:req.body.location.localArea,
-                    State:req.body.location.State,
-                    Country:req.body.location.Country,
-                    pincode:req.body.location.pincode
-                },
-                crop_img:req.file.destination+req.file.originalname,
-                uploaded_by:req.body.uploaded_by
-            });
-            crop.save()
-            .then(result=>{
-                res.status(201).json({
-                    message:"updated successfully",
-                    cropdetails:result
-                })
-            })
-            .catch(err=>
-                {
-                    console.log(err);
-                    res.status(500).json({
-                        error:err
-                    })
-                }) 
-    })  
-})
-    
-
+//app.post("/",upload.single("crop_img"),CheckAuth,core.upload_crop)
+ app.post("/",CheckAuth,core.upload_crop)   
 //updating a particular crop
-app.put("/:id",CheckAuth,upload.single("crop_img"),(req,res)=>{
-    cropschema.findOneAndUpdate({crop_name:req.params.id},{$set:
-        {
-            crop_name:req.body.crop_name,
-            crop_type:req.body.crop_type,
-            crop_quantity:req.body.crop_quantity,
-            location:{
-                Adressline1:req.body.location.Adressline1,
-                Adressline1:req.body.location.Adressline1,
-                localArea:req.body.location.localArea,
-                State:req.body.location.state,
-                Country:req.body.location.Country,
-                pincode:req.body.location.pincode
-            },
-            crop_img:req.file.destination+req.file.originalname,
-            uploaded_by:req.body.uploaded_by
-        }
-    }).exec()
-        .then(result=>{
-            console.log(result);
-            res.status(200).json({
-            message:"updating data in database",
-            editedcrop:req.body
-        })
-        })
-        .catch(err=>{
-            console.log(err);
-            res.status(500).json({
-                error:err
-            })
-        }
-            );
-        
-})
+app.put("/:id",CheckAuth,core.edit_by_id)
 
 //deleteing particular crop
-app.delete('/:id',CheckAuth,(req,res)=>{
-    cropschema.findOneAndDelete({crop_name:req.params.id}).exec((err,data)=>{
-        if(err){
-            res.send("error deleting data from database",err)
-        }
-        else{
-            res.send({
-                message:"data deleted",
-            })
-    }
-})
-})
+app.delete('/:id',CheckAuth,core.delete_by_id)
 
 //handing server errors
 app.use((req,res,next)=>{

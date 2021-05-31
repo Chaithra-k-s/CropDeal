@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { LoginService } from '../services/login.service';
+import { Router } from '@angular/router';
+import { LoginService } from '../login.service';
 
 @Component({
   selector: 'app-login',
@@ -8,7 +9,7 @@ import { LoginService } from '../services/login.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  constructor( private connectserver:LoginService) { }
+  constructor( private connectserver:LoginService, private router:Router) { }
   ngOnInit(): void {}
   message:any;
   selected="";
@@ -32,9 +33,10 @@ export class LoginComponent implements OnInit {
 
   submit(){
       console.log(this.form.value);
-      this.connectserver.loginadmin(this.form.value).subscribe(data=>{
+      this.connectserver.login(this.form.value).subscribe(data=>{
       console.log(this.form.value); 
       console.log(data);
+      this.router.navigateByUrl("/crop")
       this.message="LoggedIn successfully!"
     })
   } 

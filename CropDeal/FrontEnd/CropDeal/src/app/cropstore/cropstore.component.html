@@ -1,1 +1,6 @@
-<p>cropstore works!</p>
+  <div *ngFor="let cropobj of crops">
+         <h4>{{cropobj.crop_name}}</h4> 
+      </div>
+
+      <button mat-button (click)="redirect()">ADD CROP</button>
+    

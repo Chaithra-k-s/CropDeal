@@ -7,6 +7,7 @@ import { FrontpageComponent } from './frontpage/frontpage.component';
 import { InvoicepageComponent } from './invoicepage/invoicepage.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { UploadCropComponent } from './upload-crop/upload-crop.component';
 
 const routes: Routes = [
   {path:"",component:FrontpageComponent},
@@ -15,7 +16,8 @@ const routes: Routes = [
   {path:"invoice",component:InvoicepageComponent},
   {path:"crop",component:CropstoreComponent},
   {path:"farmerRegister",component:FarmerRegisterComponent},
-  {path:"dealerRegister",component:DealerRegisterComponent}
+  {path:"dealerRegister",component:DealerRegisterComponent},
+  {path:"providecrop",component:UploadCropComponent}
 ];
 
 @NgModule({

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { LoginService } from '../services/login.service';
+import { LoginService } from '../login.service';
 
 @Component({
   selector: 'app-register',
@@ -28,9 +28,9 @@ export class RegisterComponent implements OnInit {
         Validators.minLength(8),
         Validators.maxLength(12),
         Validators.pattern(/(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/)
-    
     ]),
-    role:new FormControl("")
+    role:new FormControl("ADMIN")
+    
   })
 
   //getting formcontrol value
@@ -43,7 +43,7 @@ export class RegisterComponent implements OnInit {
     {
       console.log(this.form.value);
       
-    this.connectserver.registerdealer(this.form.value).subscribe(data=>{
+    this.connectserver.register(this.form.value).subscribe(data=>{
     console.log(this.form.value); 
     console.log(data);
      this.message="submitted successfully!"

@@ -88,4 +88,4 @@ app.use((error,req,res,next)=>{
     })
 })
 
-app.listen("2000",()=>console.log("admin server is running on 6000"))
+app.listen("2000",()=>console.log("admin server is running on 2000"))

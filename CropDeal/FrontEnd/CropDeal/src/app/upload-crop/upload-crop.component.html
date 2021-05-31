@@ -1,0 +1,96 @@
+<body>
+    <h1>PROVIDE CROP DETAILS</h1>
+    <form [formGroup]="form" (ngSubmit)="submit">
+        <p class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label for="crop_name">CROP NAME</mat-label>
+              <input matInput formControlName="crop_name" type="text" placeholder="CROP NAME">
+              <div *ngIf="f.crop_name.touched && f.crop_name.invalid">Crop Name is Required</div>
+            </mat-form-field>
+        </p>   
+         
+      <p class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label for="crop_type">CROP TYPE</mat-label>
+              <input matInput type="text" formControlName="crop_type" placeholder="CROP TYPE" >
+              <div *ngIf="f.crop_type.touched && f.crop_type.invalid"> FEILD REQUIRED</div>
+            </mat-form-field>
+      </p>  
+  
+      <p class="form-group">
+        <mat-form-field appearance="outline">
+          <mat-label for="crop_quantity">CROP QUANTITY</mat-label> 
+          <input type="number" formControlName="crop_quantity" matInput placeholder="CROP QUANTITY">
+          <div *ngIf="f.crop_quantity.touched && f.crop_quantity.invalid">FEILD REQUIRED</div>
+        </mat-form-field>
+      </p>
+  
+      <p class="form-group">
+        <mat-form-field appearance="outline">
+          <mat-label for="uploaded_by">UPLOADER NAME</mat-label> 
+          <input type="text" formControlName="uploaded_by" matInput placeholder="secret@key">
+          <div *ngIf="f.uploaded_by.touched && f.uploaded_by.invalid">FEILD REQUIRED</div>
+        </mat-form-field>
+      </p>
+
+      <p class="form-group">
+        <mat-form-field appearance="outline">
+          <mat-label for="crop_img">UPLOAD IMAGE or URL</mat-label> 
+          <input type="text" formControlName="uploaded_by" matInput placeholder="secret@key">{{f.crop_img.touched && f.crop_img.invalid}}
+        </mat-form-field>
+      </p>
+  
+  <div formGroupName="location" >
+    <h1 style="color: black;">LOCATION INFORMATION</h1>
+  <p class="form-group">
+      <mat-form-field appearance="outline">
+      <mat-label for="Addressline1">ADDRESS LINE 1</mat-label>
+      <input matInput type="text" formControlName="Addressline1" placeholder="ADDRESS LINE1">{{f.location.touched && f.location.invalid}}
+      <div *ngIf="f.location.touched && f.location.invalid">FEILD REQUIRED</div>
+    </mat-form-field>
+  </p>
+
+  <p class="form-group">
+    <mat-form-field appearance="outline">
+    <mat-label for="Addressline2">ADDRESS LINE 2</mat-label>
+    <input matInput type="text" formControlName="Addressline2" placeholder="ADDRESS LINE2">
+  </mat-form-field>
+</p>
+  
+  <p class="form-group"> 
+    <mat-form-field appearance="outline">
+    <mat-label for="localArea">LOCAL AREA</mat-label>
+    <input matInput formControlName="localArea" type="text" placeholder="AREA">
+  </mat-form-field>
+  </p>
+  
+  <p class="form-group">
+      <mat-form-field appearance="outline">
+        <mat-label for="State">STATE</mat-label>
+        <input matInput formControlName="State" type="text" placeholder="STATE">
+      </mat-form-field>
+    </p>
+
+    <p class="form-group">
+      <mat-form-field appearance="outline">
+        <mat-label for="Country">COUNTRY</mat-label>
+        <input matInput type="text" formControlName="Country" placeholder="COUNTRY" >
+      </mat-form-field>
+    </p>   
+    <p class="form-group"> 
+      <mat-form-field appearance="outline">
+      <mat-label for="pincode">PIN CODE</mat-label>
+      <input matInput formControlName="pincode" type="number" placeholder="PINCODE">
+    </mat-form-field>
+    </p> 
+
+  </div> 
+        
+    <div class="example-container">
+      <button mat-raised-button [disabled]="form.invalid" (click)="submit()" type="submit">Submit</button>
+    </div>
+    <h1>{{message}}</h1>
+    </form>  
+  </body>
+  
+  

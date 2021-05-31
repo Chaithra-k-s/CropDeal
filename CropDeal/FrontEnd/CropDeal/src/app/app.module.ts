@@ -5,12 +5,15 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
 import { HttpClientModule } from '@angular/common/http';
-import { LoginService } from './services/login.service';
+import { LoginService } from './login.service';
+import { UploadCropComponent } from './upload-crop/upload-crop.component';
+import { CropServiceService } from './crop-service.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     routingComponents,
+    UploadCropComponent,
   ],
   imports: [
     BrowserModule,
@@ -19,7 +22,7 @@ import { LoginService } from './services/login.service';
     MaterialModule,
     HttpClientModule,
   ],
-  providers: [LoginService],
+  providers: [LoginService,CropServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
