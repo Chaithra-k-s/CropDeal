@@ -59,6 +59,10 @@ app.post("/cart",(req,res,next)=>{
     res.json(list)
 })
 
+app.get("/cartitems",(req,res,next)=>{
+    res.status(200).json(list);
+})
+
 app.post('/generate',(req,res,next)=>{
     const createinvoice=new invoice({
         _id:new mongoose.Types.ObjectId(),

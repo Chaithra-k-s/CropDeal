@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { CropServiceService} from '../crop-service.service';
 import { crop } from '../observables';
 
-
 @Component({
   selector: 'app-cropstore',
   templateUrl: './cropstore.component.html',
@@ -24,9 +23,11 @@ export class CropstoreComponent implements OnInit {
       this.type=typeof(this.crops)
     })
   }
+
   redirect(){
     this.router.navigateByUrl("/providecrop")
   }
+  
   bill(value:any){
     this.cropservice.sendtoinvoice(value).subscribe(data=>{
       console.log(data);
@@ -34,6 +35,7 @@ export class CropstoreComponent implements OnInit {
     })
     this.router.navigateByUrl("/invoice") 
   }
+
   invoice(value:any){
     this.cropservice.sendtoinvoice(value).subscribe(data=>
       {
@@ -41,6 +43,7 @@ export class CropstoreComponent implements OnInit {
     })
     console.log(value);
   }
+
   cropdetails(value:crop[]){
       this.particularcrop=this.cropservice.filtercrop(value).subscribe(data=>{
         console.log(data)
