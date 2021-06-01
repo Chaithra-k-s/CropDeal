@@ -9,8 +9,7 @@ import { CropServiceService } from '../crop-service.service';
 })
 export class UploadCropComponent implements OnInit {
 
-
-  constructor( private fb :FormBuilder,private connectserver:CropServiceService ) { }
+  constructor( private fb :FormBuilder,private cropserver:CropServiceService ) { }
   ngOnInit(): void {}
   message:any;
   form=this.fb.group({
@@ -37,8 +36,8 @@ export class UploadCropComponent implements OnInit {
   }
 
   submit(){
-      console.log(this.form.value);
-      this.connectserver.uploadcrop(this.form.value).subscribe(data=>{
+      console.log(this.form.value);      
+      this.cropserver.uploadcrop(this.form.value).subscribe(data=>{
       console.log(this.form.value); 
       console.log(data);
       this.message="submitted successfully!"

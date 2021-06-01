@@ -9,6 +9,10 @@ const bcrypt =require ("bcrypt");
 const jwt=require("jsonwebtoken");
 const code=require("./farmersCore");
 
+//importing schema
+const farmerschema=require("./FarmerSchema");
+const { secretKey } = require("./config");
+
 const app=express();
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json());
@@ -37,10 +41,11 @@ const CheckAuth=(req,res,next)=>{
             const decoded=jwt.verify(token,"chaithra");
             req.userdata=decoded;
     next();
-}
+ }
     } catch(error){
         return res.status(401).json({
-            message:"UNAUTHORISED!"
+            message:"UNAUTHORISED!",
+            error:error
         })
     }
 }
@@ -55,8 +60,8 @@ mongoose.connect(dbURI,{useNewUrlParser:true,useUnifiedTopology:true,useCreateIn
     console.log("db connection error:" + err);
 });
 
-//importing schema
-const farmerschema=require("./FarmerSchema");
+
+
 
 // Api Endpoints
 //getting all data

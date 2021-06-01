@@ -45,7 +45,7 @@ const CheckAuth=(req,res,next)=>{
 const dbURI="mongodb+srv://admin:123@mongodbpractise.bjozc.mongodb.net/DEALER?retryWrites=true&w=majority";
 mongoose.connect(dbURI,{useNewUrlParser:true,useUnifiedTopology:true,useCreateIndex:true})
 .then(()=>{
-    console.log("admin database connected")
+    console.log("dealer database connected")
 })
 .catch((err)=>{
     console.log("db connection error:" + err);

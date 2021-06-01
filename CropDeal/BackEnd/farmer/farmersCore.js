@@ -50,11 +50,11 @@ exports.farmers_register=(req,res)=>{
                         email:req.body.email,
                         password:hash,
                         description:req.body.description,
-                        bank_details:{
-                            bank_name:req.body.bank_details.bank_name,
-                            account_number:req.body.bank_details.account_number,
-                            ifsc_code:req.body.bank_details.ifsc_code
-                        }
+                        // bank_details:{
+                        //     bank_name:req.body.bank_details.bank_name,
+                        //     account_number:req.body.bank_details.account_number,
+                        //     ifsc_code:req.body.bank_details.ifsc_code
+                        // }
                     });
                      farmer.save()
                     .then(result=>{
@@ -134,12 +134,12 @@ exports.farmers_edit_by_id=(req,res)=>{
             name:req.body.name,
             email:req.body.email,
             password:req.body.password,
-            description:req.body.description,
-            bank_details:{
-                bank_name:req.body.bank_details.bank_name,
-                account_number:req.body.bank_details.account_number,
-                ifsc_code:req.body.bank_details.ifsc_code
-            }
+            // description:req.body.description,
+            // bank_details:{
+            //     bank_name:req.body.bank_details.bank_name,
+            //     account_number:req.body.bank_details.account_number,
+            //     ifsc_code:req.body.bank_details.ifsc_code
+            // }
            
         }
     }) .then(result=>{

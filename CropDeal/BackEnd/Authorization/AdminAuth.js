@@ -5,6 +5,8 @@
 // }
 
 const member=require('./FarmerSchema');
+const dealer=require("./DealerSchema");
+const admin=require("./AdminSchema");
 const jwt=require('jsonwebtoken');
 const bcrypt=require('bcrypt');
 const mongoose=require('mongoose');

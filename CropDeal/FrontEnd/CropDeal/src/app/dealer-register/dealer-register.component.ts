@@ -56,7 +56,7 @@ export class DealerRegisterComponent implements OnInit {
     //   console.log(this.form.value); 
     //   console.log(data);
     //   this.message="submitted successfully!"
-    //})
+    // })
   }  else {
     this.message="password mismatch!!";
   }

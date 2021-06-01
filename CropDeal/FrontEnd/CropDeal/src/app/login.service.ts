@@ -64,18 +64,15 @@ export class LoginService {
     handleError(error:HttpErrorResponse) {
        let errorMessage = '';
        if (error.error instanceof ErrorEvent) {
-      //   // client-side error
+         // client-side error
        errorMessage = `Error: ${error.error.message}`;
        } else {
-      //   // server-side error
+        // server-side error
        errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
        }
        window.alert(errorMessage);
       console.log(errorMessage)
       return throwError(error.message || "Server Error");
     }
-    // getadmin(){
-    //   return this.client.get(this.url)
-    // }
 
 }

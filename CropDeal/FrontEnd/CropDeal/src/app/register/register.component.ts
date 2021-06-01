@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { LoginService } from '../login.service';
 
 @Component({
@@ -8,10 +9,9 @@ import { LoginService } from '../login.service';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-
-  constructor(
-     private connectserver:LoginService
-    ) { }
+  selected="";
+  role: string[] = ['ADMIN', 'FARMER', 'DEALER'];
+  constructor(private connectserver:LoginService,private router:Router) { }
   ngOnInit(): void {}
   message:any;
   form=new FormGroup({
@@ -29,8 +29,7 @@ export class RegisterComponent implements OnInit {
         Validators.maxLength(12),
         Validators.pattern(/(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/)
     ]),
-    role:new FormControl("ADMIN")
-    
+    role:new FormControl(this.selected,Validators.required),
   })
 
   //getting formcontrol value
@@ -41,12 +40,9 @@ export class RegisterComponent implements OnInit {
   submit(){
     if(this.form.value.password===this.form.value.confirmpassword)
     {
-      console.log(this.form.value);
-      
-    this.connectserver.register(this.form.value).subscribe(data=>{
-    console.log(this.form.value); 
-    console.log(data);
-     this.message="submitted successfully!"
+      this.connectserver.register(this.form.value).subscribe(data=>{
+      this.message="submitted successfully!";
+      this.router.navigateByUrl("/login") 
     })
   }  else {
     this.message="password mismatch!!";

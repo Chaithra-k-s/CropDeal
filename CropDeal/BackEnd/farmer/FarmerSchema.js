@@ -4,11 +4,11 @@ var schema=mongoose.Schema;
 var bank=new schema({
     account_number : {
         type:Number,
-        required:true
+        //required:true
     },
     bank_name : {
         type:String, 
-        required:true
+        //required:true
     },
     ifsc_code : String
 })
