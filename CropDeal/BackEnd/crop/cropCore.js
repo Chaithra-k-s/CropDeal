@@ -40,6 +40,7 @@ exports.upload_crop=(req,res)=>{
                 crop_name:req.body.crop_name,
                 crop_type:req.body.crop_type,
                 crop_quantity:req.body.crop_quantity,
+                crop_price:req.body.crop_price,
                 location:{
                     Addressline1:req.body.location.Addressline1,
                     Addressline2:req.body.location.Addressline2,
@@ -75,6 +76,7 @@ exports.edit_by_id=(req,res)=>{
             crop_name:req.body.crop_name,
             crop_type:req.body.crop_type,
             crop_quantity:req.body.crop_quantity,
+            crop_price:req.body.crop_price,
             location:{
                 Addressline1:req.body.location.Addressline1,
                 Addressline2:req.body.location.Addressline2,

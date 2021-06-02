@@ -35,7 +35,7 @@ var dealerschema=new schema({
         required:true
     },
     subscribed_crops:crop,
-    bank_details:bank,
+    // bank_details:bank,
     Role:{
         type:String,
         default:"DEALER"

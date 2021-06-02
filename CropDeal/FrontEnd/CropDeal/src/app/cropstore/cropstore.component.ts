@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { CropServiceService} from '../crop-service.service';
+import { CropServiceService} from '../services/crop-service.service';
 import { crop } from '../observables';
 
 @Component({
@@ -24,10 +24,18 @@ export class CropstoreComponent implements OnInit {
     })
   }
 
-  redirect(){
-    this.router.navigateByUrl("/providecrop")
+  redirecttofarmer(){
+    window.alert("Provide details to Edit Account Details")
+    this.router.navigateByUrl("/farmerRegister")
   }
-  
+  redirecttodealer(){
+    window.alert("Provide details to Edit Account Details")
+    this.router.navigateByUrl("/dealerRegister")
+  }
+  deleteuser(){
+    window.alert("Enter ur details to Delete Account")
+    this.router.navigateByUrl("/deleteuser")
+  }  
   bill(value:any){
     this.cropservice.sendtoinvoice(value).subscribe(data=>{
       console.log(data);

@@ -4,6 +4,7 @@ const cors=require("cors");
 const bcrypt =require ("bcrypt")
 const jwt=require("jsonwebtoken");
 const mongoose=require("mongoose");
+const { secretKey } = require("./config");
 
 exports.dealers_get_all=(req,res)=>{
     dealerschema.find({}).exec((err,data)=>{
@@ -48,15 +49,15 @@ exports.dealers_register=(req,res)=>{
                         name:req.body.name,
                         email:req.body.email,
                         password:hash,
-                        subscribed_crops:{
-                            crop_name:req.body.subscribed_crops.crop_name,
-                            crop_type:req.body.subscribed_crops.crop_type
-                        },
-                        bank_details:{
-                            bank_name:req.body.bank_details.bank_name,
-                            account_number:req.body.bank_details.account_number,
-                            ifsc_code:req.body.bank_details.ifsc_code
-                        }
+                        // subscribed_crops:{
+                        //     crop_name:req.body.subscribed_crops.crop_name,
+                        //     crop_type:req.body.subscribed_crops.crop_type
+                        // },
+                        // bank_details:{
+                        //     bank_name:req.body.bank_details.bank_name,
+                        //     account_number:req.body.bank_details.account_number,
+                        //     ifsc_code:req.body.bank_details.ifsc_code
+                        // }
                     });
                      dealer.save()
                     .then(result=>{
@@ -96,7 +97,7 @@ exports.dealers_login=(req,res,next)=>{
                 const token=jwt.sign({
                     email:dealer[0].email,
                     userId:dealer[0]._id
-                },"chaithra",{
+                },secretKey,{
                     expiresIn:'1h'
                 })
                 return res.status(200).json({
@@ -129,15 +130,15 @@ exports.dealers_edit_by_id=(req,res)=>{
             name:req.body.name,
             email:req.body.email,
             password:hash,
-            subscribed_crops:{
-                crop_name:req.body.subscribed_crops.crop_name,
-                crop_type:req.body.subscribed_crops.crop_type
-            },
-            bank_details:{
-                bank_name:req.body.bank_details.bank_name,
-                account_number:req.body.bank_details.account_number,
-                ifsc_code:req.body.bank_details.ifsc_code
-            }
+            // subscribed_crops:{
+            //     crop_name:req.body.subscribed_crops.crop_name,
+            //     crop_type:req.body.subscribed_crops.crop_type
+            // },
+            // bank_details:{
+            //     bank_name:req.body.bank_details.bank_name,
+            //     account_number:req.body.bank_details.account_number,
+            //     ifsc_code:req.body.bank_details.ifsc_code
+            // }
         }
     })
     .then(result=>{

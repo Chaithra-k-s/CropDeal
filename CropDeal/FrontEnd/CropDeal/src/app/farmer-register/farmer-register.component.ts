@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { LoginService } from '../login.service';
+import { FarmerService } from '../services/farmer.service';
+import { LoginService } from '../services/login.service';
 
 @Component({
   selector: 'app-farmer-register',
@@ -9,7 +10,7 @@ import { LoginService } from '../login.service';
 })
 export class FarmerRegisterComponent implements OnInit {
 
-  constructor( private fb :FormBuilder, private service:LoginService ) { }
+  constructor( private fb :FormBuilder, private farmerservice:FarmerService ) { }
   ngOnInit(): void {}
   message:any;
   form=this.fb.group({
@@ -37,18 +38,13 @@ export class FarmerRegisterComponent implements OnInit {
 
   //getting formcontrol value
   get f(){
-    
     return this.form.controls
   }
 
   submit(){
     if(this.form.value.password===this.form.value.confirmpassword)
     {
-      console.log(this.form.value);
-      
-    this.service.register(this.form.value).subscribe(data=>{
-      console.log(this.form.value); 
-      console.log(data);
+      this.farmerservice.editfarmer(this.form.value).subscribe(data=>{
       this.message="submitted successfully!"
     })
   }  else {

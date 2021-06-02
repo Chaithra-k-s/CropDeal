@@ -11,6 +11,7 @@ const jwt=require('jsonwebtoken');
 const bcrypt=require('bcrypt');
 const mongoose=require('mongoose');
 const secretKey=require('./config');
+const axios=require("axios");
 
 exports.login=(req,res,next)=>{
     member.findOne({

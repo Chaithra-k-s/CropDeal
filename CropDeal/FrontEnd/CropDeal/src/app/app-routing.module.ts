@@ -2,7 +2,10 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CropstoreComponent } from './cropstore/cropstore.component';
 import { DealerRegisterComponent } from './dealer-register/dealer-register.component';
+import { DealerlistComponent } from './dealerlist/dealerlist.component';
+import { DeleteaccountpageComponent } from './deleteaccountpage/deleteaccountpage.component';
 import { FarmerRegisterComponent } from './farmer-register/farmer-register.component';
+import { FarmerlistComponent } from './farmerlist/farmerlist.component';
 import { FrontpageComponent } from './frontpage/frontpage.component';
 import { InvoicepageComponent } from './invoicepage/invoicepage.component';
 import { LoginComponent } from './login/login.component';
@@ -17,7 +20,10 @@ const routes: Routes = [
   {path:"crop",component:CropstoreComponent},
   {path:"farmerRegister",component:FarmerRegisterComponent},
   {path:"dealerRegister",component:DealerRegisterComponent},
-  {path:"providecrop",component:UploadCropComponent}
+  {path:"providecrop",component:UploadCropComponent},
+  {path:"farmers",component:FarmerlistComponent},
+  {path:"dealers",component:DealerlistComponent},
+  {path:"deleteuser",component:DeleteaccountpageComponent}
 ];
 
 @NgModule({
@@ -32,5 +38,8 @@ export const routingComponents=[
   InvoicepageComponent,
   CropstoreComponent,
   DealerRegisterComponent,
-  FarmerRegisterComponent
+  FarmerRegisterComponent,
+  FarmerlistComponent,
+  DealerlistComponent,
+  UploadCropComponent
 ]

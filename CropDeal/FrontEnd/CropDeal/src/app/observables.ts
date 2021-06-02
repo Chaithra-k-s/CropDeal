@@ -28,6 +28,7 @@ export class crop{
         public crop_name:String,
         public crop_type:String,
         public crop_quantity:Number,
+        public crop_price:Number,
         public location:location,
         public crop_img: String,
         public uploaded_by:String,

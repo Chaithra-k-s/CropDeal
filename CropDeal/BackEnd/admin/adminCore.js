@@ -4,7 +4,11 @@ const cors=require("cors");
 const bcrypt =require ("bcrypt")
 const jwt=require("jsonwebtoken");
 const mongoose=require("mongoose");
-const secretKey = require("./config");
+const axios=require("axios");
+const { secretKey } = require("./config");
+const farmerurl="http://localhost:5000/";
+const dealerurl="http://localhost:7000/"
+const cropurl="http://localhost:8000/"
 
 exports.admin_register=(req,res,next)=>{
     adminschema.find({email:req.body.email})
@@ -47,7 +51,6 @@ exports.admin_register=(req,res,next)=>{
 }
 
 exports.admin_login=(req,res,next)=>{
-    console.log(req.body);
     adminschema.find({email:req.body.email}).exec()
     .then(admin=>{
         if(admin.length<1){
@@ -65,8 +68,7 @@ exports.admin_login=(req,res,next)=>{
                 const token=jwt.sign({
                     email:admin[0].email,
                     userId:admin[0]._id
-                },
-                secretKey.secretKey,
+                },secretKey,
                 {
                     expiresIn:'1h'
                 })
@@ -87,6 +89,7 @@ exports.admin_login=(req,res,next)=>{
         })
     })
 }
+
 
 exports.admin_edit_by_id=(req,res)=>{
     bcrypt.hash(req.body.password,10,(err,hash)=>{

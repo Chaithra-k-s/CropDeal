@@ -1,6 +1,11 @@
+<nav>
+  <button class="redirect" mat-button color="primary"><a href="providecrop">ADD CROP</a></button>
+  <button class="redirect" mat-button color="primary" (click)="redirecttofarmer()">EDIT FARMER DETAILS</button>
+  <button class="redirect" mat-button color="primary" (click)="redirecttodealer()">EDIT DEALER DETAILS</button>
+  <button class="redirect" mat-button color="primary" (click)="deleteuser()">DELETE USER</button>
+  </nav>
+  
   <body>
-    <button class="redirect" mat-raised-button color="primary" (click)="redirect()">ADD CROP</button>
-
     <mat-card *ngFor="let cropobj of crops" class="example-card">
       <mat-card-header>
         <div mat-card-avatar class="example-header-image"></div>
@@ -9,11 +14,12 @@
       </mat-card-header>
       <img mat-card-image  src="{{cropobj.crop_img}}" alt="{{cropobj.crop_img}}">
       <mat-card-content >
+        PRICE:{{cropobj.crop_price}}
         ADDRESS:
         {{cropobj.location | json}}
       </mat-card-content>
       <mat-card-actions>
-        <button (click)="invoice(cropobj)" mat-button>add to Cart</button>
+        <button (click)="invoice(cropobj)"  mat-button>add to Cart</button>
         <button (click)="bill(cropobj)" mat-button>Checkout</button>
       </mat-card-actions>
     </mat-card>

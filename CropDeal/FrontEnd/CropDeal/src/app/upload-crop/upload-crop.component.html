@@ -24,6 +24,14 @@
           <div *ngIf="f.crop_quantity.touched && f.crop_quantity.invalid">FEILD REQUIRED</div>
         </mat-form-field>
       </p>
+
+      <p class="form-group">
+        <mat-form-field appearance="outline">
+          <mat-label for="crop_price">PRICE</mat-label> 
+          <input type="number" formControlName="crop_price" matInput placeholder="PRICE">
+          <div *ngIf="f.crop_price.touched && f.crop_price.invalid">FEILD REQUIRED</div>
+        </mat-form-field>
+      </p>
   
       <p class="form-group">
         <mat-form-field appearance="outline">

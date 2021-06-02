@@ -27,19 +27,57 @@ app.use((req,res,next)=>{
 })
 
 //checking Authorization in middleware
-const CheckAuth=(req,res,next)=>{
-    try{
-        const token =req.headers.authorization.split(" ")[1];
-        console.log(token);
-    const decoded=jwt.verify(token,"chaithra");
-    req.userdata=decoded;
-    next();
-    } catch(error){
-        return res.status(401).json({
-            message:"Auth failed in middleware"
+const CheckAuth=(req,res,next)=>
+    {
+        dealerschema.find({email:req.body.email}).exec()
+        .then(dealer=>{
+            if(dealer.length<1){
+                return res.status(401).json({
+                    message:"Authentication Failed"
+                })
+            }
+            bcrypt.compare(req.body.password, dealer[0].password,(err,result)=>{
+                if(err){
+                    return res.status(401).json({
+                        message:"Authentication failed"
+                    })
+                }
+                if (result){
+                    const token=jwt.sign({
+                        email:dealer[0].email,
+                        userId:dealer[0]._id
+                    },secretKey,{
+                        expiresIn:'1h'
+                    })
+                    next()
+                    res.status(200).json({
+                    message:"Auth Successful!",
+                    token:token
+                    })
+                }
+                res.status(401).json({
+                    message:"Authentication failed"
+                })
+            })
+        }).catch(err=>{
+            console.log(err);
+            res.status(500).json({
+                error:err,
+                message:err
+            })
         })
     }
-}
+    // try{
+    //     const token =req.headers.authorization.split(" ")[1];
+    //     console.log(token);
+    // const decoded=jwt.verify(token,secretKey);
+    // req.userdata=decoded;
+    // next();
+    // } catch(error){
+    //     return res.status(401).json({
+    //         message:"Auth failed in middleware"
+    //     })
+    // }
 
 //connecting to database
 const dbURI="mongodb+srv://admin:123@mongodbpractise.bjozc.mongodb.net/DEALER?retryWrites=true&w=majority";
@@ -53,6 +91,7 @@ mongoose.connect(dbURI,{useNewUrlParser:true,useUnifiedTopology:true,useCreateIn
 
 //importing schema
 const dealerschema=require("./DealerSchema");
+const { secretKey } = require("./config");
 
 // Api methods
 
@@ -61,7 +100,6 @@ app.get("/dealers",CheckAuth,code.dealers_get_all)
 
 // fetch particular dealer details with name
 app.get('/dealers/:id',CheckAuth,code.dealers_get_by_id)
-
 
 //register new dealer
 app.post("/register",code.dealers_register) 
@@ -73,7 +111,7 @@ app.post("/login",code.dealers_login)
 app.put("/dealers/:id",CheckAuth,code.dealers_edit_by_id)
 
 //deleteing particular dealer
-app.delete('/dealers/:id',CheckAuth,code.dealers_delete_by_id)
+app.delete('/dealers/:id',code.dealers_delete_by_id)
 
 //handing server errors
 app.use((req,res,next)=>{

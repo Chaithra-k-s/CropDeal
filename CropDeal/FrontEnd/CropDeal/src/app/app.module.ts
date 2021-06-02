@@ -5,15 +5,17 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
 import { HttpClientModule } from '@angular/common/http';
-import { LoginService } from './login.service';
-import { UploadCropComponent } from './upload-crop/upload-crop.component';
-import { CropServiceService } from './crop-service.service';
+import { LoginService } from './services/login.service';
+import { CropServiceService } from './services/crop-service.service';
+import { FarmerService } from './services/farmer.service';
+import { DealerService } from './services/dealer.service';
+import { DeleteaccountpageComponent } from './deleteaccountpage/deleteaccountpage.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     routingComponents,
-    UploadCropComponent,
+    DeleteaccountpageComponent
   ],
   imports: [
     BrowserModule,
@@ -22,7 +24,7 @@ import { CropServiceService } from './crop-service.service';
     MaterialModule,
     HttpClientModule,
   ],
-  providers: [LoginService,CropServiceService],
+  providers: [LoginService,CropServiceService,FarmerService,DealerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

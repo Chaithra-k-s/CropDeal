@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { CropServiceService } from '../crop-service.service';
+import { CropServiceService } from '../services/crop-service.service';
 
 @Component({
   selector: 'app-upload-crop',
@@ -16,6 +16,7 @@ export class UploadCropComponent implements OnInit {
     crop_name:new FormControl("",[Validators.required]),
     crop_type: new FormControl("",[ Validators.required]),
     crop_quantity:new FormControl("",[Validators.required]),
+    crop_price:new FormControl("",[Validators.required]),
     crop_img:new FormControl("",[Validators.required]),
     uploaded_by:new FormControl("",[Validators.required]),
     location:this.fb.group({

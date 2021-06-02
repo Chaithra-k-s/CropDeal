@@ -25,6 +25,7 @@ var cropschema=new schema({
         type:Number,
         required:true
     },
+    crop_price:Number,
     location:location,
     crop_img: String,
     uploaded_by:String,

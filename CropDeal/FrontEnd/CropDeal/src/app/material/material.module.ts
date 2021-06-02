@@ -13,6 +13,7 @@ import { MatChipsModule } from "@angular/material/chips";
 import {MatRadioModule} from '@angular/material/radio';
 import {MatCardModule} from '@angular/material/card';
 import {MatTableModule} from '@angular/material/table';
+import {MatBadgeModule} from '@angular/material/badge';
 
 const MaterialComponents = [
   MatMenuModule,
@@ -28,7 +29,8 @@ const MaterialComponents = [
   MatChipsModule,
   MatRadioModule,
   MatCardModule,
-  MatTableModule
+  MatTableModule,
+  MatBadgeModule
 ]
 
 @NgModule({

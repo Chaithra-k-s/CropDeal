@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { CropServiceService } from '../crop-service.service';
-import { LoginService } from '../login.service';
+import { CropServiceService } from '../services/crop-service.service';
+import { LoginService } from '../services/login.service';
 import { admin } from '../observables';
 
 @Component({

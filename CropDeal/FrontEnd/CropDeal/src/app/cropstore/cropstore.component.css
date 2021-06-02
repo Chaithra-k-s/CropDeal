@@ -3,7 +3,6 @@ h4{
 }
 body{
   margin-left: 3%;
-  margin-top: 5%;
   padding:30px;
   text-align: center;
 }
@@ -23,10 +22,7 @@ button.redirect{
   float: right;
 }
 img{
-  width: 200px;
-  position:relative;
-  padding:5px;
-  margin:5px
+  width: 300px;
 }
 .example-card {
   padding:2%;
@@ -40,4 +36,7 @@ img{
 
 mat-card-subtitle{
   text-align: left;
+}
+a{
+  text-decoration: none;
 }

@@ -1,0 +1,69 @@
+<body>
+    <h1>DELETE ACCOUNT</h1>
+    <form *ngIf=!submitted [formGroup]="form" (ngSubmit)="submit">
+    <p class="form-group">
+      <mat-form-field appearance="outline">
+        <mat-label for="name">Name</mat-label>
+        <input matInput formControlName="name" type="text" placeholder="Name">
+        <mat-icon>person</mat-icon>
+        <div *ngIf="f.name.touched && f.name.invalid">
+          <div *ngIf="f.name.errors?.required">Name is Required</div>
+          <div *ngIf="f.name.errors?.minlength">Name should be 3 Characters or more</div>
+        </div>
+      </mat-form-field>
+    </p>
+  
+    <p class="form-group">
+      <mat-form-field appearance="outline">
+        <mat-label for="email">E-MAIL</mat-label>
+        <input matInput type="email" formControlName="email" placeholder="abc@email.com" >
+        <mat-icon> email</mat-icon>
+        <div *ngIf="f.email.touched && f.email.invalid" color="warn">
+          <div *ngIf="f.email.errors?.required">E-mail feild is required</div>
+          <div *ngIf="f.email.errors?.email">Please Enter VALID E-MAIL</div>
+        </div>
+      </mat-form-field>
+  </p>
+  
+  <p class="form-group">
+    <mat-form-field appearance="outline">
+        <mat-label for="passward">PASSWORD</mat-label> 
+        <input type="password" formControlName="password" matInput placeholder="secret@key">
+        <mat-icon>lock</mat-icon>
+        <div *ngIf="f.password.touched && f.password.invalid" color="warn">
+          <div *ngIf="f.password.errors?.required">Password is required</div>
+          <div *ngIf="f.password.errors?.pattern">INVALID PASSWORD!
+            <br>
+            Password should conatin:
+            <br>
+            length between 8-12,
+            minimum of 1 capital letter,
+            minimum of 1 small letter,
+            minimum of 1 number,
+            alteast one alphanumeric Characters
+          </div>
+        </div>
+      </mat-form-field>
+  </p>  
+  
+  <p class="form-group">
+    <label id="example-radio-group-label">LOGIN AS</label>
+    <br>
+  <mat-radio-group
+    aria-labelledby="example-radio-group-label"
+    class="example-radio-group" formControlName="role" >
+    <mat-radio-button class="example-radio-button" *ngFor="let season of role" [value]="season" required>
+      {{season}}
+    </mat-radio-button>
+  </mat-radio-group>
+  </p>
+  
+       
+    <div class="example-container">
+      <button mat-raised-button [disabled]="form.invalid" (click)="submit()" type="submit">Submit</button>
+    </div>
+        <h1>{{message}}</h1>
+    </form>  
+    </body>
+  
+  

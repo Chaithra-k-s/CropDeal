@@ -6,16 +6,18 @@ const bodyParser=require("body-parser")
 const cors=require("cors");
 const bcrypt =require ("bcrypt");
 const jwt=require("jsonwebtoken");
-const core=require("./adminCore")
+const core=require("./adminCore");
+const axios=require("axios");
+const { token } = require("morgan");
+const { secretKey } = require("./config");
+const farmerurl="http://localhost:5000/";
+const dealerurl="http://localhost:7000/"
+const cropurl="http://localhost:8000/"
 
 const app=express();
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json());
 //app.use(morgan("dev"));
-
-app.get("/",(req,res)=>{
-    res.send("hello")
-})
 
 //for browsers only
 app.use((req,res,next)=>{
@@ -34,7 +36,7 @@ const CheckAuth=(req,res,next)=>{
     try{
         const token =req.headers.authorization.split(" ")[1];
         console.log(token);
-    const decoded=jwt.verify(token,"chaithra");
+    const decoded=jwt.verify(token,secretKey);
     req.userdata=decoded;
     next();
     } catch(error){
@@ -53,12 +55,6 @@ mongoose.connect(dbURI,{useNewUrlParser:true,useUnifiedTopology:true,useCreateIn
 .catch((err)=>{
     console.log("db connection error:" + err);
 });
-
-//importing schema
-const adminschema=require("./AdminSchema");
-app.get("/",(req,res)=>{
-    res.send("hello")
-})
 
 // login dealer user
 app.post("/login",core.admin_login);
