@@ -17,9 +17,14 @@
             <td>{{cropobj.crop_quantity}}</td>
             <td>{{cropobj.crop_price}}</td>
         </tr>
+        <tr>TOTAL AMOUNT={{check()}}</tr>
     </table>    
 </body>
-
+<!-- {{add.value |json}}
+<div *ngFor="let i of add">
+  {{i.crop_price}}
+</div>
+{{check()}}
 
   <table mat-table [dataSource]="add" class="mat-elevation-z8">
     <ng-container matColumnDef="CROP NAME">
@@ -41,7 +46,7 @@
         <ng-container matColumnDef="COST">
             <th mat-header-cell *matHeaderCellDef>COST</th>
          <td mat-cell *matCellDef="let transaction"> {{transaction.crop_price | currency}} </td>
-            <!-- <td mat-footer-cell *matFooterCellDef> {{getTotalCost() | currency}} </td> -->
+            <td mat-footer-cell *matFooterCellDef> {{ check() | currency}} </td>
         </ng-container>
   
     <ng-container matColumnDef="item-description">
@@ -76,4 +81,4 @@
   
     <tr mat-footer-row *matFooterRowDef="displayedColumns" class="example-first-footer-row"></tr>
     <tr mat-footer-row *matFooterRowDef="['disclaimer']" class="example-second-footer-row"></tr>
-  </table>
+  </table> -->

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { observable, Observable } from 'rxjs';
+import { observable, Observable, timer } from 'rxjs';
 import { CropServiceService } from '../services/crop-service.service';
 import { InvoiceService } from '../services/invoice.service';
 import { crop } from '../observables';
+import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-invoicepage',
@@ -13,14 +14,15 @@ import { crop } from '../observables';
 export class InvoicepageComponent implements OnInit {
 
   constructor(private invoiceservice:InvoiceService,private router:Router ) { }
+
    add:any | crop[];
+   total=0;
+
   ngOnInit(): void {
     this.invoiceservice.getCartItems().subscribe(data=>{
       console.log(data);
       this.add=data;
     })
-    console.log();
-    console.log(this.add);
   }
 
   clearTable() {
@@ -30,21 +32,20 @@ export class InvoicepageComponent implements OnInit {
     })    
   }
 
+  check(){
+  return this.add.map((t: { crop_price: any; }) => t.crop_price).reduce((acc: any, value: any) => acc + value, 0);
+  
+  }
+
   clearElement(value:any){
     this.invoiceservice.deleteCartItem(value).subscribe(data=>{
-      console.log(data);
-      
+      console.log(data); 
     })
   }
 
   addData() {
     this.router.navigateByUrl("/crop") 
   }
-  displayedColumns: string[] = ['CROP NAME', 'CROP TYPE','QUANTITY','COST'];
-  // transactions: crop[] = [this.add];
 
-  // /** Gets the total cost of all transactions. */
-  getTotalCost() {
-    return this.add.map((data: { crop_price: Number; }) => data.crop_price).reduce((acc:any, value:any) => acc + value, 0);
-  }
+  displayedColumns: string[] = ['CROP NAME', 'CROP TYPE','QUANTITY','COST'];
 }
