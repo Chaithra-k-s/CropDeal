@@ -1,6 +1,6 @@
 <body>
   <h1>LOGIN</h1>
-  <form [formGroup]="form" (ngSubmit)="submit">
+  <form *ngIf=!submitted [formGroup]="form" (ngSubmit)="submit">
   <p class="form-group">
     <mat-form-field appearance="outline">
       <mat-label for="name">Name</mat-label>

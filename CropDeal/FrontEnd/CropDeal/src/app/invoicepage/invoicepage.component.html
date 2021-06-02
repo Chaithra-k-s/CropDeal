@@ -1,7 +1,7 @@
 <body>
     <div>
-        <button mat-raised-button (click)="clearTable()">Clear table</button>
-        <button mat-raised-button (click)="addData()">Add data</button>
+        <button mat-raised-button (click)="clearTable()"><mat-icon>remove_shopping_cart</mat-icon>Clear Cart</button>
+        <button mat-raised-button (click)="addData()"><mat-icon>add_shopping_cart</mat-icon>Add to Cart</button>
       </div>
     
     <table>
@@ -10,23 +10,30 @@
             <th>CROP TYPE</th>
             <th>CROP QUANTITY</th>
             <th>COST</th>
+            <th>Actions</th>
           </tr>
         <tr *ngFor="let cropobj of add">
             <td>{{cropobj.crop_name}}</td>
             <td>{{cropobj.crop_type}}</td>
             <td>{{cropobj.crop_quantity}}</td>
             <td>{{cropobj.crop_price}}</td>
+            <td><button mat-raised-button (click)="remove(cropobj)"><mat-icon>delete</mat-icon></button></td>
         </tr>
         <tr>TOTAL AMOUNT={{check()}}</tr>
+        
+        <td><button mat-raised-button (click)="buynow()">BUY NOW</button></td>
+        <br>
+<div>Please note that the cost of items displayed are completely and totally made up </div>
+         
     </table>    
 </body>
 <!-- {{add.value |json}}
 <div *ngFor="let i of add">
   {{i.crop_price}}
 </div>
-{{check()}}
+{{check()}}-->
 
-  <table mat-table [dataSource]="add" class="mat-elevation-z8">
+  <!-- <table mat-table [dataSource]="add" class="mat-elevation-z8">
     <ng-container matColumnDef="CROP NAME">
       <th mat-header-cell *matHeaderCellDef>CROP NAME</th>
       <td *matCellDef="let transaction"> {{transaction.crop_name}} </td>
@@ -77,8 +84,7 @@
     <tr mat-header-row *matHeaderRowDef="['item-description','type-description','quantity-in-Kgs', 'cost-description-in-Rs']"
         class="example-second-header-row">
     </tr>
-
-  
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     <tr mat-footer-row *matFooterRowDef="displayedColumns" class="example-first-footer-row"></tr>
     <tr mat-footer-row *matFooterRowDef="['disclaimer']" class="example-second-footer-row"></tr>
-  </table> -->
+  </table>  -->

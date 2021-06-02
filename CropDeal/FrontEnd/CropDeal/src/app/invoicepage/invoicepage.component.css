@@ -1,40 +1,24 @@
-
   body{
     padding: 0%;
     margin:0%;
     text-align: center;
-}
-  .mat-form-field {
-    font-size: 14px;
-    width: 100%;
-  }
-  
+} 
   td, th {
     width: 25%;
   }
-  
-  .example-first-header-row th {
-    border-bottom: none;
-  }
-  
-  .example-second-header-row {
-    font-style: italic;
-  }
-  
-  .example-first-footer-row {
-    font-weight: bold;
-  }
-  
-  .example-second-footer-row td {
-    font-style: italic;
-  }
+ 
   table {
       padding: 2%;
       margin: 8%;
       font-family: arial, sans-serif;
-      width: 100%;
+      width: 80%;
   }
-  
+  button{
+    margin: 100px 10px 0px 10px;
+    padding: 10px;
+    width: 200px;
+
+  }
   td, th {
     border: 1px solid #fdfcfc;
     text-align: left;

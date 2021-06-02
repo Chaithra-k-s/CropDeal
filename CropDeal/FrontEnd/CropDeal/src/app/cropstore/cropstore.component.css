@@ -3,7 +3,7 @@ h4{
 }
 body{
   margin-left: 3%;
-  padding:30px;
+  padding:20px;
   text-align: center;
 }
 div{
@@ -17,21 +17,39 @@ h3{
   font-weight: bold;
   color: black;
 }
-
 button.redirect{
-  float: right;
+  float:right;
 }
 img{
-  width: 300px;
+  width: 200px;
+  height:200px;
 }
 .example-card {
-  padding:2%;
-  margin: 3%;
-  max-width: 300px;
+  padding:1%;
+  margin: 1%;
+  max-width: 200px;
 }
 
+nav{
+  display: block;
+  padding-block: 30px;
+}
 .example-header-image {
   background-size: cover;
+}
+mat-card{
+  display: inline-table;
+  height:300px;  
+}
+
+mat-card-content{
+text-align: left;
+height: 150px;
+}
+
+mat-card-title{
+  text-align: left;
+  height:50px
 }
 
 mat-card-subtitle{

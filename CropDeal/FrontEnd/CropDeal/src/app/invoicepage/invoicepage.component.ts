@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { observable, Observable, timer } from 'rxjs';
-import { CropServiceService } from '../services/crop-service.service';
 import { InvoiceService } from '../services/invoice.service';
 import { crop } from '../observables';
-import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-invoicepage',
@@ -24,25 +21,28 @@ export class InvoicepageComponent implements OnInit {
       this.add=data;
     })
   }
-
+//remove all
   clearTable() {
     this.invoiceservice.deleteCart().subscribe(data=>{
-      console.log(data);
       this.add=data
     })    
   }
-
+//total amount
   check(){
-  return this.add.map((t: { crop_price: any; }) => t.crop_price).reduce((acc: any, value: any) => acc + value, 0);
-  
+  return this.add.map((t: { crop_price: any; }) => 
+  t.crop_price).reduce((acc: any, value: any) => acc + value, 0);
   }
-
-  clearElement(value:any){
+//generate invoice
+  buynow(){
+    this.router.navigateByUrl("");
+  }
+  // deleting particular element
+  remove(value:crop[]){
     this.invoiceservice.deleteCartItem(value).subscribe(data=>{
-      console.log(data); 
-    })
+      this.add=data
+     })
   }
-
+//add element to cart
   addData() {
     this.router.navigateByUrl("/crop") 
   }

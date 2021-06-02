@@ -51,7 +51,8 @@ mongoose.connect(dbURI,{useNewUrlParser:true,useUnifiedTopology:true,useCreateIn
 });
 const invoice=require("./InvoiceSchema");
 let list=[]
-//preparing card
+
+//preparing cart
 app.post("/cart",(req,res,next)=>{
     list.push(req.body);
     console.log(req.body);
@@ -59,10 +60,26 @@ app.post("/cart",(req,res,next)=>{
     res.json(list)
 })
 
+//get all items
 app.get("/cartitems",(req,res,next)=>{
     res.status(200).json(list);
 })
 
+//delete particualr element
+app.get("/deleteitem/:id",(req,res)=>{
+    crop_name=req.params.id;   
+    var removeindex=list.map((item)=>{return item.crop_name}).indexOf(crop_name)
+    list.splice(removeindex,1)
+    res.status(200).json(list)
+})
+
+//delete all items in cart
+app.get("/deleteitems",(req,res)=>{
+    list=[];
+    res.status(200).json(list)
+})
+
+//generte invoice
 app.post('/generate',(req,res,next)=>{
     const createinvoice=new invoice({
         _id:new mongoose.Types.ObjectId(),
@@ -88,6 +105,7 @@ app.post('/generate',(req,res,next)=>{
     console.log(req.body);
 })
 
+//edit generated invoice
 app.put('/edit/:id',CheckAuth,(req,res,next)=>{
     invoice.findOneAndUpdate({crop_name:req.params.id},{$set:
         {

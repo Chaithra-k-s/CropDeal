@@ -3,7 +3,6 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { CropServiceService } from '../services/crop-service.service';
 import { LoginService } from '../services/login.service';
-import { admin } from '../observables';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +14,7 @@ export class LoginComponent implements OnInit {
   selected="";
   token:any
   role: string[] = ['ADMIN', 'FARMER', 'DEALER'];
+  submitted=false
   
   constructor( private loginserver:LoginService, private router:Router, private cropserver:CropServiceService) { }
   ngOnInit(): void {
@@ -41,6 +41,7 @@ export class LoginComponent implements OnInit {
         this.message="LogIn successfull!"
         window.alert(this.message);
         this.token=data;
+        this.submitted=true;
         const value=this.cropserver.sendtoken(this.token.token)
         //console.log(this.token.token);
         value.subscribe(data=>{

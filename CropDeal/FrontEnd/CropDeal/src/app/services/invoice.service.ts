@@ -13,6 +13,7 @@ export class InvoiceService {
 
   invoiceurl="http://localhost:4000/";
 
+//get all items
   getCartItems():Observable<crop[]>{
     const headers={'content-type':'application/json'};
     return this.client.get<crop[]>(this.invoiceurl+'cartitems',{'headers':headers})
@@ -20,7 +21,7 @@ export class InvoiceService {
       catchError(this.handleError)
     );
   }
-
+//delete all items
   deleteCart():Observable<crop[]>{
     const headers={'content-type':'application/json'};
     return this.client.get<crop[]>(this.invoiceurl+'deleteitems',{'headers':headers})
@@ -28,10 +29,10 @@ export class InvoiceService {
       catchError(this.handleError)
     );
   }
-
+//delete particular items
   deleteCartItem(value:any):Observable<crop[]>{
     const headers={'content-type':'application/json'};
-    return this.client.get<crop[]>(this.invoiceurl+'deleteitem/'+value,{'headers':headers})
+    return this.client.get<crop[]>(this.invoiceurl+'deleteitem/'+value.crop_name,{'headers':headers})
     .pipe(
       catchError(this.handleError)
     );
