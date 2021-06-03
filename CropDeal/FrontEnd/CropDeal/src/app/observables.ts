@@ -3,6 +3,8 @@ export class admin{
         public name:String,
         public email:String,
         public password:String,
+        public contact:Number,
+        public gender:String,
         public role:String
     ){}  
 }
@@ -47,9 +49,12 @@ export class farmer{
         public name:String,
         public email:String,
         public password:String,
-        public description:String,
+        public contact:Number,
+        public gender:String,
+        public cropsgrown:Array<String>,
         public bank_details:bank,
-        public Role:String){}
+        public Role:String
+        ){}
 }
 
 export class dealer{
@@ -57,6 +62,8 @@ export class dealer{
         public name:String,
         public email:String,
         public password:String,
+        public contact:Number,
+        public gender:String,
         public subscribed_crops:sub_crop,
         public bank_details:bank,
         public Role:String

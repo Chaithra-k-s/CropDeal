@@ -10,13 +10,17 @@ import { LoginService } from '../services/login.service';
 })
 export class RegisterComponent implements OnInit {
   selected="";
+  submitted=false;
   role: string[] = ['ADMIN', 'FARMER', 'DEALER'];
   constructor(private connectserver:LoginService,private router:Router) { }
   ngOnInit(): void {}
-  message:any;
+  message:any;;
+  hide=true
   form=new FormGroup({
     name:new FormControl("",[Validators.required, Validators.minLength(3)]),
     email: new FormControl("",[ Validators.required,Validators.email]),
+    gender:new FormControl("",[Validators.required]),
+    contact:new FormControl(1234567890,[Validators.required, Validators.minLength(10),Validators.maxLength(10)]),
     password:new FormControl("",[
       Validators.required,
       Validators.minLength(8),
@@ -41,7 +45,9 @@ export class RegisterComponent implements OnInit {
     if(this.form.value.password===this.form.value.confirmpassword)
     {
       this.connectserver.register(this.form.value).subscribe(data=>{
-      this.message="submitted successfully!";
+      this.message="Registered Successfully!";
+      window.alert(this.message)
+      this.submitted=true
       this.router.navigateByUrl("/login") 
     })
   }  else {

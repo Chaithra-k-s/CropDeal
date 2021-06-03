@@ -1,22 +1,37 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpClientModule, HttpErrorResponse } from '@angular/common/http';
-import { retry, catchError } from 'rxjs/operators';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
-import { admin,farmer,dealer } from '../observables';
+import { admin } from '../observables';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
 
-  constructor(private http:HttpClientModule, private client:HttpClient) { }
+  constructor( private client:HttpClient ) { }
   error:any
+  head=new HttpHeaders().set('content-type','application/json');
 
+//admin edit is not functioned because only 2 parameters are there in admin 
     adminurl="http://localhost:2000/";
     farmerurl="http://localhost:5000/";
-    dealerurl="http://localhost:7000/"
+    dealerurl="http://localhost:7000/";
 
+//admin token
+    getadmin(token:any){
+      // console.log(token);
+      this.head.set('authorization','Bearer '+token)
+      const headers={
+        'content-type':'application/json',
+        'authorization':'Bearer '+token
+    }
+      return this.client.get<admin[]>(this.adminurl+"admin",{'headers':headers})
+    }
+
+//login exiting user
     login(value:any):Observable<admin[]>{
+     // console.log(value);
       const headers={'content-type':'application/json'};
       const body=JSON.stringify(value)
       if(value.role==="ADMIN"){
@@ -39,6 +54,8 @@ export class LoginService {
       }
       return this.error
     }
+
+//register new user
     register(value:any):Observable<admin[]>{
       const headers={'content-type':'application/json'};
       const body=JSON.stringify(value)
@@ -61,32 +78,13 @@ export class LoginService {
         );
       }return this.error
     }
-//     editfarmer(value:any):Observable<farmer[]>{
-//         const headers={'content-type':'application/json'};
-//         const body=JSON.stringify(value)
-//         return this.client.post<farmer[]>(this.farmerurl+"farmer/"+value.name,body,{'headers':headers})
-//           .pipe(
-//             catchError(this.handleError)
-//           );
-//     }
-//     getfarmer(value:any):Observable<farmer[]>{
-//       const headers={'content-type':'application/json'};
-//       const body=JSON.stringify(value)
-//       return this.client.get<farmer[]>(this.farmerurl+"farmer/",{'headers':headers,'withCredentials':true,})
-//         .pipe(
-//           catchError(this.handleError)
-//         );
-//   }
-//   getfarmerbybyid(value:any):Observable<farmer[]>{
-//     const headers={'content-type':'application/json'};
-//     const body=JSON.stringify(value)
-//     return this.client.get<farmer[]>(this.farmerurl+"farmer/"+value.name,{'headers':headers,'withCredentials':true,})
-//       .pipe(
-//         catchError(this.handleError)
-//       );
-// }
-  deleteadminbybyid(value:any):Observable<admin[]>{
-  const headers={'content-type':'application/json'};
+
+//delete admin user using token
+    deleteadminbyid(value:admin,token:any):Observable<admin[]>{
+      const headers={
+        'content-type':'application/json',
+        'authorization':'Bearer '+token
+    }
   const body=JSON.stringify(value)
   return this.client.delete<admin[]>(this.adminurl+value.name,{'headers':headers})
     .pipe(
@@ -94,6 +92,20 @@ export class LoginService {
     );
     }
 
+//edit admin
+    editadminbyid(value:admin,token:any):Observable<admin[]>{
+  const headers={
+    'content-type':'application/json',
+    'authorization':'Bearer '+token
+}
+const body=JSON.stringify(value)
+return this.client.put<admin[]>(this.adminurl+'/'+value.name,body,{'headers':headers})
+.pipe(
+  catchError(this.handleError)
+);
+    }
+
+//handle error
     handleError(error:HttpErrorResponse) {
        let errorMessage = '';
        if (error.error instanceof ErrorEvent) {
@@ -107,5 +119,4 @@ export class LoginService {
       console.log(errorMessage)
       return throwError(error.message || "Server Error");
     }
-
 }

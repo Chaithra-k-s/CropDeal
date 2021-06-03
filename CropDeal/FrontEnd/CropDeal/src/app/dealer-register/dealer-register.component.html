@@ -1,72 +1,81 @@
 <body>
     <h1>DEALER EDIT FORM</h1>
-    <form [formGroup]="form" (ngSubmit)="submit">
-      <h2>ENTER YOUR DETAILS</h2>
-        <p class="form-group">
-            <mat-form-field appearance="outline">
-              <mat-label for="name">Name</mat-label>
-              <input matInput formControlName="name" type="text" placeholder="Name">
-              <mat-icon>person</mat-icon>
-              <div *ngIf="f.name.touched && f.name.invalid">
-                <div *ngIf="f.name.errors?.required">Name is Required</div>
-                <div *ngIf="f.name.errors?.minlength">Name should be 3 Characters or more</div>
-              </div>
-            </mat-form-field>
-        </p>   
+<form [formGroup]="form" (ngSubmit)="submit">
+  <h2>ENTER YOUR DETAILS</h2>
+  <p>Note! provide proper deatils of email-id and password to edit</p>
+    <p class="form-group">
+    <mat-form-field appearance="outline">
+      <mat-label for="name">Name</mat-label>
+      <input matInput formControlName="name" type="text" placeholder="Name">
+      <mat-icon>person</mat-icon>
+      <div *ngIf="f.name.touched && f.name.invalid">
+        <div *ngIf="f.name.errors?.required">Name is Required</div>
+        <div *ngIf="f.name.errors?.minlength">Name should be 3 Characters or more</div>
+      </div>
+    </mat-form-field>
+    </p>   
          
-      <p class="form-group">
-            <mat-form-field appearance="outline">
-              <mat-label for="email">E-MAIL</mat-label>
-              <input matInput type="email" formControlName="email" placeholder="abc@email.com" >
-              <mat-icon> email</mat-icon>
-              <div *ngIf="f.email.touched && f.email.invalid" color="warn">
-                <div *ngIf="f.email.errors?.required">E-mail feild is required</div>
-                <div *ngIf="f.email.errors?.email">Please Enter VALID E-MAIL</div>
-              </div>
-            </mat-form-field>
-      </p>  
-
-      <p class="form-group">
-            <mat-form-field appearance="outline">
-                <mat-label for="passward">PASSWORD</mat-label> 
-                <input type="password" formControlName="password" matInput placeholder="secret@key">
-                <mat-icon>lock</mat-icon>
-                <div *ngIf="f.password.touched && f.password.invalid" color="warn">
-                  <div *ngIf="f.password.errors?.required">Password is required</div>
-                  <div *ngIf="f.password.errors?.pattern">INVALID PASSWORD!
-                    <br>
-                    Password should conatin:
-                    <br>
-                    length between 8-12,
-                    minimum of 1 capital letter,
-                    minimum of 1 small letter,
-                    minimum of 1 number,
-                    alteast one alphanumeric Characters
-                  </div>
-                </div>
-              </mat-form-field>
-      </p>
-
-      <p class="form-group">
-        <mat-form-field appearance="outline">
-            <mat-label for="confirmpassward">CONFIRM PASSWORD</mat-label> 
-            <input type="password" formControlName="confirmpassword" matInput placeholder="secret@key">
-            <mat-icon>lock</mat-icon>
-            <div *ngIf="f.confirmpassword.touched && f.confirmpassword.invalid" color="warn">
-              <div *ngIf="f.confirmpassword.errors?.required">Password is required</div>
-              <div *ngIf="f.confirmpassword.errors?.pattern">INVALID PASSWORD!
-                <br>
-                Password should conatin:
-                <br>
-                length between 8-12,
-                minimum of 1 capital letter,
-                minimum of 1 small letter,
-                minimum of 1 number,
-                alteast one alphanumeric Characters
-              </div>
-            </div>
-          </mat-form-field>
+    <p class="form-group">
+      <mat-form-field appearance="outline">
+        <mat-label for="email">E-MAIL</mat-label>
+        <input matInput type="email" formControlName="email" placeholder="abc@email.com" >
+        <mat-icon> email</mat-icon>
+        <div *ngIf="f.email.touched && f.email.invalid" color="warn">
+          <div *ngIf="f.email.errors?.required">E-mail feild is required</div>
+          <div *ngIf="f.email.errors?.email">Please Enter VALID E-MAIL</div>
+        </div>
+      </mat-form-field>
+    </p>  
+<p>
+  <mat-form-field appearance="outline">
+    <mat-label for="contact">Contact</mat-label>
+    <input matInput formControlName="contact" type="tel" placeholder="Name">
+    <mat-icon> phone</mat-icon>
+    <div *ngIf="f.contact.touched && f.contact.invalid">
+      <div *ngIf="f.contact.errors?.required">Contact info is Required</div>
+      <div *ngIf="f.contact.errors?.minlength"> Number should be 10 digits</div>
+    </div>
+  </mat-form-field>
   </p>
+
+<p>
+  <mat-form-field appearance="outline">
+    <mat-label for="gender">Gender</mat-label>
+    <mat-select formControlName="gender">
+        <mat-option value="MALE">MALE</mat-option>
+        <mat-option value="FEMALE">FEMALE</mat-option>
+        <mat-option value="TRANSGENER">TRANSGENDER</mat-option>
+      </mat-select>
+    <div *ngIf="f.gender.touched && f.gender.invalid">
+      <div *ngIf="f.gender.errors?.required">Name is Required</div>
+    </div>
+  </mat-form-field>
+</p>
+
+  <p class="form-group">
+<mat-form-field appearance="outline">
+    <mat-label for="password">PASSWORD</mat-label>
+    <input matInput formControlName="password" placeholder="secret@key" [type]="hide ? 'password' : 'text'">
+    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+    </button> 
+    <mat-icon>lock</mat-icon>
+    <div *ngIf="f.password.touched && f.password.invalid" color="warn">
+      <div *ngIf="f.password.errors?.required">Password is required</div>
+      <div *ngIf="f.password.errors?.pattern">INVALID PASSWORD!
+        <br>
+        Password should conatin:
+        <br>
+        length between 8-12,
+        minimum of 1 capital letter,
+        minimum of 1 small letter,
+        minimum of 1 number,
+        alteast one alphanumeric Characters
+      </div>
+    </div>
+  </mat-form-field>
+  </p>
+
   <div formGroupName="subscribed_crops" >
       <mat-form-field appearance="outline">
         <mat-label for="crop_name">CROP NAME</mat-label>
@@ -102,7 +111,19 @@
       </mat-form-field>
     </p>
     <div *ngIf="f.bank_details.touched && f.bank_details.invalid">ACCOUNT DETAILS IS REQUIRED!</div> 
-</div>           
+</div>  
+
+<p class="form-group">
+  <label id="example-radio-group-label">LOGIN AS</label>
+  <br>
+<mat-radio-group
+  aria-labelledby="example-radio-group-label"
+  class="example-radio-group" formControlName="role" >
+  <mat-radio-button class="example-radio-button" *ngFor="let season of role" [value]="season" required>
+    {{season}}
+  </mat-radio-button>
+</mat-radio-group>
+</p>
     <div class="example-container">
       <button mat-raised-button [disabled]="form.invalid" (click)="submit()" type="submit">Submit</button>
     </div>

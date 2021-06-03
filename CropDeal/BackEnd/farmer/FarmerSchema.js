@@ -29,7 +29,9 @@ var farmerschema=new schema({
         type:String,
         required:true
     },
-    description:String,
+    contact:Number,
+    gender:String,
+    cropsgrown:Array,
     bank_details:bank,
     Role:{
         type:String,

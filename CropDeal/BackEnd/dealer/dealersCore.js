@@ -13,7 +13,6 @@ exports.dealers_get_all=(req,res)=>{
         }
         else{
             res.send(data);
-            console.log(data);
         }
     })
 }
@@ -49,15 +48,8 @@ exports.dealers_register=(req,res)=>{
                         name:req.body.name,
                         email:req.body.email,
                         password:hash,
-                        // subscribed_crops:{
-                        //     crop_name:req.body.subscribed_crops.crop_name,
-                        //     crop_type:req.body.subscribed_crops.crop_type
-                        // },
-                        // bank_details:{
-                        //     bank_name:req.body.bank_details.bank_name,
-                        //     account_number:req.body.bank_details.account_number,
-                        //     ifsc_code:req.body.bank_details.ifsc_code
-                        // }
+                        conatct:req.body.contact,
+                        gender:req.body.gender
                     });
                      dealer.save()
                     .then(result=>{
@@ -77,7 +69,7 @@ exports.dealers_register=(req,res)=>{
                 })
             }
         })
-    }
+}
 
 exports.dealers_login=(req,res,next)=>{
     dealerschema.find({email:req.body.email}).exec()
@@ -130,15 +122,17 @@ exports.dealers_edit_by_id=(req,res)=>{
             name:req.body.name,
             email:req.body.email,
             password:hash,
-            // subscribed_crops:{
-            //     crop_name:req.body.subscribed_crops.crop_name,
-            //     crop_type:req.body.subscribed_crops.crop_type
-            // },
-            // bank_details:{
-            //     bank_name:req.body.bank_details.bank_name,
-            //     account_number:req.body.bank_details.account_number,
-            //     ifsc_code:req.body.bank_details.ifsc_code
-            // }
+            contact:req.body.contact,
+            gender:req.body.gender,
+            subscribed_crops:{
+                crop_name:req.body.subscribed_crops.crop_name,
+                crop_type:req.body.subscribed_crops.crop_type
+            },
+            bank_details:{
+                bank_name:req.body.bank_details.bank_name,
+                account_number:req.body.bank_details.account_number,
+                ifsc_code:req.body.bank_details.ifsc_code
+            }
         }
     })
     .then(result=>{

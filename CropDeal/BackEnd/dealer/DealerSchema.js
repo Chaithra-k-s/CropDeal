@@ -9,11 +9,11 @@ var crop=new schema({
 var bank=new schema({
     account_number : {
         type:Number,
-        required:true
+        // required:true
     },
     bank_name : {
         type:String, 
-        required:true
+        //required:true
     },
     ifsc_code : String
 })
@@ -24,6 +24,8 @@ var dealerschema=new schema({
         type:String,
         required:true
     },
+    contact:Number,
+    gender:String,
     email:{
         type:String,
         required:true,
@@ -35,7 +37,7 @@ var dealerschema=new schema({
         required:true
     },
     subscribed_crops:crop,
-    // bank_details:bank,
+    bank_details:bank,
     Role:{
         type:String,
         default:"DEALER"

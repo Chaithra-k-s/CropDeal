@@ -1,50 +1,70 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpClientModule, HttpErrorResponse } from '@angular/common/http';
-import { retry, catchError } from 'rxjs/operators';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
-import { admin,farmer,dealer } from '../observables';
+import { farmer } from '../observables';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FarmerService {
-  constructor(private http:HttpClientModule, private client:HttpClient) { }
+  constructor( private client:HttpClient ) { }
   error:any
+  head=new HttpHeaders().set('content-type','application/json');
 
-  farmerurl="http://localhost:5000/";
+  farmerurl="http://localhost:5000/farmers";
 
-  editfarmer(value:any):Observable<farmer[]>{
-      const headers={'content-type':'application/json'};
+
+//edit farmer details
+  editfarmer(value:farmer,token:any):Observable<farmer[]>{
+    const headers={
+      'content-type':'application/json',
+      'authorization':'Bearer '+token
+  }
       const body=JSON.stringify(value)
-      return this.client.put<farmer[]>(this.farmerurl+"farmer/"+value.name,body,{'headers':headers})
+      return this.client.put<farmer[]>(this.farmerurl+"/"+value.name,body,{'headers':headers})
         .pipe(
           catchError(this.handleError)
         );
   }
-  getfarmer(value:any):Observable<farmer[]>{
-    const headers={'content-type':'application/json'};
-    const body=JSON.stringify(value)
-    return this.client.get<farmer[]>(this.farmerurl+"farmer/",{'headers':headers})
+
+//get farmer details using token
+  getfarmer(token:any):Observable<farmer[]>{
+       const headers={
+      'content-type':'application/json',
+      'authorization':'Bearer '+token
+      }
+    return this.client.get<farmer[]>(this.farmerurl,{'headers':headers})
       .pipe(
         catchError(this.handleError)
       );
   }
-  getfarmerbybyid(value:any):Observable<farmer[]>{
-  const headers={'content-type':'application/json'};
-  const body=JSON.stringify(value)
-  return this.client.get<farmer[]>(this.farmerurl+"farmer/"+value.name,{'headers':headers})
+
+//get particular farmer details using token
+  getfarmerbyid(value:farmer,token:any):Observable<farmer[]>{
+    const headers={
+      'content-type':'application/json',
+      'authorization':'Bearer '+token
+      }
+  return this.client.get<farmer[]>(this.farmerurl+'/'+value.name,{'headers':headers})
     .pipe(
       catchError(this.handleError)
     );
   }
-  deletefarmerbybyid(value:any):Observable<farmer[]>{
-    const headers={'content-type':'application/json'};
-    const body=JSON.stringify(value)
-    return this.client.delete<farmer[]>(this.farmerurl+"farmer/"+value.name,{'headers':headers,'withCredentials':true,})
+
+//delete farmer details from database using token
+  deletefarmerbyid(value:farmer,token:any):Observable<farmer[]>{
+    const headers={
+      'content-type':'application/json',
+      'authorization':'Bearer '+token
+      }
+    return this.client.delete<farmer[]>(this.farmerurl+'/'+value.name,{'headers':headers})
       .pipe(
         catchError(this.handleError)
       );
   }
+
+//error handling
   handleError(error:HttpErrorResponse) {
      let errorMessage = '';
      if (error.error instanceof ErrorEvent) {

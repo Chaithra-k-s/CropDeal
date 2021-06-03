@@ -56,6 +56,9 @@ mongoose.connect(dbURI,{useNewUrlParser:true,useUnifiedTopology:true,useCreateIn
     console.log("db connection error:" + err);
 });
 
+//get all details
+app.get("/admin",CheckAuth,core.get_admins);
+
 // login dealer user
 app.post("/login",core.admin_login);
 

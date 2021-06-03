@@ -17,6 +17,8 @@ var adminschema=new schema({
         type:String,
         required:true
     },
+    contact:Number,
+    gender:String,
     Role:{
         type:String,
         default:"ADMIN"

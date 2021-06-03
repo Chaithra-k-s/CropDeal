@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { CropServiceService } from '../services/crop-service.service';
+import { windowWhen } from 'rxjs/operators';
+import { crop, farmer } from '../observables';
+import { DealerService } from '../services/dealer.service';
+import { FarmerService } from '../services/farmer.service';
 import { LoginService } from '../services/login.service';
+
 
 @Component({
   selector: 'app-dealerlist',
@@ -10,16 +14,29 @@ import { LoginService } from '../services/login.service';
   styleUrls: ['./dealerlist.component.css']
 })
 export class DealerlistComponent implements OnInit {
+  displayedColumns: string[] = ['name', 'email', 'contact'];//add crops later
+
   message:any;
   selected="";
   token:any
   role: string[] = ['ADMIN', 'FARMER', 'DEALER'];
-  submitted=false
-  
-  constructor( private loginserver:LoginService, private router:Router, private cropserver:CropServiceService) { }
-  ngOnInit(): void {
-  }
+  submitted=false;
+  dataSource:any;
  
+  
+  constructor( private loginservice:LoginService,private router:Router,
+     private farmerservice:FarmerService,
+     private dealerservice:DealerService,) { }
+//filter data
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  ngOnInit(): void {
+    this.submit
+  }
+ //building form
   form=new FormGroup({
     name:new FormControl("",[Validators.required, Validators.minLength(3)]),
     email: new FormControl("",[ Validators.required,Validators.email]),
@@ -35,27 +52,29 @@ export class DealerlistComponent implements OnInit {
   get f(){
     return this.form.controls;
   }
+  //actions on form submit
   submit(){
-      this.loginserver.login(this.form.value).subscribe(data=>{
-        this.message="LogIn successfull!"
+      this.loginservice.login(this.form.value).subscribe(data=>{
+        this.message="LogIn successfull!, Please find the Details Below"
         window.alert(this.message);
         this.token=data;
-        const value=this.cropserver.sendtoken(this.token.token)
-        console.log(this.token.token);
-        value.subscribe(data=>{
-          console.log(data);
-        })
-        
-        if(this.form.value.role ==="DEALER"){
-          this.router.navigateByUrl("/crop");
+        console.log(this.token);
+        this.submitted=true
+        if(this.form.value.role===("FARMER" || "ADMIN") ){
+          this.farmerservice.getfarmer(this.token.token).subscribe(data=>{
+          this.dataSource=data;         
+          })
+        } 
+        if(this.form.value.role ===("DEALER" || "ADMIN")){
+          this.dealerservice.getdealer(this.token.token).subscribe(data=>{
+          this.dataSource=data;
+          })
+        }
+        if(this.form.value.role ==="ADMIN"){
+          this.loginservice.getadmin(this.token.token).subscribe(data=>{
+          this.dataSource=data;
+        }) 
       }
-      if(this.form.value.role ==="ADMIN"){
-        this.router.navigateByUrl("/crop");
-    }
-      if(this.form.value.role=== "FARMER"){
-        this.router.navigateByUrl("/providecrop");
-      }
-      
     })
-  } 
+}
 }

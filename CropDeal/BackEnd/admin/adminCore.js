@@ -8,8 +8,21 @@ const axios=require("axios");
 const { secretKey } = require("./config");
 const farmerurl="http://localhost:5000/";
 const dealerurl="http://localhost:7000/"
-const cropurl="http://localhost:8000/"
+const cropurl="http://localhost:8000/";
 
+//all admins
+exports.get_admins=(req,res,next)=>{
+    adminschema.find({}).exec((err,data)=>{
+        if(err){
+            res.send("error fetching data from database")
+        }
+        else{
+            res.send(data);
+        }
+    })
+}
+
+//register admin
 exports.admin_register=(req,res,next)=>{
     adminschema.find({email:req.body.email})
     .exec().then(user=>{
@@ -28,6 +41,8 @@ exports.admin_register=(req,res,next)=>{
                         _id:new mongoose.Types.ObjectId(),
                         name:req.body.name,
                         email:req.body.email,
+                        gender:req.body.gender,
+                        contact:req.body.contact,
                         password: hash
                     })
                     createdadmin.save()
@@ -50,6 +65,7 @@ exports.admin_register=(req,res,next)=>{
     })  
 }
 
+//logim admin
 exports.admin_login=(req,res,next)=>{
     adminschema.find({email:req.body.email}).exec()
     .then(admin=>{
@@ -90,7 +106,7 @@ exports.admin_login=(req,res,next)=>{
     })
 }
 
-
+//edit admin details
 exports.admin_edit_by_id=(req,res)=>{
     bcrypt.hash(req.body.password,10,(err,hash)=>{
         if (err) {
@@ -102,7 +118,9 @@ exports.admin_edit_by_id=(req,res)=>{
         {
             name:req.body.name,
             email:req.body.email,
-            password:hash
+            password:hash,
+            contact:req.body.contact,
+            gender:req.body.gender
         }
     })
     .then(result=>{
@@ -115,13 +133,14 @@ exports.admin_edit_by_id=(req,res)=>{
             console.log(err),
             res.status(402).json({
                 message:"INVALID EMAIL ID",
-                ERROR:err._message
+                ERROR:"INVALID EMAIL ID"
             })
         })
     }
 })
 }
 
+//delete admin details
 exports.admin_delete_by_id=(req,res)=>{
     adminschema.findOneAndDelete({name:req.params.id}).exec((err,data)=>{
         if(err){

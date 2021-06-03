@@ -14,7 +14,8 @@ export class LoginComponent implements OnInit {
   selected="";
   token:any
   role: string[] = ['ADMIN', 'FARMER', 'DEALER'];
-  submitted=false
+  submitted=false;
+  hide=true
   
   constructor( private loginserver:LoginService, private router:Router, private cropserver:CropServiceService) { }
   ngOnInit(): void {
@@ -41,14 +42,7 @@ export class LoginComponent implements OnInit {
         this.message="LogIn successfull!"
         window.alert(this.message);
         this.token=data;
-        this.submitted=true;
-        const value=this.cropserver.sendtoken(this.token.token)
-        //console.log(this.token.token);
-        value.subscribe(data=>{
-          console.log(data);
-        });
-        
-        
+        this.submitted=true;        
       if(this.form.value.role ==="DEALER"){
           this.router.navigateByUrl("/crop");
       }
