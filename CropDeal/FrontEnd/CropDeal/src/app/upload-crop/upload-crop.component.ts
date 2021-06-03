@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { CropServiceService } from '../services/crop-service.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { CropServiceService } from '../services/crop-service.service';
 })
 export class UploadCropComponent implements OnInit {
 
-  constructor( private fb :FormBuilder,private cropserver:CropServiceService ) { }
+  constructor( private fb :FormBuilder,private cropserver:CropServiceService,private router:Router  ) { }
   ngOnInit(): void {}
   message:any;
   form=this.fb.group({
@@ -37,11 +38,12 @@ export class UploadCropComponent implements OnInit {
   }
 
   submit(){
-      console.log(this.form.value);      
+      //console.log(this.form.value);      
       this.cropserver.uploadcrop(this.form.value).subscribe(data=>{
-      console.log(this.form.value); 
-      console.log(data);
+      //console.log(this.form.value); 
+      //console.log(data);
       this.message="submitted successfully!"
+      this.router.navigateByUrl('crop');
     })
   }
 }

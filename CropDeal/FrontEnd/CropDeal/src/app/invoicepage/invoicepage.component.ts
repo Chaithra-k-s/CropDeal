@@ -34,7 +34,7 @@ export class InvoicepageComponent implements OnInit {
   }
 //generate invoice
   buynow(){
-    this.router.navigateByUrl("");
+    this.router.navigateByUrl("receipt");
   }
   // deleting particular element
   remove(value:crop[]){

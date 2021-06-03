@@ -101,13 +101,19 @@
   </p>
   <div *ngIf="f.bank_details.touched && f.bank_details.invalid">ACCOUNT DETAILS IS REQUIRED!</div> 
 </div> 
+
 <p class="form-group">
-  <mat-form-field appearance="outline">
-    <mat-label for="description">DESCRIPTION</mat-label>
-    <input matInput type="text" formControlName="description" placeholder="additional details" >
-    <mat-icon>description</mat-icon>
-  </mat-form-field>
-</p>          
+  <label id="example-radio-group-label">LOGIN AS</label>
+  <br>
+<mat-radio-group
+  aria-labelledby="example-radio-group-label"
+  class="example-radio-group" formControlName="role" >
+  <mat-radio-button class="example-radio-button" *ngFor="let season of role" [value]="season" required>
+    {{season}}
+  </mat-radio-button>
+</mat-radio-group>
+</p>
+
   <div class="example-container">
     <button mat-raised-button [disabled]="form.invalid" (click)="submit()" type="submit">Submit</button>
   </div>

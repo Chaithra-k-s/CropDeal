@@ -55,8 +55,8 @@ let list=[]
 //preparing cart
 app.post("/cart",(req,res,next)=>{
     list.push(req.body);
-    console.log(req.body);
-    console.log(list);
+    //console.log(req.body);
+    //console.log(list);
     res.json(list)
 })
 

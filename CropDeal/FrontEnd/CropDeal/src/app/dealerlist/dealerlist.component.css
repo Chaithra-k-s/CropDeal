@@ -17,3 +17,8 @@ h3{
 mat-radio-button{
     padding: 7px;
 }
+table {
+    text-align: left;
+    margin-left: 10%;
+    width: 70%;
+  }

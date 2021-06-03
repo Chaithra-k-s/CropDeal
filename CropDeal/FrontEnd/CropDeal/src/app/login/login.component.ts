@@ -42,16 +42,17 @@ export class LoginComponent implements OnInit {
         this.message="LogIn successfull!"
         window.alert(this.message);
         this.token=data;
-        this.submitted=true;        
-      if(this.form.value.role ==="DEALER"){
-          this.router.navigateByUrl("/crop");
-      }
-      if(this.form.value.role ==="ADMIN"){
-        this.router.navigateByUrl("/crop");
-    }
-      if(this.form.value.role=== "FARMER"){
-        this.router.navigateByUrl("/providecrop");
-      }
+        this.submitted=true;
+        this.router.navigateByUrl("/crop")        
+    //   if(this.form.value.role ==="DEALER"){
+    //       this.router.navigateByUrl("/crop");
+    //   }
+    //   if(this.form.value.role ==="ADMIN"){
+    //     this.router.navigateByUrl("/crop");
+    // }
+    //   if(this.form.value.role=== "FARMER"){
+    //     this.router.navigateByUrl("/providecrop");
+    //   }
       
     })
   } 

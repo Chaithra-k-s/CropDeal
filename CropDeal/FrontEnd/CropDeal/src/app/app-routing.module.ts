@@ -21,7 +21,7 @@ const routes: Routes = [
   {path:"farmerRegister",component:FarmerRegisterComponent},
   {path:"dealerRegister",component:DealerRegisterComponent},
   {path:"providecrop",component:UploadCropComponent},
-  {path:"farmers",component:FarmerlistComponent},
+  {path:"receipt",component:FarmerlistComponent},
   {path:"dealers",component:DealerlistComponent},
   {path:"deleteuser",component:DeleteaccountpageComponent}
 ];

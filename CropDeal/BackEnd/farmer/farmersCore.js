@@ -124,6 +124,7 @@ exports.farmers_delete_by_id=(req,res)=>{
 }
 
 exports.farmers_edit_by_id=(req,res)=>{
+    console.log(req.body);
     farmerschema.find({email:req.body.email}).exec()
     .then(farmer=>{
         if(farmer.length<1){
@@ -171,9 +172,6 @@ exports.farmers_edit_by_id=(req,res)=>{
                     })
                 })
             }
-            res.status(401).json({
-                message:"Authentication failed"
-            })
         })
     }).catch(err=>{
         console.log(err);

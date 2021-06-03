@@ -51,21 +51,21 @@ export class DeleteaccountpageComponent implements OnInit {
       this.submitted=true
       this.submitted=true
       if(this.form.value.role ==="DEALER"){
-        this.dealerservice.deletedealerbyid(this.form.value,this.token).subscribe(data=>{
+        this.dealerservice.deletedealerbyid(this.form.value,this.token.token).subscribe(data=>{
           this.message="deleted successfull!"
           window.alert(this.message);
           this.router.navigateByUrl("")
         })
       }
       if(this.form.value.role ==="ADMIN"){
-        this.adminservice.deleteadminbyid(this.form.value,this.token).subscribe(data=>{
+        this.adminservice.deleteadminbyid(this.form.value,this.token.token).subscribe(data=>{
           this.message="deleted successfull!"
           window.alert(this.message);
           this.router.navigateByUrl("")
         })
     }
       if(this.form.value.role==="FARMER"){
-        this.farmerservice.deletefarmerbyid(this.form.value,this.token).subscribe(data=>{
+        this.farmerservice.deletefarmerbyid(this.form.value,this.token.token).subscribe(data=>{
           this.message="deleted successfull!"
           window.alert(this.message);
           this.router.navigateByUrl("")

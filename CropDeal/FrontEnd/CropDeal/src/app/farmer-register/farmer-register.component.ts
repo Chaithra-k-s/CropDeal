@@ -16,6 +16,7 @@ export class FarmerRegisterComponent implements OnInit {
   message:any;
   hide = true;
   token:any;
+  role: string[] = ['FARMER'];
   submitted=false;
   selected='';
   form=this.fb.group({
@@ -23,6 +24,7 @@ export class FarmerRegisterComponent implements OnInit {
     gender:new FormControl("",[Validators.required, Validators.minLength(3)]),
     contact:new FormControl(1234567890,[Validators.required, Validators.minLength(10),Validators.maxLength(10)]),
     email: new FormControl("",[ Validators.required,Validators.email]),
+    role:new FormControl(this.selected,Validators.required), 
     password:new FormControl("",[
       Validators.required,
       Validators.minLength(8),
@@ -48,9 +50,9 @@ export class FarmerRegisterComponent implements OnInit {
       window.alert(this.message);
       //console.log(this.form.value);
       this.token=data;
-      //console.log(this.token);
+      console.log(this.token);
       this.submitted=true
-      this.farmerservice.editfarmer(this.form.value,this.token).subscribe(data=>{
+      this.farmerservice.editfarmer(this.form.value,this.token.token).subscribe(data=>{
       //console.log(this.form.value); 
       //console.log(data);
       this.message="submitted successfully!"

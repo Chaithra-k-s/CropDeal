@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { windowWhen } from 'rxjs/operators';
-import { crop, farmer } from '../observables';
 import { DealerService } from '../services/dealer.service';
 import { FarmerService } from '../services/farmer.service';
 import { LoginService } from '../services/login.service';
@@ -14,7 +12,7 @@ import { LoginService } from '../services/login.service';
   styleUrls: ['./dealerlist.component.css']
 })
 export class DealerlistComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'email', 'contact'];//add crops later
+  displayedColumns: string[] = ['name', 'email', 'contact', 'gender'];//add crops later
 
   message:any;
   selected="";
@@ -22,16 +20,16 @@ export class DealerlistComponent implements OnInit {
   role: string[] = ['ADMIN', 'FARMER', 'DEALER'];
   submitted=false;
   dataSource:any;
+  hide=true
  
-  
   constructor( private loginservice:LoginService,private router:Router,
      private farmerservice:FarmerService,
      private dealerservice:DealerService,) { }
 //filter data
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
+// applyFilter(event: Event) {
+//   const filterValue = (event.target as HTMLInputElement).value;
+//   this.dataSource.filter = filterValue.trim().toLowerCase();
+// }
 
   ngOnInit(): void {
     this.submit
@@ -58,23 +56,29 @@ export class DealerlistComponent implements OnInit {
         this.message="LogIn successfull!, Please find the Details Below"
         window.alert(this.message);
         this.token=data;
-        console.log(this.token);
+        //console.log(this.token);
         this.submitted=true
+
         if(this.form.value.role===("FARMER" || "ADMIN") ){
           this.farmerservice.getfarmer(this.token.token).subscribe(data=>{
-          this.dataSource=data;         
+          this.dataSource=data; 
+          //this.applyFilter        
           })
         } 
         if(this.form.value.role ===("DEALER" || "ADMIN")){
           this.dealerservice.getdealer(this.token.token).subscribe(data=>{
           this.dataSource=data;
+          //this.applyFilter
           })
         }
         if(this.form.value.role ==="ADMIN"){
           this.loginservice.getadmin(this.token.token).subscribe(data=>{
           this.dataSource=data;
+          //this.applyFilter
         }) 
       }
+      
     })
+
 }
 }

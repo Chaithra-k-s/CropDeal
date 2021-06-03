@@ -43,7 +43,7 @@ export class DealerRegisterComponent implements OnInit {
       ifsc_code:new FormControl("",[Validators.required])
       })
     })
-    role: string[] = ['ADMIN','DEALER'];
+    role: string[] = ['DEALER'];
   //getting formcontrol value
   get f(){
     return this.form.controls

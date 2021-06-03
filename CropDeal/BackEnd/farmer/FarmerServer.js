@@ -51,6 +51,7 @@ app.use((req,res,next)=>{
 const CheckAuth=(req,res,next)=>{    
     try{
         const token =req.headers.authorization.split(" ")[1];
+        console.log(token);
         const decoded=jwt.verify(token,secretKey);
         req.userdata=decoded;
         next();

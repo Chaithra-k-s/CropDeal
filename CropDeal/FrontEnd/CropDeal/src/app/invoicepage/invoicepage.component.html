@@ -19,13 +19,13 @@
             <td>{{cropobj.crop_price}}</td>
             <td><button mat-raised-button (click)="remove(cropobj)"><mat-icon>delete</mat-icon></button></td>
         </tr>
+
         <tr>TOTAL AMOUNT={{check()}}</tr>
         
         <td><button mat-raised-button (click)="buynow()">BUY NOW</button></td>
-        <br>
-<div>Please note that the cost of items displayed are completely and totally made up </div>
-         
-    </table>    
+        <br>         
+    </table>  
+    <div>*Please note that the cost of items displayed are completely and totally made up </div>  
 </body>
 <!-- {{add.value |json}}
 <div *ngFor="let i of add">
