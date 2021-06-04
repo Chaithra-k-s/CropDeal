@@ -2,6 +2,9 @@ body{
     padding: 0%;
     margin:0%;
     text-align: center;
+    background-image: url("https://cdn.pixabay.com/photo/2016/11/21/14/57/wheat-1845835__340.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 div{
     color: red;

@@ -2,6 +2,10 @@ body{
     padding: 0%;
     margin:0%;
     text-align: center;
+    background-image: url("https://cdn.pixabay.com/photo/2017/08/05/12/33/flat-lay-2583213__480.jpg");
+    background-size: cover;
+    overflow: scroll;
+    background-repeat: no-repeat;
 }
 div{
     color: red;
