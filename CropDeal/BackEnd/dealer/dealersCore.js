@@ -18,7 +18,7 @@ exports.dealers_get_all=(req,res)=>{
 }
 
 exports.dealers_get_by_id=(req,res)=>{
-    dealerschema.findOne({name:req.params.id}).exec((err,data)=>{
+    dealerschema.findOne({_id:req.params.id}).exec((err,data)=>{
         if(err){
             res.send("error fetching data from database")
         }
@@ -94,7 +94,8 @@ exports.dealers_login=(req,res,next)=>{
                 })
                 return res.status(200).json({
                     message:"Auth Successful!",
-                    token:token
+                    token:token,
+                    user:dealer[0]
                 })
             }
             res.status(401).json({
@@ -117,7 +118,7 @@ exports.dealers_edit_by_id=(req,res)=>{
                 error:err
             })
         }else{
-    dealerschema.findOneAndUpdate({name:req.params.id},{$set:
+    dealerschema.findOneAndUpdate({_id:req.params.id},{$set:
         {
             name:req.body.name,
             email:req.body.email,
@@ -153,7 +154,7 @@ exports.dealers_edit_by_id=(req,res)=>{
 }
 
 exports.dealers_delete_by_id=(req,res)=>{
-    dealerschema.findOneAndDelete({name:req.params.id}).exec((err,data)=>{
+    dealerschema.findOneAndDelete({_id:req.params.id}).exec((err,data)=>{
         if(err){
             res.send("error deleting data from database",err)
         }

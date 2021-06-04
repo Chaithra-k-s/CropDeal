@@ -3,12 +3,13 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { catchError } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import { farmer } from '../observables';
+import { ProfileService } from './profile.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FarmerService {
-  constructor( private client:HttpClient ) { }
+  constructor( private client:HttpClient, private profileservice:ProfileService ) { }
   error:any
   head=new HttpHeaders().set('content-type','application/json');
 
@@ -16,10 +17,10 @@ export class FarmerService {
 
 
 //edit farmer details
-  editfarmer(value:farmer,token:any):Observable<farmer[]>{
+  editfarmer(value:farmer):Observable<farmer[]>{
     const headers={
       'content-type':'application/json',
-      'authorization':'Bearer '+token
+      'authorization':'Bearer '+this.profileservice.token
   }
       const body=JSON.stringify(value)
       return this.client.put<farmer[]>(this.farmerurl+"/"+value.name,body,{'headers':headers})
@@ -29,10 +30,10 @@ export class FarmerService {
   }
 
 //get farmer details using token
-  getfarmer(token:any):Observable<farmer[]>{
+  getfarmer():Observable<farmer[]>{
        const headers={
       'content-type':'application/json',
-      'authorization':'Bearer '+token
+      'authorization':'Bearer '+this.profileservice.token
       }
     return this.client.get<farmer[]>(this.farmerurl,{'headers':headers})
       .pipe(
@@ -46,7 +47,7 @@ export class FarmerService {
       'content-type':'application/json',
       'authorization':'Bearer '+token
       }
-  return this.client.get<farmer[]>(this.farmerurl+'/'+value.name,{'headers':headers})
+  return this.client.get<farmer[]>(this.farmerurl+"/"+this.profileservice._id,{'headers':headers})
     .pipe(
       catchError(this.handleError)
     );
@@ -58,7 +59,7 @@ export class FarmerService {
       'content-type':'application/json',
       'authorization':'Bearer '+token
       }
-    return this.client.delete<farmer[]>(this.farmerurl+'/'+value.name,{'headers':headers})
+    return this.client.delete<farmer[]>(this.farmerurl+'/'+this.profileservice._id,{'headers':headers})
       .pipe(
         catchError(this.handleError)
       );

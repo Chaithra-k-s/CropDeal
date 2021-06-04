@@ -62,13 +62,13 @@ export class DealerlistComponent implements OnInit {
         //console.log(this.token);
         this.submitted=true       
         if(this.form.value.role===("FARMER" || "ADMIN") ){
-          this.farmerservice.getfarmer(this.token.token).subscribe(data=>{
+          this.farmerservice.getfarmer().subscribe(data=>{
           this.dataSource=data; 
           //this.applyFilter        
           })
         } 
         if(this.form.value.role ===("DEALER" || "ADMIN")){
-          this.dealerservice.getdealer(this.token.token).subscribe(data=>{
+          this.dealerservice.getdealer().subscribe(data=>{
           this.dataSource=data;
           //this.applyFilter
           })

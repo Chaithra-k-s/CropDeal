@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { FarmerService } from '../services/farmer.service';
 import { LoginService } from '../services/login.service';
+import { ProfileService } from '../services/profile.service';
 
 @Component({
   selector: 'app-farmer-register',
@@ -11,19 +13,28 @@ import { LoginService } from '../services/login.service';
 export class FarmerRegisterComponent implements OnInit {
 
   constructor( private fb :FormBuilder, private farmerservice:FarmerService,
-    private loginservice:LoginService ) { }
-  ngOnInit(): void {}
+    private loginservice:LoginService,
+    private router:Router,
+    private profileservice:ProfileService ) { }
+  ngOnInit(): void {
+    if(!this.profileservice._id.length){
+      console.log(!this.profileservice._id.length);
+      this.data=false
+    }
+  }
+
   message:any;
   hide = true;
   token:any;
   role: string[] = ['FARMER'];
   submitted=false;
   selected='';
+  data=true
   form=this.fb.group({
-    name:new FormControl("",[Validators.required, Validators.minLength(3)]),
+    name:new FormControl(this.profileservice.name,[Validators.required, Validators.minLength(3)]),
     gender:new FormControl("",[Validators.required, Validators.minLength(3)]),
     contact:new FormControl(1234567890,[Validators.required, Validators.minLength(10),Validators.maxLength(10)]),
-    email: new FormControl("",[ Validators.required,Validators.email]),
+    email: new FormControl(this.profileservice.email,[ Validators.required,Validators.email]),
     role:new FormControl(this.selected,Validators.required), 
     password:new FormControl("",[
       Validators.required,
@@ -31,8 +42,14 @@ export class FarmerRegisterComponent implements OnInit {
       Validators.maxLength(12),
       Validators.pattern(/(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/)
     ]),
+    confirmpassword:new FormControl("",[
+      Validators.required,
+      Validators.minLength(8),
+      Validators.maxLength(12),
+      Validators.pattern(/(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/)
+    ]),
     bank_details:this.fb.group({
-      account_number:new FormControl("",[Validators.required]),
+      account_number:new FormControl(1234,[Validators.required]),
       bank_name:new FormControl("",[Validators.required]),
       ifsc_code:new FormControl("",[Validators.required])
       })
@@ -44,19 +61,15 @@ export class FarmerRegisterComponent implements OnInit {
   }
 
   submit(){
-    console.log(this.form.value);
-    this.loginservice.login(this.form.value).subscribe(data=>{
-      this.message="LogIn successfull!",
-      window.alert(this.message);
-      //console.log(this.form.value);
-      this.token=data;
-      console.log(this.token);
+    if(this.form.value.password===this.form.value.confirmpassword){
       this.submitted=true
-      this.farmerservice.editfarmer(this.form.value,this.token.token).subscribe(data=>{
-      //console.log(this.form.value); 
-      //console.log(data);
-      this.message="submitted successfully!"
+      this.farmerservice.editfarmer(this.form.value).subscribe(data=>{
+      console.log(this.form.value); 
+      console.log(data);
+      this.message="Edited successfully!"
+      window.alert(this.message);
+      this.router.navigateByUrl("product")
     })
-  })
   }
+}
 }

@@ -58,6 +58,7 @@ export class DeleteaccountpageComponent implements OnInit {
         this.dealerservice.deletedealerbyid().subscribe(data=>{
           this.message="deleted successfull!"
           window.alert(this.message);
+          document.location.reload()
           this.router.navigateByUrl("")
         })
       }
@@ -65,6 +66,7 @@ export class DeleteaccountpageComponent implements OnInit {
         this.adminservice.deleteadminbyid(this.token.token).subscribe(()=>{
           this.message="deleted successfull!"
           window.alert(this.message);
+          document.location.reload()
           this.router.navigateByUrl("")
         })
     }
@@ -72,6 +74,7 @@ export class DeleteaccountpageComponent implements OnInit {
         this.farmerservice.deletefarmerbyid(this.form.value,this.token.token).subscribe(data=>{
           this.message="deleted successfull!"
           window.alert(this.message);
+          document.location.reload()
           this.router.navigateByUrl("")
         })
       }

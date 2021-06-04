@@ -43,6 +43,7 @@ export class LoginComponent implements OnInit {
         this.message="LogIn successfull!"
         window.alert(this.message);
         this.token=data;
+        console.log(data);
         this.profileservice.user=data
         this.data=data;
         this.profileservice.token=this.data.token;
@@ -50,7 +51,6 @@ export class LoginComponent implements OnInit {
         this.profileservice._id=this.data.user._id;
         this.profileservice.name=this.data.user.name;
         this.profileservice.role=this.data.user.role;
-        //console.log(data);
         this.submitted=true;
         this.router.navigateByUrl("product")             
     })

@@ -21,18 +21,18 @@ export class DealerService {constructor(private http:HttpClientModule,
     const headers={
       'content-type':'application/json',
       'authorization':'Bearer '+this.profileservice.token
-  }
+      }
       const body=JSON.stringify(value)
-      return this.client.put<dealer[]>(this.dealerurl+this.profileservice._id,body,{'headers':headers})
-        .pipe(
+      return this.client.put<dealer[]>(this.dealerurl+"/"+this.profileservice._id,body,{'headers':headers})
+      .pipe(
           catchError(this.handleError)
-        );
+      );
   }
 
-  getdealer(token:any):Observable<dealer[]>{
+  getdealer():Observable<dealer[]>{
     const headers={
       'content-type':'application/json',
-      'authorization':'Bearer '+token
+      'authorization':'Bearer '+this.profileservice.token
   }
     return this.client.get<dealer[]>(this.dealerurl,{'headers':headers})
       .pipe(
@@ -40,12 +40,12 @@ export class DealerService {constructor(private http:HttpClientModule,
       );
   }
 
-  getdealerbyid(value:dealer,token:any):Observable<dealer[]>{
+  getdealerbyid():Observable<dealer[]>{
     const headers={
       'content-type':'application/json',
-      'authorization':'Bearer '+token
+      'authorization':'Bearer '+this.profileservice.token
   }
-  return this.client.get<dealer[]>(this.dealerurl+this.profileservice._id,{'headers':headers})
+  return this.client.get<dealer[]>(this.dealerurl+"/"+this.profileservice._id,{'headers':headers})
     .pipe(
       catchError(this.handleError)
     );

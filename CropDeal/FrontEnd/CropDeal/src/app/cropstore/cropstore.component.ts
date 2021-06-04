@@ -24,6 +24,11 @@ export class CropstoreComponent implements OnInit {
   particularcrop:any
 
   ngOnInit(): void {
+    this.cropservice.getcrop().subscribe(data=>{
+      this.crops=data
+      console.log(this.crops);
+      
+    })
     console.log(this.profileservice.user)
     console.log(this.profileservice._id);
     console.log(this.profileservice.email);

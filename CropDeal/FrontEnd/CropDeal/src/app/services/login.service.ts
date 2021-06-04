@@ -27,7 +27,7 @@ export class LoginService {
 
 //login exiting user
     login(value:any):Observable<admin[]>{
-     // console.log(value);
+     console.log(value);
       const headers={'content-type':'application/json'};
       const body=JSON.stringify(value)
       if(value.role==="ADMIN"){
