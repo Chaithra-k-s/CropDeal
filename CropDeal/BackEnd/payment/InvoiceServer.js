@@ -10,7 +10,7 @@ const app=express();
 const axios=require("axios")
 
 //axios.get()
-
+app.use(express.static('.'));
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json());
 app.use(morgan("dev"));

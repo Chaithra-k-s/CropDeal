@@ -8,9 +8,15 @@ import { admin } from '../observables';
   providedIn: 'root'
 })
 export class LoginService {
+  // public user_id="";
+  // public auth_farmer="";
+  // public auth_dealer="";
+  public auth_admin:any;
 
-  constructor( private client:HttpClient ) { }
-  error:any
+  constructor( private client:HttpClient ) {     
+  }
+ 
+  error:any;
   head=new HttpHeaders().set('content-type','application/json');
 
 //admin edit is not functioned because only 2 parameters are there in admin 
@@ -18,16 +24,6 @@ export class LoginService {
     farmerurl="http://localhost:5000/";
     dealerurl="http://localhost:7000/";
 
-//admin token
-    getadmin(token:any){
-      // console.log(token);
-      this.head.set('authorization','Bearer '+token)
-      const headers={
-        'content-type':'application/json',
-        'authorization':'Bearer '+token
-    }
-      return this.client.get<admin[]>(this.adminurl+"admin",{'headers':headers})
-    }
 
 //login exiting user
     login(value:any):Observable<admin[]>{
@@ -77,32 +73,6 @@ export class LoginService {
           catchError(this.handleError)
         );
       }return this.error
-    }
-
-//delete admin user using token
-    deleteadminbyid(value:admin,token:any):Observable<admin[]>{
-      const headers={
-        'content-type':'application/json',
-        'authorization':'Bearer '+token
-    }
-  const body=JSON.stringify(value)
-  return this.client.delete<admin[]>(this.adminurl+value.name,{'headers':headers})
-    .pipe(
-      catchError(this.handleError)
-    );
-    }
-
-//edit admin
-    editadminbyid(value:admin,token:any):Observable<admin[]>{
-  const headers={
-    'content-type':'application/json',
-    'authorization':'Bearer '+token
-}
-const body=JSON.stringify(value)
-return this.client.put<admin[]>(this.adminurl+'/'+value.name,body,{'headers':headers})
-.pipe(
-  catchError(this.handleError)
-);
     }
 
 //handle error

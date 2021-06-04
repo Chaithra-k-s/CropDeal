@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AdminService } from '../services/admin.service';
 import { DealerService } from '../services/dealer.service';
 import { FarmerService } from '../services/farmer.service';
 import { LoginService } from '../services/login.service';
+import { ProfileService } from '../services/profile.service';
 
 
 @Component({
@@ -13,7 +15,6 @@ import { LoginService } from '../services/login.service';
 })
 export class DealerlistComponent implements OnInit {
   displayedColumns: string[] = ['name', 'email', 'contact', 'gender'];//add crops later
-
   message:any;
   selected="";
   token:any
@@ -21,17 +22,19 @@ export class DealerlistComponent implements OnInit {
   submitted=false;
   dataSource:any;
   hide=true
- 
-  constructor( private loginservice:LoginService,private router:Router,
+  data=true
+  constructor( private loginservice:LoginService,
+    private router:Router,
      private farmerservice:FarmerService,
-     private dealerservice:DealerService,) { }
-//filter data
-// applyFilter(event: Event) {
-//   const filterValue = (event.target as HTMLInputElement).value;
-//   this.dataSource.filter = filterValue.trim().toLowerCase();
-// }
+     private dealerservice:DealerService,
+     private adminservice:AdminService,
+     private profileservice:ProfileService) { }
 
   ngOnInit(): void {
+    if(!this.profileservice._id.length){
+      console.log(!this.profileservice._id.length);
+      this.data=false
+    }
     this.submit
   }
  //building form
@@ -57,8 +60,7 @@ export class DealerlistComponent implements OnInit {
         window.alert(this.message);
         this.token=data;
         //console.log(this.token);
-        this.submitted=true
-
+        this.submitted=true       
         if(this.form.value.role===("FARMER" || "ADMIN") ){
           this.farmerservice.getfarmer(this.token.token).subscribe(data=>{
           this.dataSource=data; 
@@ -72,13 +74,11 @@ export class DealerlistComponent implements OnInit {
           })
         }
         if(this.form.value.role ==="ADMIN"){
-          this.loginservice.getadmin(this.token.token).subscribe(data=>{
+          this.adminservice.getadmin().subscribe(data=>{
           this.dataSource=data;
           //this.applyFilter
         }) 
-      }
-      
+      } 
     })
-
 }
 }

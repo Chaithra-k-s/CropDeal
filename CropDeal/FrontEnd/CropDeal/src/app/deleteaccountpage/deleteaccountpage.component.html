@@ -1,6 +1,7 @@
-<body>
+<body *ngIf="data">
     <h1>DELETE ACCOUNT</h1>
-    <form *ngIf=!submitted [formGroup]="form" (ngSubmit)="submit">
+    <form *ngIf="!submitted" [formGroup]="form" (ngSubmit)="submit">
+      <h3>confirm your details to delete account</h3>
     <p class="form-group">
       <mat-form-field appearance="outline">
         <mat-label for="name">Name</mat-label>

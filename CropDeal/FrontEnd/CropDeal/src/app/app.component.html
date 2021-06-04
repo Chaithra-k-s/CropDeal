@@ -2,8 +2,8 @@
   <nav>
   <div>
       <button mat-icon-button [matMenuTriggerFor]="appMenu"><mat-icon>menu</mat-icon></button>
-      <button mat-icon-button><a href="crop"><mat-icon>store</mat-icon></a></button>
-      <button mat-icon-button><a href="invoice"><mat-icon>shopping_cart</mat-icon></a></button>
+      <button mat-icon-button (click)="cropspage()"><mat-icon>store</mat-icon></button>
+      <button mat-icon-button (click)="cartpage()"><mat-icon>shopping_cart</mat-icon></button>
       <button mat-icon-button (click)="getdealers()"><mat-icon>account_circle</mat-icon></button>
       
       
@@ -12,18 +12,11 @@
 </nav>
   <mat-menu color="primary" #appMenu="matMenu">
       <ng-template matMenuContent let-name="name">
-      <button mat-menu-item ><a href="register"><mat-icon>account_circle</mat-icon>REGISTER</a></button>
-      <button mat-menu-item><a href="login"><mat-icon>account_circle</mat-icon>SIGN-IN</a></button>
-      <button mat-menu-item><a href="#"><mat-icon>exit_to_app</mat-icon>LOGOUT</a></button>
+      <button mat-menu-item (click)="registerpage()"><mat-icon>account_circle</mat-icon>REGISTER</button>
+      <button mat-menu-item (click)="loginpage()"><mat-icon>account_circle</mat-icon>SIGN-IN</button>
+      <button mat-menu-item ><a href="#"><mat-icon>exit_to_app</mat-icon>LOGOUT</a></button>
       </ng-template>
   </mat-menu>
-
-  <mat-menu color="primary" #subMenu="matMenu">
-    <ng-template matMenuContent let-name="name">
-      <button (click)="getfarmers()" mat-menu-item><mat-icon>account_circle</mat-icon>FARMERS</button> 
-      <button (click)="getdealers()"mat-menu-item><mat-icon>account_circle</mat-icon>DEALERS</button> 
-    </ng-template>
-</mat-menu>
   
 </body>
 <router-outlet></router-outlet>

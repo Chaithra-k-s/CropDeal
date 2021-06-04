@@ -1,0 +1,30 @@
+<body *ngIf="data">
+    <div>
+        <button mat-raised-button (click)="clearTable()"><mat-icon>remove_shopping_cart</mat-icon>Clear Cart</button>
+        <button mat-raised-button (click)="addData()"><mat-icon>add_shopping_cart</mat-icon>Add to Cart</button>
+      </div>
+    
+    <table>
+        <tr>
+            <th>CROP NAME</th>
+            <th>CROP TYPE</th>
+            <th>CROP QUANTITY</th>
+            <th>COST</th>
+            <th>Actions</th>
+          </tr>
+        <tr *ngFor="let cropobj of add">
+            <td>{{cropobj.crop_name}}</td>
+            <td>{{cropobj.crop_type}}</td>
+            <td>{{cropobj.crop_quantity}}</td>
+            <td>{{cropobj.crop_price}}</td>
+            <td><button mat-raised-button (click)="remove(cropobj)"><mat-icon>delete</mat-icon></button></td>
+        </tr>
+
+        <tr>TOTAL AMOUNT={{check()}}</tr>
+        
+        <td><button mat-raised-button (click)="buynow(add)">BUY NOW</button></td>
+        <!-- <td><button><a href="http://localhost:4242/checkout.html">BUY NOW</a></button></td> -->
+        <br>         
+    </table>  
+    <div>*Please note that the cost of items displayed are completely and totally made up </div>  
+</body>

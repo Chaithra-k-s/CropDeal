@@ -58,6 +58,8 @@ mongoose.connect(dbURI,{useNewUrlParser:true,useUnifiedTopology:true,useCreateIn
 //get all details
 app.get("/admin",CheckAuth,core.get_admins);
 
+//get admin by id
+app.get("/admin/:id",CheckAuth,core.get_admin_by_id)
 // login dealer user
 app.post("/login",core.admin_login);
 

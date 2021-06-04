@@ -22,6 +22,17 @@ exports.get_admins=(req,res,next)=>{
     })
 }
 
+//get admin by id
+exports.get_admin_by_id=(req,res,next)=>{
+    adminschema.findOne({_id:req.parmas.id}).exec((err,data)=>{
+        if(err){
+            res.send("error fetching data from database")
+        }
+        else{
+            res.send(data);
+        }
+    })  
+}
 //register admin
 exports.admin_register=(req,res,next)=>{
     adminschema.find({email:req.body.email})
@@ -90,7 +101,8 @@ exports.admin_login=(req,res,next)=>{
                 })
                 return res.status(200).json({
                     message:"Auth Successful!",
-                    token:token
+                    token:token,
+                    user:admin[0]
                 })
             }
             res.status(401).json({
@@ -114,7 +126,7 @@ exports.admin_edit_by_id=(req,res)=>{
                 error:err
             })
         }else{
-    adminschema.findOneAndUpdate({name:req.params.id},{$set:
+    adminschema.findOneAndUpdate({_id:req.params.id},{$set:
         {
             name:req.body.name,
             email:req.body.email,
@@ -142,7 +154,7 @@ exports.admin_edit_by_id=(req,res)=>{
 
 //delete admin details
 exports.admin_delete_by_id=(req,res)=>{
-    adminschema.findOneAndDelete({name:req.params.id}).exec((err,data)=>{
+    adminschema.findOneAndDelete({_id:req.params.id}).exec((err,data)=>{
         if(err){
             res.send("error deleting data from database",err)
         }

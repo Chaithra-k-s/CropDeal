@@ -1,6 +1,6 @@
-<body>
+<body *ngIf="data">
     <h1>DEALER EDIT FORM</h1>
-<form [formGroup]="form" (ngSubmit)="submit">
+<form *ngIf="!submitted" [formGroup]="form" (ngSubmit)="submit">
   <h2>ENTER YOUR DETAILS</h2>
   <p>Note! provide proper deatils of email-id and password to edit</p>
     <p class="form-group">

@@ -3,24 +3,27 @@ import { HttpClient, HttpClientModule, HttpErrorResponse,  HttpHeaders } from '@
 import { retry, catchError } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import { dealer } from '../observables';
+import { ProfileService } from './profile.service';
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class DealerService {constructor(private http:HttpClientModule, private client:HttpClient) { }
+export class DealerService {constructor(private http:HttpClientModule, 
+  private client:HttpClient, private profileservice:ProfileService) { }
+
   error:any
   head=new HttpHeaders().set('content-type','application/json');
 
   dealerurl="http://localhost:7000/dealers";
 
-  editdealer(value:dealer,token:any):Observable<dealer[]>{
+  editdealer(value:dealer):Observable<dealer[]>{
     const headers={
       'content-type':'application/json',
-      'authorization':'Bearer '+token
+      'authorization':'Bearer '+this.profileservice.token
   }
       const body=JSON.stringify(value)
-      return this.client.put<dealer[]>(this.dealerurl+'/'+value.name,body,{'headers':headers})
+      return this.client.put<dealer[]>(this.dealerurl+this.profileservice._id,body,{'headers':headers})
         .pipe(
           catchError(this.handleError)
         );
@@ -42,19 +45,19 @@ export class DealerService {constructor(private http:HttpClientModule, private c
       'content-type':'application/json',
       'authorization':'Bearer '+token
   }
-  return this.client.get<dealer[]>(this.dealerurl+"/"+value.name,{'headers':headers})
+  return this.client.get<dealer[]>(this.dealerurl+this.profileservice._id,{'headers':headers})
     .pipe(
       catchError(this.handleError)
     );
   }
 
-  deletedealerbyid(value:dealer,token:any):Observable<dealer[]>{
+  deletedealerbyid():Observable<dealer[]>{
     const headers={
       'content-type':'application/json',
-      'authorization':'Bearer '+token
+      'authorization':'Bearer '+this.profileservice.token
   }
-    const body=JSON.stringify(value);
-    return this.client.delete<dealer[]>(this.dealerurl+"/"+value.name,{'headers':headers })
+    //const body=JSON.stringify(value);
+    return this.client.delete<dealer[]>(this.dealerurl+"/"+this.profileservice._id,{'headers':headers })
       .pipe(
         catchError(this.handleError)
       );

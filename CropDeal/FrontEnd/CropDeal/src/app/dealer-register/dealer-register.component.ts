@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Form, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DealerService } from '../services/dealer.service';
 import { LoginService } from '../services/login.service';
+import { ProfileService } from '../services/profile.service';
 //import { ProfileServiceService } from '../profile-service.service';
 
 @Component({
@@ -12,20 +13,29 @@ import { LoginService } from '../services/login.service';
 })
 export class DealerRegisterComponent implements OnInit {
 
-  constructor(private fb :FormBuilder, private dealerservice:DealerService, private loginservice:LoginService
+  constructor(private fb :FormBuilder, 
+    private dealerservice:DealerService,
+    private loginservice:LoginService,
+    private profileservice:ProfileService
     ) { }
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if(!this.profileservice._id.length){
+      console.log(!this.profileservice._id.length);
+      this.data=false
+    }
+  }
   message:any;
   hide = true;
   token:any;
   submitted=false;
   selected='';
+  data=true;
 
   form=this.fb.group({
     gender:new FormControl("",[Validators.required, Validators.minLength(3)]),
     contact:new FormControl(1234567890,[Validators.required, Validators.minLength(10),Validators.maxLength(10)]),
-    name:new FormControl("",[Validators.required, Validators.minLength(3)]),
-    email: new FormControl("",[ Validators.required,Validators.email]),
+    name:new FormControl(this.profileservice.name,[Validators.required, Validators.minLength(3)]),
+    email: new FormControl(this.profileservice.email,[ Validators.required,Validators.email]),
     role:new FormControl(this.selected,Validators.required), 
     password:new FormControl("",[
       Validators.required,
@@ -50,19 +60,12 @@ export class DealerRegisterComponent implements OnInit {
   }
 
   submit(){
-    console.log(this.form.value);
-    this.loginservice.login(this.form.value).subscribe(data=>{
-      this.message="LogIn successfull!",
-      window.alert(this.message);
-      //console.log(this.form.value);
-      this.token=data;
-      //console.log(this.token);
+    //console.log(this.form.value);
       this.submitted=true
-      this.dealerservice.editdealer(this.form.value,this.token).subscribe(data=>{
+      this.dealerservice.editdealer(this.form.value).subscribe(data=>{
       //console.log(this.form.value); 
       //console.log(data);
       this.message="submitted successfully!"
     })
-  })
   }
 }

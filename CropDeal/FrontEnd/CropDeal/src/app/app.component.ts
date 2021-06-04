@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { ProfileService } from './services/profile.service';
 
 @Component({
   selector: 'app-root',
@@ -7,14 +8,36 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(private router:Router){}
+  constructor(private router:Router, private profileservice:ProfileService){}
   title = 'CropDeal';
-  getfarmers(){
-    window.alert("login to get deatils")
-    this.router.navigateByUrl("farmers");
-  }
+
   getdealers(){
-    window.alert("login to get deatils");
+    if(!this.profileservice._id.length)
+    {
+      window.alert("login to get deatils");
+      this.router.navigateByUrl("login")
+  }else{
     this.router.navigateByUrl("dealers");
+  }
+    
+  }
+  registerpage(){
+    this.router.navigateByUrl("register");
+  }
+  loginpage(){
+    this.router.navigateByUrl("login");
+  }
+  cropspage(){
+    this.router.navigateByUrl("product");
+  }
+  cartpage(){
+    if(!this.profileservice._id.length)
+    {
+      window.alert("login to get deatils");
+      this.router.navigateByUrl("login");
+  }
+  else{
+    this.router.navigateByUrl("cart");
+  }
   }
 }

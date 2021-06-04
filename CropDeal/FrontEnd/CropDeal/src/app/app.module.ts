@@ -10,12 +10,15 @@ import { CropServiceService } from './services/crop-service.service';
 import { FarmerService } from './services/farmer.service';
 import { DealerService } from './services/dealer.service';
 import { DeleteaccountpageComponent } from './deleteaccountpage/deleteaccountpage.component';
+import { CompleteComponent } from './complete/complete.component';
+import { ProfileService } from './services/profile.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     routingComponents,
-    DeleteaccountpageComponent
+    DeleteaccountpageComponent,
+    CompleteComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +27,7 @@ import { DeleteaccountpageComponent } from './deleteaccountpage/deleteaccountpag
     MaterialModule,
     HttpClientModule,
   ],
-  providers: [LoginService,CropServiceService,FarmerService,DealerService],
+  providers: [LoginService,CropServiceService,FarmerService,DealerService,ProfileService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

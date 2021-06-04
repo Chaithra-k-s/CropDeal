@@ -1,1 +1,61 @@
-<p>farmerlist works!</p>
+<!-- //checkout page for transactions -->
+<html *ngIf="!visible">
+  <head>
+    <title>Buy cool new product</title>
+    <link rel="stylesheet" href="./farmerlist.component.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+  </head>
+  <body>
+    <section>
+      <div *ngFor="let crop of data" class="product">
+        <img mat-card-image  src="{{crop.crop_img}}" alt="{{crop.crop_img}}">
+        <h3>{{crop.crop_name}}</h3>
+        <div class="description">
+          <h5>Rs.{{crop.crop_price}}</h5>
+        </div>
+      </div>
+      <button type="button" id="checkout-button">
+        <a href="http://localhost:4242/checkout.html">Checkout</a></button>
+    </section>
+  </body>
+  <script type="text/javascript">
+    // Create an instance of the Stripe object with your publishable API key
+    var stripe = Stripe("pk_test_TYooMQauvdEDq54NiTphI7jx");
+    var checkoutButton = document.getElementById("checkout-button");
+
+    checkoutButton.addEventListener("click", function () {
+      fetch("/create-checkout-session", {
+        method: "POST",
+      })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (session) {
+          return stripe.redirectToCheckout({ sessionId:"4000 0000 0000 9995" });
+        })
+        .then(function (result) {
+          // If redirectToCheckout fails due to a browser or network
+          // error, you should display the localized error message to your
+          // customer using error.message.
+          if (result.error) {
+            alert(result.error.message);
+          }
+        })
+        .catch(function (error) {
+          console.error("Error:", error);
+        });
+    });
+  </script>
+</html>
+<html *ngIf="visible">
+<head>
+  <title>Checkout canceled</title>
+  <link rel="stylesheet" href="./farmerlist.component.css">
+</head>
+<body>
+  <section>
+    <p>Forgot to add something to your cart? Shop around then come back to pay!</p>
+  </section>
+</body>
+</html>

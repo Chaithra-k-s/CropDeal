@@ -1,6 +1,6 @@
 <body>
     <nav>
-      <button class="redirect" mat-button color="primary"><a href="providecrop">ADD CROP</a></button>
+      <button class="redirect" mat-button color="primary" (click)="redirecttouploadcrop()">ADD CROP</button>
       <button class="redirect" mat-button color="primary" (click)="redirecttofarmer()">EDIT FARMER DETAILS</button>
       <button class="redirect" mat-button color="primary" (click)="redirecttodealer()">EDIT DEALER DETAILS</button>
       <button class="redirect" mat-button color="primary" (click)="deleteuser()">DELETE USER</button>
@@ -16,8 +16,8 @@
       <mat-card-content >
         <b>PRICE</b> : {{cropobj.crop_price}}
         <br>
-        ADDRESS:
-        {{cropobj.location | json}}
+        <!-- ADDRESS:
+        {{cropobj.location.value | json}} -->
       </mat-card-content>
       <mat-card-actions>
         <button (click)="invoice(cropobj)"  mat-button>Add to Cart</button>

@@ -7,7 +7,7 @@ import { DeleteaccountpageComponent } from './deleteaccountpage/deleteaccountpag
 import { FarmerRegisterComponent } from './farmer-register/farmer-register.component';
 import { FarmerlistComponent } from './farmerlist/farmerlist.component';
 import { FrontpageComponent } from './frontpage/frontpage.component';
-import { InvoicepageComponent } from './invoicepage/invoicepage.component';
+import { InvoicepageComponent } from './cart/invoicepage.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { UploadCropComponent } from './upload-crop/upload-crop.component';
@@ -16,8 +16,8 @@ const routes: Routes = [
   {path:"",component:FrontpageComponent},
   {path:"register",component:RegisterComponent},
   {path:"login",component:LoginComponent},
-  {path:"invoice",component:InvoicepageComponent},
-  {path:"crop",component:CropstoreComponent},
+  {path:"cart",component:InvoicepageComponent},
+  {path:"product",component:CropstoreComponent},
   {path:"farmerRegister",component:FarmerRegisterComponent},
   {path:"dealerRegister",component:DealerRegisterComponent},
   {path:"providecrop",component:UploadCropComponent},

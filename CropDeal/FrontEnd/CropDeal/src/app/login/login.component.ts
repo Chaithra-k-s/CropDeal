@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { CropServiceService } from '../services/crop-service.service';
 import { LoginService } from '../services/login.service';
+import { ProfileService } from '../services/profile.service';
 
 @Component({
   selector: 'app-login',
@@ -16,8 +17,8 @@ export class LoginComponent implements OnInit {
   role: string[] = ['ADMIN', 'FARMER', 'DEALER'];
   submitted=false;
   hide=true
-  
-  constructor( private loginserver:LoginService, private router:Router, private cropserver:CropServiceService) { }
+  data:any;
+  constructor( private loginserver:LoginService, private router:Router, private profileservice:ProfileService) { }
   ngOnInit(): void {
   }
  
@@ -42,18 +43,16 @@ export class LoginComponent implements OnInit {
         this.message="LogIn successfull!"
         window.alert(this.message);
         this.token=data;
+        this.profileservice.user=data
+        this.data=data;
+        this.profileservice.token=this.data.token;
+        this.profileservice.email=this.data.user.email;
+        this.profileservice._id=this.data.user._id;
+        this.profileservice.name=this.data.user.name;
+        this.profileservice.role=this.data.user.role;
+        //console.log(data);
         this.submitted=true;
-        this.router.navigateByUrl("/crop")        
-    //   if(this.form.value.role ==="DEALER"){
-    //       this.router.navigateByUrl("/crop");
-    //   }
-    //   if(this.form.value.role ==="ADMIN"){
-    //     this.router.navigateByUrl("/crop");
-    // }
-    //   if(this.form.value.role=== "FARMER"){
-    //     this.router.navigateByUrl("/providecrop");
-    //   }
-      
+        this.router.navigateByUrl("product")             
     })
   } 
 }

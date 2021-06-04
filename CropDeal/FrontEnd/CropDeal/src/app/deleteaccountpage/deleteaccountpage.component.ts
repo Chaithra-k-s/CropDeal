@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AdminService } from '../services/admin.service';
 import { DealerService } from '../services/dealer.service';
 import { FarmerService } from '../services/farmer.service';
 import { LoginService } from '../services/login.service';
+import { ProfileService } from '../services/profile.service';
 
 @Component({
   selector: 'app-deleteaccountpage',
@@ -11,7 +13,7 @@ import { LoginService } from '../services/login.service';
   styleUrls: ['./deleteaccountpage.component.css']
 })
 export class DeleteaccountpageComponent implements OnInit {
-
+  data=true
   message:any;
   selected="";
   token:any;
@@ -20,9 +22,13 @@ export class DeleteaccountpageComponent implements OnInit {
   submitted=false
   
   constructor( private farmerservice:FarmerService, private router:Router,
-     private dealerservice:DealerService, private adminservice:LoginService,
-     private loginservice:LoginService) { }
+     private dealerservice:DealerService, private adminservice:AdminService,
+     private loginservice:LoginService, private profileservice:ProfileService) { }
   ngOnInit(): void {
+    if(!this.profileservice._id.length){
+      console.log(!this.profileservice._id.length);
+      this.data=false
+    }
   }
  
   form=new FormGroup({
@@ -43,22 +49,20 @@ export class DeleteaccountpageComponent implements OnInit {
 
   submit(){
     this.loginservice.login(this.form.value).subscribe(data=>{
-      this.message="LogIn successfull!",
+      this.message="Validation successfull!",
       window.alert(this.message);
-      //console.log(this.form.value);
       this.token=data;
-      //console.log(this.token);
       this.submitted=true
       this.submitted=true
       if(this.form.value.role ==="DEALER"){
-        this.dealerservice.deletedealerbyid(this.form.value,this.token.token).subscribe(data=>{
+        this.dealerservice.deletedealerbyid().subscribe(data=>{
           this.message="deleted successfull!"
           window.alert(this.message);
           this.router.navigateByUrl("")
         })
       }
       if(this.form.value.role ==="ADMIN"){
-        this.adminservice.deleteadminbyid(this.form.value,this.token.token).subscribe(data=>{
+        this.adminservice.deleteadminbyid(this.token.token).subscribe(()=>{
           this.message="deleted successfull!"
           window.alert(this.message);
           this.router.navigateByUrl("")
