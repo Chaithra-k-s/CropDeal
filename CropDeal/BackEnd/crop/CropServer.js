@@ -71,6 +71,7 @@ const Storage = multer.diskStorage({
         cb(null,file.originalname);
     }
 })
+
 const filefilter=(req,file,cb)=>{
     if(file.mimetype === 'image/jpeg' || file.mimetype === 'image/png'){
         cb(null,true)
@@ -79,6 +80,7 @@ const filefilter=(req,file,cb)=>{
         cb(new Error("Doesnot support type"),false)
     }
 }
+
 const upload=multer({storage:Storage,limits:{
     fileSize:1024*1024*5
 }})
@@ -116,4 +118,7 @@ app.use((error,req,res,next)=>{
         }
     })
 })
-app.listen("8000",()=>console.log("crop server is running on 8000"))
+
+var cropserver=app.listen("8000",()=>console.log("crop server is running on 8000"));
+
+module.exports=cropserver;

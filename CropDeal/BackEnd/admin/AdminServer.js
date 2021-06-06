@@ -8,7 +8,6 @@ const bcrypt =require ("bcrypt");
 const jwt=require("jsonwebtoken");
 const core=require("./adminCore");
 const axios=require("axios");
-const { token } = require("morgan");
 const { secretKey } = require("./config");
 const farmerurl="http://localhost:5000/";
 const dealerurl="http://localhost:7000/"
@@ -35,12 +34,13 @@ app.use((req,res,next)=>{
 const CheckAuth=(req,res,next)=>{
     try{
         const token =req.headers.authorization.split(" ")[1];
-    const decoded=jwt.verify(token,secretKey);
-    req.userdata=decoded;
+        console.log(token);
+        const decoded=jwt.verify(token,secretKey);
+        req.userdata=decoded;
     next();
     } catch(error){
         return res.status(401).json({
-            message:"Auth failed in middleware"
+            message:"Auth failed in middleware",
         })
     }
 }
@@ -88,4 +88,10 @@ app.use((error,req,res,next)=>{
     })
 })
 
-app.listen("2000",()=>console.log("admin server is running on 2000"))
+var adminserver=app.listen("2000",()=>console.log("admin server is running on 2000"));
+
+module.exports=adminserver
+ 
+//401-unauthorised
+//500 server down
+//402 register error or mongoose error

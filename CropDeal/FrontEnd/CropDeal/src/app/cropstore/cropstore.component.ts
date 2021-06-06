@@ -90,7 +90,7 @@ export class CropstoreComponent implements OnInit {
     this.cropservice.sendtoinvoice(value).subscribe(data=>{
       this.invoiceservice.cart=data;
       if (this.invoiceservice.cart.length){
-        this.router.navigateByUrl("/invoice") ;
+        this.router.navigateByUrl("receipt") ;
       }
       else{
         this.router.navigateByUrl("receipt");
