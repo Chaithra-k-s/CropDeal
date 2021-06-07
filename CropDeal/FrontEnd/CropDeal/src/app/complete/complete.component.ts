@@ -7,12 +7,20 @@ import { Router } from '@angular/router';
   styleUrls: ['./complete.component.css']
 })
 export class CompleteComponent implements OnInit {
-
+show=true;
   constructor(private router:Router) { }
   goback(){
-    this.router.navigateByUrl("crop")
+    this.router.navigateByUrl("product")
   }
   ngOnInit(): void {
+    this.submit
+    // console.log(this.show);
+    
+  }
+  submit(){
+    this.show=false
+    // console.log(this.show);
+    
   }
  
 }

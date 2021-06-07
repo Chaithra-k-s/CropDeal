@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { crop } from '../observables';
 import { InvoiceService } from '../services/invoice.service';
 
@@ -10,7 +11,7 @@ import { InvoiceService } from '../services/invoice.service';
 export class FarmerlistComponent implements OnInit {
 data:any
 visible=false
-  constructor(private invoiceserver:InvoiceService) { }
+  constructor(private invoiceserver:InvoiceService,private router:Router) { }
   ngOnInit(): void {
     console.log(this.invoiceserver.cart); 
     this.data=this.invoiceserver.cart; 
@@ -24,7 +25,7 @@ remove(crop:any){
   this.invoiceserver.deleteCartItem(crop._id);
 }
 checkout(){
-  
+  this.router.navigateByUrl("complete")
 }
 }
 

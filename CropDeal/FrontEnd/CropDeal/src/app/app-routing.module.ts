@@ -11,6 +11,7 @@ import { InvoicepageComponent } from './cart/invoicepage.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { UploadCropComponent } from './upload-crop/upload-crop.component';
+import { CompleteComponent } from './complete/complete.component';
 
 const routes: Routes = [
   {path:"",component:FrontpageComponent},
@@ -23,7 +24,8 @@ const routes: Routes = [
   {path:"providecrop",component:UploadCropComponent},
   {path:"receipt",component:FarmerlistComponent},
   {path:"dealers",component:DealerlistComponent},
-  {path:"deleteuser",component:DeleteaccountpageComponent}
+  {path:"deleteuser",component:DeleteaccountpageComponent},
+  {path:"complete",component:CompleteComponent}
 ];
 
 @NgModule({
