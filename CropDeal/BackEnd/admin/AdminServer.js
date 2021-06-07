@@ -18,8 +18,9 @@ app.use(morgan("dev"));
 
 const swaggerJsdoc=require("swagger-jsdoc");
 const swaggerUi=require("swagger-ui-express");
+
 //swagger 
-const options = {
+    const options = {
     definition: {
       openapi: "3.0.0",
       info: {
@@ -36,7 +37,7 @@ const options = {
     },
     apis: ["AdminServer.js"],
   };
- //require("../../BackEnd/crop/CropServer")
+
   const specs = swaggerJsdoc(options);
   app.use(
     "/api-docs",
@@ -44,20 +45,9 @@ const options = {
     swaggerUi.setup(specs,{ explorer: true })
   );
 
-  console.log(specs);
+//console.log(specs);
 
-//for browsers only
-app.use((req,res,next)=>{
-    res.header("Access-Control-Allow-Origin",'*');
-    res.header("Access-Control-Allow-Headers",
-    'Origin,X-Requested-With,Content-Type,Accept,Authorization');
-    if(req.method === 'OPTIONS'){
-        res.header('Access-Control-Allow-Methods','PUT,POST,PATCH,DELETE,GET');
-        return res.status(200).json({})
-    }
-    next();
-})
-
+//schema
 /**
  * @swagger
  * components:
@@ -111,6 +101,18 @@ const CheckAuth=(req,res,next)=>{
     }
 }
 
+//for browsers only
+app.use((req,res,next)=>{
+    res.header("Access-Control-Allow-Origin",'*');
+    res.header("Access-Control-Allow-Headers",
+    'Origin,X-Requested-With,Content-Type,Accept,Authorization');
+    if(req.method === 'OPTIONS'){
+        res.header('Access-Control-Allow-Methods','PUT,POST,PATCH,DELETE,GET');
+        return res.status(200).json({})
+    }
+    next();
+})
+
 //connecting to database
 const dbURI="mongodb+srv://admin:123@mongodbpractise.bjozc.mongodb.net/CropdealADMIN?retryWrites=true&w=majority";
 mongoose.connect(dbURI,{useNewUrlParser:true,useUnifiedTopology:true,useCreateIndex:true})
@@ -120,6 +122,7 @@ mongoose.connect(dbURI,{useNewUrlParser:true,useUnifiedTopology:true,useCreateIn
 .catch((err)=>{
     console.log("db connection error:" + err);
 });
+
 /**
  * @swagger
  * /admin:
@@ -143,9 +146,28 @@ mongoose.connect(dbURI,{useNewUrlParser:true,useUnifiedTopology:true,useCreateIn
  *         default:
  *           description: Something is wrong
  */
+
 //get all details
 app.get("/admin",CheckAuth,core.get_admins);
 
+/**
+ * @swagger
+ * /admin/:id:
+ *   get:
+ *    discription: Get admin with check_auth
+ *    responses:
+ *      '200':
+ *       description:Success
+ *   /ping:
+ *     get:
+ *       summary: Checks if the server is running
+ *       security: []   # No security
+ *       responses:
+ *         '200':
+ *           description: Server is up and running
+ *         default:
+ *           description: Something is wrong
+ */
 //get admin by id
 app.get("/admin/:id",CheckAuth,core.get_admin_by_id)
 
@@ -154,24 +176,12 @@ app.get("/admin/:id",CheckAuth,core.get_admin_by_id)
  * /login:
  *   post:
  *    discription: login admin
- *    components:
- *      securitySchemes:
- *        BearerAuth:
- *          type: http
- *          scheme: bearer
- *    parameters:
- *      - name: 
- *        description: name
- *        required: true
- *        type: String
- *      - email: 
- *        description: email
- *        required: true
- *        type: String
- *      - password: 
- *        description: password
- *        required: true
- *        type: String
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Admin'
  *    responses:
  *      '200':
  *       description:Success
@@ -215,9 +225,50 @@ app.post("/login",core.admin_login);
  //register new dealer
 app.post('/register',core.admin_register);
 
+/**
+ * @swagger
+ * /register:
+ *   put:
+ *     summary: register a new admin
+ *     tags: [Product]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Admin'
+ *     responses:
+ *       200:
+ *         description: The ADMIN was successfully created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Admin'
+ *       500:
+ *         description: Some server error
+ */
+
  //edit admin deatils
 app.put("/:id",CheckAuth,core.admin_edit_by_id);
 
+/**
+ * @swagger
+ * /admin/:id:
+ *   delete:
+ *    discription: Get admin with check_auth
+ *    responses:
+ *      '200':
+ *       description:Success
+ *   /ping:
+ *     get:
+ *       summary: Checks if the server is running
+ *       security: []   # No security
+ *       responses:
+ *         '200':
+ *           description: Server is up and running
+ *         default:
+ *           description: Something is wrong
+ */
 
 //delete admin details
 app.delete("/:id",CheckAuth,core.admin_delete_by_id)

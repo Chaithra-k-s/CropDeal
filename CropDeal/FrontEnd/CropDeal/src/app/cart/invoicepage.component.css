@@ -2,13 +2,13 @@
     padding: 0%;
     margin:0%;
     text-align: center;
-    background-image: url("https://media.istockphoto.com/photos/grocery-shopping-concept-foods-with-shopping-bag-picture-id1126188273?k=6&m=1126188273&s=612x612&w=0&h=YEOvt9vBehWOgP7QadF2RX2iBtvZ_zY7LaMmOP4OFK8=");
+    background-image: url("https://media.istockphoto.com/photos/woman-hand-using-mobile-phone-with-online-transaction-application-picture-id895289310?k=6&m=895289310&s=612x612&w=0&h=_ZhugzLWurPGr14bJ35QgMvr9-3xqmK5sBcZILVewvA=");
     background-size: cover;
     background-repeat: no-repeat;
     overflow: scroll;
 } 
   td, th {
-    width: 25%;
+   width: 25%;
   }
  
   table {
@@ -28,8 +28,6 @@
     font-weight: bold;
     padding: 3px;
   }
-  
-  tr:nth-child(even) {
-    color: white;
-    background-color: #674fee;
+  b{
+    font-size: x-large;
   }

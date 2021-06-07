@@ -86,22 +86,209 @@ const upload=multer({storage:Storage,limits:{
 }})
 //const upload=multer({dest:"./uploads/"});
 
+const swaggerJsdoc=require("swagger-jsdoc");
+const swaggerUi=require("swagger-ui-express");
+//swagger 
+const options = {
+    definition: {
+      openapi: "3.0.0",
+      info: {
+        title: "CROP DEAL CASE STUDY Crop API with Swagger",
+        version: "0.1.0",
+        description:
+          "This is a simple CRUD API application made with Express and documented with Swagger",
+      },
+      servers: [
+        {
+          url: "http://localhost:8000",
+        },
+      ],
+    },
+    apis: ["CropServer.js"],
+  };
+  const specs = swaggerJsdoc(options);
+  app.use(
+    "/api-docs",
+    swaggerUi.serve,
+    swaggerUi.setup(specs,{ explorer: true })
+  );
+
+ // console.log(specs);
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *      Crop:
+ *       type: object
+ *       required:
+ *         - crop_name
+ *         - crop_type
+ *         - crop_quantity
+ *         - crop_price
+ *         - location
+ *         - crop_img
+ *         - uploaded_by
+ *       properties:
+ *         crop_type:
+ *           type: string
+ *           description: The crop type
+ *         crop_name:
+ *           type: string
+ *           description: The crop name
+ *         crop_quamtity:
+ *           type: number
+ *           description: quantity
+ *         crop_price:
+ *           type: number
+ *           description: crop price
+ *         location:
+ *           type: string
+ *           description: farmer location
+ *         crop_image:
+ *           type: string
+ *           description: crop image
+ *         uploaded_by:
+ *           type: string
+ *           description: farmer name
+ *
+ *       example:
+ *         - crop_name:"onion"
+ *         - crop_type:"vegetable"
+ *         - crop_quantity:100
+ *         - crop_price:20
+ *         - location:object
+ *         - crop_img:"http://image"
+ *         - uploaded_by :"pradeep"                     
+ */
+
 // Api methods
+
+/**
+ * @swagger
+ * /:
+ *   get:
+ *    discription: Get all crops
+ *    responses:
+ *      '200':
+ *       description:Success
+ *   /ping:
+ *     get:
+ *       summary: Checks if the server is running
+ *       security: []   # No security
+ *       responses:
+ *         '200':
+ *           description: Server is up and running
+ *         default:
+ *           description: Something is wrong
+ */
 
 //getting all data
 app.get("/",core.crop_get_all)
 
+/**
+ * @swagger
+ * /{id}:
+ *   get:
+ *     summary: edit by id
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The product id
+ *     responses:
+ *       200:
+ *         description: The product description by id
+ *         contens:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Admin'
+ *       404:
+ *         description: The product was not found
+ */
+
 // fetch particular crop details with name
 app.get('/:id',core.crop_get_by_id)
 
+/**
+ * @swagger
+ * /:
+ *   post:
+ *     summary: upload crop
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Crop'
+ *     responses:
+ *       200:
+ *         description: crop are uploaded successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Crop'
+ *       500:
+ *         description: Some server error
+ */
+
 //adding crop
 //app.post("/",upload.single("crop_img"),CheckAuth,core.upload_crop)
- app.post("/",CheckAuth,core.upload_crop)   
+ app.post("/",CheckAuth,core.upload_crop) 
+
+/**
+ * @swagger
+ * /{id}:
+ *   put:
+ *     summary: edit by id
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The product id
+ *     responses:
+ *       200:
+ *         description: The product description by id
+ *         contens:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Crop'
+ *       404:
+ *         description: The product was not found
+ */
+ 
 //updating a particular crop
 app.put("/:id",CheckAuth,core.edit_by_id)
 
+/**
+ * @swagger
+ * /{id}:
+ *   delete:
+ *     summary: Get the crop by id
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The product id
+ *     responses:
+ *       200:
+ *         description: The product description by id
+ *         contens:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Admin'
+ *       404:
+ *         description: The product was not found
+ */
+
 //deleteing particular crop
-app.delete('/:id',CheckAuth,core.delete_by_id)
+app.delete('/:id',core.delete_by_id)
 
 //handing server errors
 app.use((req,res,next)=>{

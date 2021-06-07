@@ -24,7 +24,7 @@ exports.get_admins=(req,res,next)=>{
 
 //get admin by id
 exports.get_admin_by_id=(req,res,next)=>{
-    adminschema.findOne({_id:req.parmas.id}).exec((err,data)=>{
+    adminschema.findOne({_id:req.params.id}).exec((err,data)=>{
         if(err){
             res.send("error fetching data from database")
         }
@@ -120,6 +120,7 @@ exports.admin_login=(req,res,next)=>{
 
 //edit admin details
 exports.admin_edit_by_id=(req,res)=>{
+    console.log(req.body);
     bcrypt.hash(req.body.password,10,(err,hash)=>{
         if (err) {
             return res.status(500).json({

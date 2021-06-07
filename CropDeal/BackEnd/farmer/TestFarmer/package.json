@@ -1,0 +1,25 @@
+{
+  "name": "dealertesting",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "start": "nodemon FarmerServer.js",
+    "test": "mocha || true --recursive --exit",
+    "coverage": "nyc --reporter=html npm run test"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "jest": "^27.0.4",
+    "mocha": "^8.4.0",
+    "mockgoose": "^8.0.4",
+    "nyc": "^15.1.0",
+    "supertest": "^6.1.3"
+  }
+}

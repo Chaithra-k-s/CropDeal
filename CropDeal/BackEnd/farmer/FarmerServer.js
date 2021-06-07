@@ -108,4 +108,6 @@ app.use((error,req,res,next)=>{
 })
 
 // get calls from server
-app.listen("5000",()=>console.log("farmer server is running on 5000"))
+var farmer=app.listen("5000",()=>console.log("farmer server is running on 5000"))
+
+module.exports=farmer

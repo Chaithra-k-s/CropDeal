@@ -11,5 +11,8 @@
   "dependencies": {
     "express": "^4.17.1",
     "stripe": "^7.1.0"
+  },
+  "devDependencies": {
+    "cors": "^2.8.5"
   }
 }

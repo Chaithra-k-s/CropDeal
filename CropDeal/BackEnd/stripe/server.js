@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const cors=require("cors")
 // This is a sample test API key. Sign in to see examples pre-filled with your key.
 const stripe = require("stripe")("sk_test_4eC39HqLyjWDarjtT1zdp7dc");
 

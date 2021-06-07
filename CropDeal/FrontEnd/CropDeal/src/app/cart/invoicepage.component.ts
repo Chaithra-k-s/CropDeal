@@ -42,7 +42,6 @@ export class InvoicepageComponent implements OnInit {
   return this.add.map((t: { crop_price: any; }) => 
   t.crop_price).reduce((acc: any, value: any) => acc + value, 0);
   }
-
   // invokeStripe(){
   //   if( !window.document.getElement){}
   // }
@@ -72,7 +71,7 @@ export class InvoicepageComponent implements OnInit {
   }
 //add element to cart
   addData() {
-    this.router.navigateByUrl("/crop") 
+    this.router.navigateByUrl("product") 
   }
 
   displayedColumns: string[] = ['CROP NAME', 'CROP TYPE','QUANTITY','COST'];

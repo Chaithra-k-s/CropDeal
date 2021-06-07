@@ -16,13 +16,13 @@
             <td>{{cropobj.crop_name}}</td>
             <td>{{cropobj.crop_type}}</td>
             <td>{{cropobj.crop_quantity}}</td>
-            <td>{{cropobj.crop_price}}</td>
+            <td>Rs. {{cropobj.crop_price}}</td>
             <td><button mat-raised-button (click)="remove(cropobj)"><mat-icon>delete</mat-icon></button></td>
         </tr>
 
-        <tr>TOTAL AMOUNT={{check()}}</tr>
+        <tr> <b>TOTAL AMOUNT=Rs. {{check()}}</b> </tr>
         
-        <td><button mat-raised-button (click)="buynow(add)">BUY NOW</button></td>
+        <td><button mat-raised-button (click)="buynow(add)"><mat-icon>money</mat-icon>BUY NOW</button></td>
         <!-- <td><button><a href="http://localhost:4242/checkout.html">BUY NOW</a></button></td> -->
         <br>         
     </table>  

@@ -18,7 +18,7 @@ exports.farmers_get_all=(req,res)=>{
 }
 
 exports.farmers_get_by_id=(req,res)=>{
-    farmerschema.findOne({name:req.params.id}).exec((err,data)=>{
+    farmerschema.findOne({_id:req.params.id}).exec((err,data)=>{
         if(err){
             res.send("error fetching data from database")
         }
@@ -29,7 +29,6 @@ exports.farmers_get_by_id=(req,res)=>{
 }
 
 exports.farmers_register=(req,res)=>{
-    console.log(req.body);
     farmerschema.find({email:req.body.email})
     .exec().then(user=>{
         if(user.length>=1){
@@ -76,7 +75,7 @@ exports.farmers_login=(req,res,next)=>{
     .then(farmer=>{
         if(farmer.length<1){
             return res.status(401).json({
-                message:"Authentication Failed"
+                message:"user does not exits"
             })
         }
         bcrypt.compare(req.body.password, farmer[0].password,(err,result)=>{
@@ -112,7 +111,7 @@ exports.farmers_login=(req,res,next)=>{
 }
 
 exports.farmers_delete_by_id=(req,res)=>{
-    farmerschema.findOneAndDelete({name:req.params.id}).exec((err,data)=>{
+    farmerschema.findOneAndDelete({_id:req.params.id}).exec((err,data)=>{
         if(err){
             res.send("error deleting data from database",err)
         }
@@ -126,61 +125,42 @@ exports.farmers_delete_by_id=(req,res)=>{
 
 exports.farmers_edit_by_id=(req,res)=>{
     console.log(req.body);
-    farmerschema.find({email:req.body.email}).exec()
-    .then(farmer=>{
-        if(farmer.length<1){
-            return res.status(401).json({
-                message:"Authentication Failed"
+    bcrypt.hash(req.body.password,10,(err,hash)=>{
+        if (err) {
+            return res.status(500).json({
+                error:err
             })
+        }else{
+    farmerschema.findOneAndUpdate({_id:req.params.id},{$set:
+        {
+            name:req.body.name,
+            email:req.body.email,
+            password:hash,
+            contact:req.body.contact,
+            gender:req.body.gender,
+            cropsgrown:[req.body.crops],
+            bank_details:{
+                bank_name:req.body.bank_details.bank_name,
+                account_number:req.body.bank_details.account_number,
+                ifsc_code:req.body.bank_details.ifsc_code
+            }
         }
-        bcrypt.compare(req.body.password, farmer[0].password,(err,result)=>{
-            if(err){
-                return res.status(401).json({
-                    message:"Authentication failed"
-                })
-            }
-            if (result){
-                const token=jwt.sign({
-                    email:farmer[0].email,
-                    userId:farmer[0]._id
-                },secretKey,{
-                    expiresIn:'1h'
-                })
-                farmerschema.findOneAndUpdate({name:req.params.id},{$set:
-                    {
-                        name:req.body.name,
-                        email:req.body.email,
-                        contact:req.body.contact,
-                        cropsgrown:req.body.cropsgrown,
-                        gender:req.body.gender,
-                        bank_details:{
-                            bank_name:req.body.bank_details.bank_name,
-                            account_number:req.body.bank_details.account_number,
-                            ifsc_code:req.body.bank_details.ifsc_code
-                        }
-                    }
-                }) .then(result=>{
-                    res.status(201).json({
-                        message:"updated successfully",
-                        farmerdetails:result
-                    })
-                })
-                .catch(err=>{
-                    console.log(err),
-                    res.status(402).json({
-                        message:"INVALID EMAIL ID",
-                        ERROR:err._message
-                    })
-                })
-            }
-        })
-    }).catch(err=>{
-        console.log(err);
-        res.status(500).json({
-            error:err,
-            message:err
+    })
+    .then(result=>{
+        res.status(201).json({
+            message:"updated successfully",
+            farmerdetails:result
         })
     })
+        .catch(err=>{
+            console.log(err),
+            res.status(402).json({
+                message:"INVALID EMAIL ID",
+                ERROR:err._message
+            })
+        })
+    }
+})
 
 }
     

@@ -91,4 +91,6 @@ app.use((error,req,res,next)=>{
     })
 })
 
-app.listen("7000",()=>console.log("dealer server is running on 7000"))
+var dealer=app.listen("7000",()=>console.log("dealer server is running on 7000"))
+
+module.exports=dealer;

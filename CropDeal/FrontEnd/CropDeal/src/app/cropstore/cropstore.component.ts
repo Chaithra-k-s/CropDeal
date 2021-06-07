@@ -22,12 +22,15 @@ export class CropstoreComponent implements OnInit {
   crops:any
   type:any
   particularcrop:any
+  login=false
 
   ngOnInit(): void {
     this.cropservice.getcrop().subscribe(data=>{
       this.crops=data
       console.log(this.crops);
-      
+      if(this.profileservice._id.length){
+        this.login=true
+      }      
     })
     console.log(this.profileservice.user)
     console.log(this.profileservice._id);
@@ -87,24 +90,33 @@ export class CropstoreComponent implements OnInit {
   }
 
   bill(value:any){
-    this.cropservice.sendtoinvoice(value).subscribe(data=>{
-      this.invoiceservice.cart=data;
-      if (this.invoiceservice.cart.length){
-        this.router.navigateByUrl("receipt") ;
-      }
-      else{
-        this.router.navigateByUrl("receipt");
-        //this.router.navigateByUrl("C:\nodejs\CropDeal\BackEnd\payment\stripe\checkout.html")
-      }
-    })
+    if(this.login){
+      this.cropservice.sendtoinvoice(value).subscribe(data=>{
+        this.invoiceservice.cart=data;
+        if (this.invoiceservice.cart.length>1){
+          this.router.navigateByUrl("cart") ;
+        }
+        else{
+          this.router.navigateByUrl("receipt");
+          //this.router.navigateByUrl("C:\nodejs\CropDeal\BackEnd\payment\stripe\checkout.html")
+        }
+      })
+    }else{
+      window.alert("Login to add crop for your cart");
+      this.router.navigateByUrl("login");
+    }
   }
 
   invoice(value:any){
-    this.cropservice.sendtoinvoice(value).subscribe(data=>
-      {
-      console.log(data); 
-    })
-    console.log(value);
+    if(this.login){
+      this.cropservice.sendtoinvoice(value).subscribe(data=>
+        {
+        console.log(data); 
+      })
+    }else{
+      window.alert("Login to add crop for your cart");
+      this.router.navigateByUrl("login");
+    }
   }
 
   cropdetails(value:crop[]){

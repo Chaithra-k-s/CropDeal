@@ -20,7 +20,7 @@ exports.crop_get_all=(req,res)=>{
     })
 }
 exports.crop_get_by_id=(req,res)=>{
-    cropschema.findOne({crop_name:req.params.id}).exec((err,data)=>{
+    cropschema.findOne({_id:req.params.id}).exec((err,data)=>{
         if(err){
             res.send("error fetching data from database")
         }
@@ -68,7 +68,7 @@ exports.upload_crop=(req,res)=>{
     })  
 }
 exports.edit_by_id=(req,res)=>{
-    cropschema.findOneAndUpdate({crop_name:req.params.id},{$set:
+    cropschema.findOneAndUpdate({_id:req.params.id},{$set:
         {
             crop_name:req.body.crop_name,
             crop_type:req.body.crop_type,
@@ -90,7 +90,7 @@ exports.edit_by_id=(req,res)=>{
             console.log(result);
             res.status(200).json({
             message:"updating data in database",
-            editedcrop:req.body
+            editedcrop:result
         })
         })
         .catch(err=>{
@@ -103,7 +103,7 @@ exports.edit_by_id=(req,res)=>{
         
 }
 exports.delete_by_id=(req,res)=>{
-    cropschema.findOneAndDelete({crop_name:req.params.id}).exec((err,data)=>{
+    cropschema.findOneAndDelete({_id:req.params.id}).exec((err,data)=>{
         if(data==null){
             res.status(404).json({
                 error:"Crop not found ",
