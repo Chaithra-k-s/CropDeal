@@ -2,6 +2,10 @@ body{
     padding: 0%;
     margin:0%;
     text-align: center;
+    background-image: url("https://media.istockphoto.com/vectors/fresh-vegetables-seamless-pattern-vector-id1145293728?k=6&m=1145293728&s=612x612&w=0&h=sP2yfxkry-ENAJxYhlyFlcRaXo8NBhY7RJzgW3uj2xM=") ;
+    background-size: cover;
+    overflow: scroll;
+    background-repeat: no-repeat;
 }
 div{
     color: red;

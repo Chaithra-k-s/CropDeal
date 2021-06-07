@@ -14,7 +14,7 @@ import { UploadCropComponent } from './upload-crop/upload-crop.component';
 import { CompleteComponent } from './complete/complete.component';
 
 const routes: Routes = [
-  {path:"",component:FrontpageComponent},
+  {path:"home",component:FrontpageComponent},
   {path:"register",component:RegisterComponent},
   {path:"login",component:LoginComponent},
   {path:"cart",component:InvoicepageComponent},
@@ -25,7 +25,8 @@ const routes: Routes = [
   {path:"receipt",component:FarmerlistComponent},
   {path:"dealers",component:DealerlistComponent},
   {path:"deleteuser",component:DeleteaccountpageComponent},
-  {path:"complete",component:CompleteComponent}
+  {path:"complete",component:CompleteComponent},
+  {path:"**",pathMatch:"full",redirectTo:"home"}
 ];
 
 @NgModule({

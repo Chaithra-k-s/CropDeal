@@ -14,10 +14,9 @@
       </mat-card-header>
       <img mat-card-image  src="{{cropobj.crop_img}}" alt="{{cropobj.crop_img}}">
       <mat-card-content >
-        <b>PRICE</b> : {{cropobj.crop_price}}
+        <b>PRICE</b>: Rs. {{cropobj.crop_price}}
         <br>
-        <!-- ADDRESS:
-        {{cropobj.location.value | json}} -->
+        PROVIDER:{{cropobj.uploaded_by}}
       </mat-card-content>
       <mat-card-actions>
         <button (click)="invoice(cropobj)"  mat-button>Add to Cart</button>
