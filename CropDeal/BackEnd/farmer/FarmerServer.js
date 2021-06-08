@@ -17,6 +17,17 @@ const { secretKey } = require("./config");
 // const dealerurl="http://localhost:7000/";
 // const cropurl="http://localhost:8000/"
 
+const checkAuthorization=((req,res,next)=>{
+    if(Role==("ADMIN"||"FARMER"))
+    {
+        next()
+    }else{
+        res.status(404).json({
+            message:"UNAUTHORIZED"
+        })
+    }
+})
+
 const app=express();
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json());

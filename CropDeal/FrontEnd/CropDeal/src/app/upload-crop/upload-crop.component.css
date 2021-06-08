@@ -2,7 +2,8 @@ body{
     padding: 0%;
     margin:0%;
     text-align: center;
-    background-image: url("https://cdn.pixabay.com/photo/2017/04/25/19/36/farmer-2260636__480.jpg");
+    background-image: url("https://images.unsplash.com/photo-1591169799018-643af9490135?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NjR8fGNyb3B8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60");
+    background-size: cover;
     background-repeat: no-repeat;
     background-size: relative;
     overflow: scroll;

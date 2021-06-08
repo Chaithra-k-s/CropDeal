@@ -23,6 +23,7 @@ export class DealerlistComponent implements OnInit {
   dataSource:any;
   hide=true
   data=true
+  userrole:any;
   constructor( private loginservice:LoginService,
     private router:Router,
      private farmerservice:FarmerService,
@@ -31,6 +32,7 @@ export class DealerlistComponent implements OnInit {
      private profileservice:ProfileService) { }
 
   ngOnInit(): void {
+    this.userrole=this.profileservice.role
     if(!this.profileservice._id.length){
       console.log(!this.profileservice._id.length);
       this.data=false

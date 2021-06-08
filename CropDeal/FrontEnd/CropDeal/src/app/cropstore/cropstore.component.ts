@@ -27,16 +27,18 @@ export class CropstoreComponent implements OnInit {
   ngOnInit(): void {
     this.cropservice.getcrop().subscribe(data=>{
       this.crops=data
+      // console.log(this.profileservice.role);
+      
       console.log(this.crops);
       if(this.profileservice._id.length){
         this.login=true
       }      
     })
-    console.log(this.profileservice.user)
-    console.log(this.profileservice._id);
-    console.log(this.profileservice.email);
-    console.log(this.profileservice.token);
-    console.log(this.profileservice.name);
+    // console.log(this.profileservice.user)
+    // console.log(this.profileservice._id);
+    // console.log(this.profileservice.email);
+    // console.log(this.profileservice.token);
+    // console.log(this.profileservice.name);
   }
   
   redirecttouploadcrop(){
@@ -45,12 +47,12 @@ export class CropstoreComponent implements OnInit {
       this.router.navigateByUrl("login")
     }
     else{
-      if(this.profileservice.role ==("ADMIN"|| "FARMER")){
+      if(this.profileservice.role ==("DEALER")){
       window.alert("LOGIN AS ADMIN OF FARMER TO UPDATE CROP");
       this.router.navigateByUrl("login")
     }
     else{
-      window.alert("Provide details to Edit Account Details")
+      //window.alert("Provide details to Edit Account Details")
       this.router.navigateByUrl("providecrop")
     }
   }

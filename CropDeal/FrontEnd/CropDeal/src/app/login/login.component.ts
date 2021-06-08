@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
         this.profileservice.email=this.data.user.email;
         this.profileservice._id=this.data.user._id;
         this.profileservice.name=this.data.user.name;
-        this.profileservice.role=this.data.user.role;
+        this.profileservice.role=this.data.user.Role;
         this.submitted=true;
         this.router.navigateByUrl("product")             
     })
