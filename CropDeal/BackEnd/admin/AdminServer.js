@@ -173,27 +173,24 @@ app.get("/admin/:id",CheckAuth,core.get_admin_by_id)
 
 /**
  * @swagger
- * /login:
+ * /register:
  *   post:
- *    discription: login admin
+ *     summary: login to admin
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
  *             $ref: '#/components/schemas/Admin'
- *    responses:
- *      '200':
- *       description:Success
- *   /ping:
- *     get:
- *       summary: Checks if the server is running
- *       security: []   # No security
- *       responses:
- *         '200':
- *           description: Server is up and running
- *         default:
- *           description: Something is wrong
+ *     responses:
+ *       200:
+ *         description: The ADMIN was successfully logged In
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Admin'
+ *       500:
+ *         description: Some server error
  */
 
 // login dealer user
@@ -204,7 +201,6 @@ app.post("/login",core.admin_login);
  * /register:
  *   post:
  *     summary: register a new admin
- *     tags: [Product]
  *     requestBody:
  *       required: true
  *       content:
@@ -230,7 +226,6 @@ app.post('/register',core.admin_register);
  * /register:
  *   put:
  *     summary: register a new admin
- *     tags: [Product]
  *     requestBody:
  *       required: true
  *       content:
@@ -239,7 +234,7 @@ app.post('/register',core.admin_register);
  *             $ref: '#/components/schemas/Admin'
  *     responses:
  *       200:
- *         description: The ADMIN was successfully created
+ *         description: The ADMIN was successfully edited
  *         content:
  *           application/json:
  *             schema:
