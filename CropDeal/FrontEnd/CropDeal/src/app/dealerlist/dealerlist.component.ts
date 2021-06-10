@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AdminService } from '../services/admin.service';
+import { CropServiceService } from '../services/crop-service.service';
 import { DealerService } from '../services/dealer.service';
 import { FarmerService } from '../services/farmer.service';
 import { LoginService } from '../services/login.service';
@@ -14,7 +15,7 @@ import { ProfileService } from '../services/profile.service';
   styleUrls: ['./dealerlist.component.css']
 })
 export class DealerlistComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'email', 'contact', 'gender'];//add crops later
+  displayedColumns: string[] = ['name', 'email', 'contact', 'gender','cropsgrown'];//add crops later
   message:any;
   selected="";
   token:any
@@ -24,12 +25,14 @@ export class DealerlistComponent implements OnInit {
   hide=true
   data=true
   userrole:any;
+  crop:String[]=[]
   constructor( private loginservice:LoginService,
     private router:Router,
      private farmerservice:FarmerService,
      private dealerservice:DealerService,
      private adminservice:AdminService,
-     private profileservice:ProfileService) { }
+     private profileservice:ProfileService,
+     private cropservice:CropServiceService) { }
 
   ngOnInit(): void {
     this.userrole=this.profileservice.role
@@ -38,6 +41,14 @@ export class DealerlistComponent implements OnInit {
       this.data=false
     }
     this.submit
+    this.cropservice.getcrop().subscribe(data=>{
+      //console.log(data);
+      for(let i of data)
+      {
+        this.crop.push(i.uploaded_by);
+      }
+    })
+    console.log(this.crop);
   }
  //building form
   form=new FormGroup({
@@ -64,13 +75,13 @@ export class DealerlistComponent implements OnInit {
         //console.log(this.token);
         this.submitted=true       
         if(this.form.value.role===("FARMER" || "ADMIN") ){
-          this.farmerservice.getfarmer().subscribe(data=>{
+          this.farmerservice.getfarmer(this.token).subscribe(data=>{
           this.dataSource=data; 
           //this.applyFilter        
           })
         } 
         if(this.form.value.role ===("DEALER" || "ADMIN")){
-          this.dealerservice.getdealer().subscribe(data=>{
+          this.dealerservice.getdealer(this.token).subscribe(data=>{
           this.dataSource=data;
           //this.applyFilter
           })

@@ -46,7 +46,7 @@ export class InvoicepageComponent implements OnInit {
   //   if( !window.document.getElement){}
   // }
 //generate invoice
-  buynow(add:any){
+  buynow(){
     // const amount=this.check()
     // const paymentHandler =(<any>window).StripeCheckout.configure({
       // key:
@@ -59,8 +59,8 @@ export class InvoicepageComponent implements OnInit {
     // });
     // paymentHandler.open({
     //   name:'chaithra',
-
     // })
+    this.invoiceservice.amount=this.check()
     this.router.navigateByUrl("receipt");
   }
   // deleting particular element

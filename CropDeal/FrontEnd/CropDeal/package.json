@@ -22,8 +22,10 @@
     "@angular/router": "~12.0.1",
     "@stripe/stripe-js": "^1.15.0",
     "http": "0.0.1-security",
+    "ngx-stripe": "^11.0.1-beta.0",
     "rxjs": "~6.6.0",
     "stripe": "^8.151.0",
+    "stripe-angular": "^1.7.0",
     "tslib": "^2.1.0",
     "zone.js": "~0.11.4"
   },

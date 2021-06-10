@@ -13,7 +13,7 @@ export class InvoiceService {
 
   invoiceurl="http://localhost:4000/";
   cart:any;
-
+  amount:any;
 //get all items
   getCartItems():Observable<crop[]>{
     const headers={'content-type':'application/json'};

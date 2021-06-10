@@ -34,6 +34,8 @@ export class crop{
         public location:location,
         public crop_img: String,
         public uploaded_by:String,
+        public available:boolean,
+        public soldto:String
     ){}
 }
 

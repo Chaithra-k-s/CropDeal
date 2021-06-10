@@ -47,7 +47,7 @@ mat-card{
 
 mat-card-content{
 text-align: left;
-height: 20px;
+height: 40px;
 }
 
 mat-card-title{
@@ -60,4 +60,12 @@ mat-card-subtitle{
 }
 a{
   text-decoration: none;
+}
+button.add,button.sub{
+  background-color: white;
+  border-radius: 5px;
+}
+button{
+  background-color: white;
+  border:none
 }

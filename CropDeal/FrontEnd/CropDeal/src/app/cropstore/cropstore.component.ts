@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import { CropServiceService} from '../services/crop-service.service';
 import { crop } from '../observables';
 import { InvoiceService } from '../services/invoice.service';
@@ -12,8 +11,8 @@ import { ProfileService } from '../services/profile.service';
   styleUrls: ['./cropstore.component.css']
 })
 export class CropstoreComponent implements OnInit {
-
-  constructor(private cropservice:CropServiceService, 
+  constructor(
+    private cropservice:CropServiceService, 
     private router:Router, 
     private invoiceservice:InvoiceService, 
     private profileservice:ProfileService) 
@@ -23,6 +22,7 @@ export class CropstoreComponent implements OnInit {
   type:any
   particularcrop:any
   login=false
+  quantity:number=0
 
   ngOnInit(): void {
     this.cropservice.getcrop().subscribe(data=>{

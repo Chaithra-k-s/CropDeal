@@ -96,6 +96,11 @@
         <th mat-header-cell *matHeaderCellDef> GENDER </th>
         <td mat-cell *matCellDef="let element"> {{element.gender}} </td>
       </ng-container> 
+
+      <ng-container matColumnDef="cropsgrown">
+        <th mat-header-cell *matHeaderCellDef> CROPS </th>
+        <td mat-cell *matCellDef="let element"> {{element.cropsgrown}} </td>
+      </ng-container>
     
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

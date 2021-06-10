@@ -1,11 +1,8 @@
 <!-- //checkout page for transactions -->
 <html *ngIf="!visible">
   <head>
-    <title>Buy cool new product</title>
-    <iframe src="" frameborder="0"></iframe>
-    <link rel="stylesheet" href="./farmerlist.component.css">
-    <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
-    <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://checkout.stripe.com/checkout.js"></script>
+
   </head>
   <body>
     <section>
@@ -16,7 +13,7 @@
           <h5>Rs.{{crop.crop_price}}</h5>
         </div>
       </div>
-      <button type="button" (click)="checkout()" id="checkout-button">Checkout</button>
+      <button type="button" (click)="pay(5000)" id="checkout-button">Checkout: Rs {{amount}}</button>
          <!-- <a href="C:\nodejs\CropDeal\BackEnd\stripe\checkout.html">Checkout</a> </button> -->
     </section>
   </body>

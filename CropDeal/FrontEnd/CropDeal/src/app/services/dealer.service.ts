@@ -29,15 +29,26 @@ export class DealerService {constructor(private http:HttpClientModule,
       );
   }
 
-  getdealer():Observable<dealer[]>{
-    const headers={
-      'content-type':'application/json',
-      'authorization':'Bearer '+this.profileservice.token
-  }
-    return this.client.get<dealer[]>(this.dealerurl,{'headers':headers})
-      .pipe(
-        catchError(this.handleError)
-      );
+  getdealer(token?:any):Observable<dealer[]>{
+    if(token){
+      const headers={
+        'content-type':'application/json',
+        'authorization':'Bearer '+token.token
+    }
+      return this.client.get<dealer[]>(this.dealerurl,{'headers':headers})
+        .pipe(
+          catchError(this.handleError)
+        );
+    }else{
+      const headers={
+        'content-type':'application/json',
+        'authorization':'Bearer '+this.profileservice.token
+    }
+      return this.client.get<dealer[]>(this.dealerurl,{'headers':headers})
+        .pipe(
+          catchError(this.handleError)
+        );
+    }
   }
 
   getdealerbyid():Observable<dealer[]>{
