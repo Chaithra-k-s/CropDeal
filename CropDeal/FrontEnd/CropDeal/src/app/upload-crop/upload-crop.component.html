@@ -1,5 +1,14 @@
-<body *ngIf="!data">
+<body>
+  <!-- <div *ngFor="let i of type">{{i}}</div> -->
+  <!-- <select name="crop_type" id="crop_type">
+    <option *ngFor="let type of type" value="type">{{type}}</option>
+    <option value="inp">new value</option>
+  </select>
+  <br>
+  <input type="text" id="type"/> -->
+  <!-- *ngIf="!data"> -->
     <h1>PROVIDE CROP DETAILS</h1>
+   
     <form [formGroup]="form" (ngSubmit)="submit">
         <p class="form-group">
             <mat-form-field appearance="outline">
@@ -85,6 +94,11 @@
       <input matInput formControlName="pincode" type="number" placeholder="PINCODE">
     </mat-form-field>
     </p> 
+
+    <!-- <select name="crop_type" id="crop_type">
+      <option *ngFor="let type of type" value="type">{{type}}</option>
+      <option><input type="text" id="type"></option>
+    </select> -->
 
   </div>      
     <div class="example-container">

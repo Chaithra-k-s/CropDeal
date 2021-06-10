@@ -5,6 +5,7 @@ const app=require("./AdminServer");
 const conn=require("./DBconnect");
 let token="";
 let id=""
+
 // register, login, edit, get alladmins, admin by id finally delete user
 describe("POST /register ",()=>{
     before((done)=>{
@@ -330,7 +331,8 @@ describe("POST/login",()=>{
 
     }) 
 })
-//
+
+//get all admin details in 
 describe("GET /admin to get all admin details",()=>{
     before((done)=>{
         conn.connect()

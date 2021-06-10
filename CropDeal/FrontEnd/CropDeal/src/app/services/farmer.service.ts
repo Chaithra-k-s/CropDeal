@@ -30,15 +30,27 @@ export class FarmerService {
   }
 
 //get farmer details using token
-  getfarmer():Observable<farmer[]>{
-       const headers={
-      'content-type':'application/json',
-      'authorization':'Bearer '+this.profileservice.token
-      }
-    return this.client.get<farmer[]>(this.farmerurl,{'headers':headers})
-      .pipe(
-        catchError(this.handleError)
-      );
+  getfarmer(token?:any):Observable<farmer[]>{ 
+    if(token){
+      console.log(token);
+      let headers={
+        'content-type':'application/json',
+        'authorization':'Bearer '+token.token
+        }
+        return this.client.get<farmer[]>(this.farmerurl,{'headers':headers})
+        .pipe(
+          catchError(this.handleError)
+        );
+    } else{
+      const headers={
+        'content-type':'application/json',
+        'authorization':'Bearer '+this.profileservice.token
+        }
+        return this.client.get<farmer[]>(this.farmerurl,{'headers':headers})
+        .pipe(
+          catchError(this.handleError)
+        );
+    }   
   }
 
 //get particular farmer details using token
@@ -78,5 +90,16 @@ export class FarmerService {
      window.alert(errorMessage);
     console.log(errorMessage)
     return throwError(error.message || "Server Error");
+  }
+  editcropdetails(value:any){
+    const headers={
+      'content-type':'application/json',
+      'authorization':'Bearer '+this.profileservice.token
+  }
+      const body=JSON.stringify(value)
+      return this.client.patch<farmer[]>(this.farmerurl+"/"+value.name,body,{'headers':headers})
+        .pipe(
+          catchError(this.handleError)
+        );
   }
 }
