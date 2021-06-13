@@ -1,0 +1,16 @@
+service: aws-lambda-crop
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  memory: 512
+  timeout: 15
+  stage: production
+  region: us-east-1
+
+function:
+  api:
+    handler: lambda.handler
+    events:
+      - http: ANY {proxy+}
+      - http: ANY /

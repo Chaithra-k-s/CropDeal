@@ -1,4 +1,5 @@
 //import libraries
+const serverless=require("serverless-http")
 const http=require("http");
 const express=require("express");
 const multer=require("multer");
@@ -307,5 +308,5 @@ app.use((error,req,res,next)=>{
 })
 
 var cropserver=app.listen("8000",()=>console.log("crop server is running on 8000"));
-
 module.exports=cropserver;
+module.exports=serverless(app)

@@ -10,17 +10,18 @@ var originWhitelist=[
 ];
 var corsOptions={
     origin:function(origin,callback){
-        var isWhitelisted=this.originsWhitelist.indexOf(origin)!==-1;
+        var isWhitelisted=this.originsWhitelist
+        //.indexOf(origin)!==-1;
         callback(null,isWhitelisted);
     },
     credentials:true
 }
 app.use(cors(corsOptions));
-app.post('/paynow',(req,res)=>{
+app.get('/paynow',(req,res)=>{
     console.log('The body is',req.body);
     var charge=stripe.charges.create({
         amount:req.body.amount,
-        currency:'inr',
+        currency:'INR',
         source:req.body.token
     },(err,charge)=>{
         if(err){

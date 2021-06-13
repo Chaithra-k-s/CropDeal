@@ -3,11 +3,12 @@ import { Router } from '@angular/router';
 import { InvoiceService } from '../services/invoice.service';
 import { StripeCardComponent, StripeService} from "ngx-stripe";
 import {
+  loadStripe,
   StripeCardElementOptions,
   StripeElementsOptions
 } from '@stripe/stripe-js';
 
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHandler } from '@angular/common/http';
 import { Stripe } from 'stripe';
 
 
@@ -45,7 +46,6 @@ handler:any=null;
       s.type = "text/javascript";
       s.src = "https://checkout.stripe.com/checkout.js";
       s.onload = () => {
-        if(typeof window !==undefined){
           this.handler = (<any>window).StripeCheckout.configure({
             key: 'pk_test_51HxRkiCumzEESdU2Z1FzfCVAJyiVHyHifo0GeCMAyzHPFme6v6ahYeYbQPpD9BvXbAacO2yFQ8ETlKjo4pkHSHSh00qKzqUVK9',
             locale: 'auto',
@@ -60,27 +60,46 @@ handler:any=null;
               console.log(token)
               alert('Payment Success!!');
             })
-          
           }
       });
-        }
       }  
       window.document.body.appendChild(s);
     }  
   }
+
   pay(amount:any) {   
       const handler = (<any>window).StripeCheckout.configure({
         key: 'pk_test_51IyUGPSFBbuL0qrEI7WiOgXVunKz28dmVA7Adr3TMsME7W1DEQ9blYVJdMUd83ZgdMLMvQKyHvmepMCiWtsoTcyq00EzEAmYIe',
         locale: 'auto',
         token: function (token: any) {
-          console.log(token)
-          alert('payment successful');
+          // const YOUR_DOMAIN = 'http://localhost:4200';
+          console.log(token);
+        //   let http:HttpClient=handler;
+        //  http.post("http://localhost:4242/create-checkout-session",{
+        //     token : token.id,
+        //     amount:this.amount
+        //     }).subscribe((res:any)=>{
+        //       console.log("The response from server is ",res);
+        //       console.log('Payment Done')
+        //       console.log(token)
+              alert('Payment Success!!');
+              handler.close({
+                onended:(window.open("complete"))
+              })
+              //postMessage("successfull","http://localhost:4242/paynow")
         }
-      });  
-    handler.open({
+      });   
+      handler.open({
       name: 'CROP DEAL',
       description: 'PURCHASE OF CROP',
-      amount: this.amount
+      currency:"INR",
+      amount: this.amount*100,
+     
     });
+    // this.invoiceserver.amount=true
+  //  this.router.navigateByUrl('complete') 
   }
+  // goback(){
+  //   this.router.navigateByUrl("product")
+  // }
 }

@@ -1,0 +1,35 @@
+{
+  "paths": [
+    {
+      "name": "/item",
+      "lambdaFunction": "cropserver52912e18",
+      "privacy": {
+        "open": true
+      },
+      "policyResourceName": "/item"
+    }
+  ],
+  "resourceName": "trialcrop",
+  "apiName": "trialcrop",
+  "functionArns": [
+    {
+      "lambdaFunction": "cropserver52912e18"
+    }
+  ],
+  "privacy": {
+    "auth": 0,
+    "unauth": 0,
+    "authRoleName": "amplify-cropserver-dev-174044-authRole",
+    "unAuthRoleName": "amplify-cropserver-dev-174044-unauthRole"
+  },
+  "dependsOn": [
+    {
+      "category": "function",
+      "resourceName": "cropserver52912e18",
+      "attributes": [
+        "Name",
+        "Arn"
+      ]
+    }
+  ]
+}

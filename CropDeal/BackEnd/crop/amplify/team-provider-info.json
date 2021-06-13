@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-cropserver-dev-174044-authRole",
+      "UnauthRoleArn": "arn:aws:iam::563316135467:role/amplify-cropserver-dev-174044-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::563316135467:role/amplify-cropserver-dev-174044-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-cropserver-dev-174044-deployment",
+      "UnauthRoleName": "amplify-cropserver-dev-174044-unauthRole",
+      "StackName": "amplify-cropserver-dev-174044",
+      "StackId": "arn:aws:cloudformation:us-east-1:563316135467:stack/amplify-cropserver-dev-174044/0eabea40-caae-11eb-8f2d-1284244017a7",
+      "AmplifyAppId": "dsg59fafpk31u"
+    }
+  }
+}

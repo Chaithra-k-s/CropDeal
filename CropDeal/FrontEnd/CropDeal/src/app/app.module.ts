@@ -19,7 +19,7 @@ import { NgxStripeModule } from 'ngx-stripe';
     AppComponent,
     routingComponents,
     DeleteaccountpageComponent,
-    CompleteComponent
+    CompleteComponent,
   ],
   imports: [
     BrowserModule,
