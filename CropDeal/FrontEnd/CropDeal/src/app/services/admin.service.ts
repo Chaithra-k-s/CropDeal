@@ -10,10 +10,10 @@ import { ProfileService } from './profile.service';
 })
 export class AdminService {
   error:any;
-
   adminurl="http://localhost:2000/";
 
   constructor( private client:HttpClient, private profileservice:ProfileService ) { }
+  
 //get all admin 
   getadmin():Observable<admin[]>{
     console.log(this.profileservice.user);
@@ -22,7 +22,11 @@ export class AdminService {
       'content-type':'application/json',
       'authorization':'Bearer '+this.profileservice.token
   }
-    return this.client.get<admin[]>(this.adminurl+"admin",{'headers':headers})
+    return this.client.get<admin[]>("https://rga3ghynx0.execute-api.us-east-1.amazonaws.com/test/user",{'headers':headers})
+   //return this.client.get<admin[]>(this.adminurl+"admin",{'headers':headers})
+   .pipe(
+      catchError(this.handleError)
+    );
   }
 }
 
@@ -32,7 +36,10 @@ export class AdminService {
       'content-type':'application/json',
       'authorization':'Bearer '+this.profileservice.token
   }
-    return this.client.get<admin[]>(this.adminurl+"admin"+this.profileservice._id,{'headers':headers})
+    return this.client.get<admin[]>("https://rga3ghynx0.execute-api.us-east-1.amazonaws.com/test/user/"+this.profileservice._id,{'headers':headers})
+    .pipe(
+      catchError(this.handleError)
+    );
   }
 
 //delete admin
@@ -41,7 +48,7 @@ export class AdminService {
       'content-type':'application/json',
       'authorization':'Bearer '+token
   }
-    return this.client.delete<admin[]>(this.adminurl+this.profileservice._id,{'headers':headers})
+    return this.client.delete<admin[]>("https://rga3ghynx0.execute-api.us-east-1.amazonaws.com/test/user/"+this.profileservice._id,{'headers':headers})
   .pipe(
     catchError(this.handleError)
   );
@@ -54,7 +61,7 @@ export class AdminService {
   'authorization':'Bearer '+this.profileservice.token
 }
 const body=JSON.stringify(value)
-return this.client.put<admin[]>(this.adminurl+'/'+value.name,body,{'headers':headers})
+return this.client.put<admin[]>("https://rga3ghynx0.execute-api.us-east-1.amazonaws.com/test/user/"+value.name,body,{'headers':headers})
 .pipe(
 catchError(this.handleError)
 );

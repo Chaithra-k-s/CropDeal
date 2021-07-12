@@ -3,7 +3,8 @@ const dbURI="mongodb+srv://admin:123@mongodbpractise.bjozc.mongodb.net/CROP?retr
 
 function connect(){
     return new Promise((resolve,reject)=>{
-        mongoose.connect(dbURI,{useNewUrlParser:true,
+        mongoose.connect(dbURI,{
+            useNewUrlParser:true,
             useUnifiedTopology:true,
             useCreateIndex:true,
             useFindAndModify:true

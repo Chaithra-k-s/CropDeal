@@ -37,10 +37,11 @@ export class InvoicepageComponent implements OnInit {
     })    
   }
 
+
 //total amount
   check(){
-  return this.add.map((t: { crop_price: any; }) => 
-  t.crop_price).reduce((acc: any, value: any) => acc + value, 0);
+  return this.add.map((t:{ crop_price: number; }) => 
+  t.crop_price).reduce((acc:number, value: any) => acc + parseInt(value), 0);
   }
   // invokeStripe(){
   //   if( !window.document.getElement){}

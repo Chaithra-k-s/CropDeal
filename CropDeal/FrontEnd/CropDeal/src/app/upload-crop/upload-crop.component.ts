@@ -40,15 +40,7 @@ type:String[]=[]
     crop_price:new FormControl(0,[Validators.required]),
     crop_img:new FormControl("",[Validators.required]),
     uploaded_by:new FormControl(this.profileservice.name),
-    location:this.fb.group({
-      Addressline1:new FormControl("",[Validators.required]),
-      Addressline2:new FormControl(""),
-      localArea:new FormControl(""),
-      State:new FormControl(""),
-      Country:new FormControl(""),
-      pincode:new FormControl(123),
-      }),
-      role:new FormControl("FARMER")
+    location:new FormControl("",[Validators.required]),
     })
 
   //getting formcontrol value
@@ -57,7 +49,10 @@ type:String[]=[]
   }
 
   submit(){    
+    console.log(this.form.value);
+    
       this.cropserver.uploadcrop(this.form.value).subscribe(data=>{
+      console.log(data);
       this.message="submitted successfully!"
       this.farmerservice.editcropdetails(this.form.value)
       this.router.navigateByUrl('product');

@@ -29,7 +29,7 @@
       <p class="form-group">
         <mat-form-field appearance="outline">
           <mat-label for="crop_quantity">CROP QUANTITY</mat-label> 
-          <input type="number" formControlName="crop_quantity" matInput placeholder="CROP QUANTITY">
+          <input type="text8" formControlName="crop_quantity" matInput placeholder="CROP QUANTITY">
           <div *ngIf="f.crop_quantity.touched && f.crop_quantity.invalid">FEILD REQUIRED</div>
         </mat-form-field>
       </p>
@@ -37,7 +37,7 @@
       <p class="form-group">
         <mat-form-field appearance="outline">
           <mat-label for="crop_price">PRICE</mat-label> 
-          <input type="number" formControlName="crop_price" matInput placeholder="PRICE">
+          <input type="text" formControlName="crop_price" matInput placeholder="PRICE">
           <div *ngIf="f.crop_price.touched && f.crop_price.invalid">FEILD REQUIRED</div>
         </mat-form-field>
       </p>
@@ -49,8 +49,16 @@
           <div *ngIf="f.crop_img.touched && f.crop_img.invalid">FEILD REQUIRED</div>
         </mat-form-field>
       </p>
+
+      <p class="form-group">
+        <mat-form-field appearance="outline">
+          <mat-label for="crop_img">LOCATION</mat-label> 
+          <input type="text" formControlName="location" matInput placeholder="location">
+          <div *ngIf="f.location.touched && f.location.invalid">FEILD REQUIRED</div>
+        </mat-form-field>
+      </p>
   
-  <div formGroupName="location" >
+  <!-- <div formGroupName="location" >
     <h1 style="color: black;">LOCATION INFORMATION</h1>
   <p class="form-group">
       <mat-form-field appearance="outline">
@@ -93,14 +101,14 @@
       <mat-label for="pincode">PIN CODE</mat-label>
       <input matInput formControlName="pincode" type="number" placeholder="PINCODE">
     </mat-form-field>
-    </p> 
+    </p>  -->
 
     <!-- <select name="crop_type" id="crop_type">
       <option *ngFor="let type of type" value="type">{{type}}</option>
       <option><input type="text" id="type"></option>
-    </select> -->
+    </select>
+  </div>-->   
 
-  </div>      
     <div class="example-container">
       <button mat-raised-button [disabled]="form.invalid" (click)="submit()" type="submit">Submit</button>
     </div>

@@ -21,7 +21,7 @@ export class RegisterComponent implements OnInit {
     email: new FormControl("",[ Validators.required,Validators.email,
       Validators.pattern(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)]),
     gender:new FormControl("",[Validators.required]),
-    contact:new FormControl(1234567890,[Validators.required, Validators.minLength(10),Validators.maxLength(10)]),
+    contact:new FormControl("1234567890",[Validators.required, Validators.minLength(10),Validators.maxLength(10)]),
     password:new FormControl("",[
       Validators.required,
       Validators.minLength(8),
@@ -45,7 +45,11 @@ export class RegisterComponent implements OnInit {
   submit(){
     if(this.form.value.password===this.form.value.confirmpassword)
     {
+      console.log(this.form.value);
+      
       this.connectserver.register(this.form.value).subscribe(data=>{
+      console.log(data);
+      
       this.message="Registered Successfully!";
       window.alert(this.message)
       this.submitted=true

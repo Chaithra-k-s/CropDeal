@@ -110,6 +110,9 @@ export class CropstoreComponent implements OnInit {
   }
 
   invoice(value:any){
+    console.log(value);
+    this.cropservice.cart.push(value)
+    //console.log(this.cropservice.cart);
     if(this.login){
       this.cropservice.sendtoinvoice(value).subscribe(data=>
         {

@@ -56,19 +56,19 @@ export class LoginService {
       const headers={'content-type':'application/json'};
       const body=JSON.stringify(value)
       if(value.role==="ADMIN"){
-        return this.client.post<admin[]>(this.adminurl+"register",body,{'headers':headers})
+        return this.client.post<admin[]>("https://rga3ghynx0.execute-api.us-east-1.amazonaws.com/test/user",body,{'headers':headers})
         .pipe(
           catchError(this.handleError)
         );
       }
       if(value.role==="FARMER"){
-        return this.client.post<admin[]>(this.farmerurl+"register",body,{'headers':headers})
+        return this.client.post<admin[]>("https://xabnyx5mm7.execute-api.us-east-1.amazonaws.com/farmer/farmer",body,{'headers':headers})
         .pipe(
           catchError(this.handleError)
         );
       }
       if(value.role==="DEALER"){
-        return this.client.post<admin[]>(this.dealerurl+"register",body,{'headers':headers})
+        return this.client.post<admin[]>(" https://c0btjg70q8.execute-api.us-east-1.amazonaws.com/dealer/dealers",body,{'headers':headers})
         .pipe(
           catchError(this.handleError)
         );
